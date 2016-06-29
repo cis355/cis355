@@ -1,0 +1,136 @@
+
+<!DOCTYPE html>
+<!-- 
+filename  : elmclean.html
+author    : Erika McLean
+date      : 2016-05-10
+email     : elmclean@svsu.edu
+course    : CIS-255
+link      : csis.svsu.edu/~elmclean/cis255/elmclean/elmclean.html
+backup    : github.com/cis255/cis255
+purpose   : This file serves as a menu template for the course, 
+			CIS-255: Client Side Web Development, 
+			at Saginaw Valley State University (SVSU)
+copyright : GNU General Public License (http://www.gnu.org/licenses/)
+			This program is free software: you can redistribute it and/or modify
+			it under the terms of the GNU General Public License as published by
+			the Free Software Foundation, either version 3 of the License, or
+			(at your option) any later version.
+			This program is distributed in the hope that it will be useful,
+			but WITHOUT ANY WARRANTY; without even the implied warranty of
+			MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.   
+external code used in this file: 
+			Based off various bootstrap templates 
+
+program structure : 
+	<head> metadata
+	<body> The links to all project work: 
+		Resume: web page to display my resume
+-->
+
+<html>
+<head>
+	<meta name="copyright" content="Erika McLean">
+	<meta name="author" content="Erika McLean">
+	<meta name="description" content="menu">
+	
+	<!-- Background music -->
+	<!-- <embed id="music" src="../../assets/intherain.mp3" autostart="true" loop="true" width="2" height="0"></embed> -->
+	<!-- eventual javascript for music $("#mute").click(function() {$("#lostmojo").pause();}); -->
+
+	<link rel="icon" href="http://www.faviconshut.com/pics/7/7873-technology-icons-pc-technology-icon-favicon.png" type="image/x-icon" />
+
+	<title>CSIS 355 Erika McLean</title>
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+	<link rel="stylesheet" href="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/css/bootstrap.css" integrity="sha384-XXXXXXXX" crossorigin="anonymous">
+	<script src="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/js/bootstrap.js" integrity="sha384-XXXXXXXX" crossorigin="anonymous"></script>
+
+	<!-- My custom CSS styles and fonts-->
+	<link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=Handlee' rel='stylesheet' type='text/css'>
+
+	<style type="text/css">
+		.jumbotron {
+			/* change bootstrap jumbotron text color */
+		    color: white;
+		    /* add bootstrap jumbotron background image */
+		    /*background: url(https://cdn.cloudpix.co/images/tumblr-backgrounds/tumblr-static-tumblr-background-1179d37000ac8efa7f001cb500ac0531-large-1548461.jpg);*/
+		    /*background: url(http://data.whicdn.com/images/63168745/large.jpg);*/
+		    background: url(http://data.whicdn.com/images/46315373/original.jpg);
+		    background-size: cover;
+		    text-shadow: 0px 0px 3px rgb(50,50,50);
+		}
+
+		.jumbotron h1 {font-family: 'Pacifico', cursive;}
+		h3 {font-family: 'Handlee', cursive;}
+	</style>
+</head>
+<body>
+	<!-- static navigation bar --> 
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="navbar-header">
+			<p class="container navbar-brand" href="">CIS-355: Erika McLean</p>
+		</div>
+	</nav>
+	
+	<!-- giant image header block with intro text -->
+	<div class="jumbotron"> <!-- outside container for full width -->
+		<div class="container">
+		<br>
+			<h1 class="display-3"><span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span> Welcome!</h1>
+			<p class="lead">This course focuses on the server side of web application development technologies. Topics include understanding, installing and configuring various server side technologies such as web servers, scripting engines and databases. Students will also learn PHP to address server side scripting and its interplay with the client side response. Students will produce a large scale, dynamic web application to illustrate their application of the course topics. Examinations of database connectivity, web service models and the importance of XML will be provided.</p>
+			<hr class="m-y-2">
+			<p><span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span> Course assignments can be found below.</p>
+		</div>
+	</div>
+	
+	<div class="container">
+		<!-- rows full of all the links to the course projects -->
+		<div class="panel panel-danger"> 
+			<div class="panel-heading"><h3 class="panel-title">Main Projects</h3></div> 
+			<div class="panel-body">
+				<div class="row"> <!-- start new row -->
+					<div class="col-md-4">
+						<h3>1. Placeholder</h3>
+						<p>More projects to come.</p>
+						<p><a class="btn btn-primary" href="#" role="button">Go to project <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span></a></p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="panel panel-info"> 
+			<div class="panel-heading"><h3 class="panel-title">Other</h3></div> 
+			<div class="panel-body">
+
+				<div class="row"> <!-- start new row -->
+					<div class="col-md-4">
+						<h3>1. Learning PHP</h3>
+						<p>Learn how to send and display data in a PHP page.</p>
+						<p><a class="btn btn-primary" href="http://csis.svsu.edu/~elmclean/cis355/elmclean/enteringInfo.html" role="button">Go to project <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span></a></p>
+					</div>
+
+					<!-- more projects to come
+					<div class="col-md-4">
+						<h3>7.</h3>
+						<p></p>
+						<p><a class="btn btn-primary" href="#" role="button">Go to project <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span></a></p>
+					</div> /end more projects-->
+				</div> <!-- end row -->
+
+			</div>
+		</div>
+		<!-- end content rows -->
+		
+		<br>
+		
+		<!-- copyright footer -->
+		<footer class="footer">
+			<p class="text-muted">&copy; 2016 Erika McLean</p>
+		</footer>
+	</div>
+</body>
+</html>
