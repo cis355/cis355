@@ -1,5 +1,9 @@
 <?php 
 
+session_start();
+if (empty($_SESSION['name'])) header("Location: login.php"); // redirect
+
+
 	# Consider three scenarios.
 	# 1. User clicked create button on list screen (index.php)
 	#         If that happens then create.php displays entry screen
