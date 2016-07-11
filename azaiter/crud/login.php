@@ -1,19 +1,18 @@
 <?php 
-session_start();
-	include("session.php"); 
+	session_start();
 	# include database class required to make DB connection
 	require 'database.php';
+	
 	# checks if post request has been made, if post request is made handle the create operation
 	if ( !empty($_POST)) {
 		// keep track validation errors
 		$nameError = null;
-		$emailError = null;
-		$mobileError = null;
+		$passwordError = null;
 		
 		// keep track post values
 		$name = $_POST['name'];
-		$email = $_POST['email'];
-		$mobile = $_POST['mobile'];
+		$password = $_POST['password'];
+		$redirect = $_POST['redirect'];
 		
 		// validate input
 		$valid = true;
@@ -22,16 +21,8 @@ session_start();
 			$valid = false;
 		}
 		
-		if (empty($email)) {
-			$emailError = 'Please enter Email Address';
-			$valid = false;
-		} else if ( !filter_var($email,FILTER_VALIDATE_EMAIL) ) {
-			$emailError = 'Please enter a valid Email Address';
-			$valid = false;
-		}
-		
-		if (empty($mobile)) {
-			$mobileError = 'Please enter Mobile Number';
+		if (empty($password)) {
+			$emailError = 'Please enter password';
 			$valid = false;
 		}
 		
@@ -39,15 +30,26 @@ session_start();
 		if ($valid) {
 			$pdo = Database::connect();
 			$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-			$sql = "INSERT INTO customers (name,email,mobile) values(?, ?, ?)";
+			$sql = "Select * from customers where name = ? limit 1";
 			$q = $pdo->prepare($sql);
-			$q->execute(array($name,$email,$mobile));
+			$q->execute(array($name));
+			$results = $q->fetch(PDO::FETCH_ASSOC);
+			//print_r($results);
+			if($results['password']==$password){
+				echo "logged in";
+				$_SESSION["user_id"] = $results['id'];
+				$_SESSION["username"] = $name;
+				$_SESSION["password"] = $password;
+				header("Location: main.php");
+			} else {
+				echo "<font color='red'><b>Username Or Password incorrect!</b></font>";
+			}
+			echo $redirect;
 			Database::disconnect();
-			header("Location: main.php");
+			
 		}
 	}
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -62,12 +64,13 @@ session_start();
     
     			<div class="span10 offset1">
     				<div class="row">
-		    			<h3>Create a Customer</h3>
+		    			<h3>Login</h3>
+						<p><?php echo $_SESSION['url_referer']; ?></p>
 		    		</div>
     		
-	    			<form class="form-horizontal" action="create.php" method="post">
+	    			<form class="form-horizontal" action="login.php" method="post">
 					  <div class="control-group <?php echo !empty($nameError)?'error':'';?>">
-					    <label class="control-label">Name</label>
+					    <label class="control-label">Username</label>
 					    <div class="controls">
 					      	<input name="name" type="text"  placeholder="Name" value="<?php echo !empty($name)?$name:'';?>">
 					      	<?php if (!empty($nameError)): ?>
@@ -75,28 +78,20 @@ session_start();
 					      	<?php endif; ?>
 					    </div>
 					  </div>
-					  <div class="control-group <?php echo !empty($emailError)?'error':'';?>">
-					    <label class="control-label">Email Address</label>
+					  <div class="control-group <?php echo !empty($passwordError)?'error':'';?>">
+					    <label class="control-label">Password</label>
 					    <div class="controls">
-					      	<input name="email" type="text" placeholder="Email Address" value="<?php echo !empty($email)?$email:'';?>">
-					      	<?php if (!empty($emailError)): ?>
-					      		<span class="help-inline"><?php echo $emailError;?></span>
-					      	<?php endif;?>
-					    </div>
-					  </div>
-					  <div class="control-group <?php echo !empty($mobileError)?'error':'';?>">
-					    <label class="control-label">Mobile Number</label>
-					    <div class="controls">
-					      	<input name="mobile" type="text"  placeholder="Mobile Number" value="<?php echo !empty($mobile)?$mobile:'';?>">
-					      	<?php if (!empty($mobileError)): ?>
-					      		<span class="help-inline"><?php echo $mobileError;?></span>
+					      	<input name="password" type="password" placeholder="Password" value="<?php echo !empty($password)?$password:'';?>">
+					      	<?php if (!empty($passwordError)): ?>
+					      		<span class="help-inline"><?php echo $passwordError;?></span>
 					      	<?php endif;?>
 					    </div>
 					  </div>
 					  <div class="form-actions">
-						  <button type="submit" class="btn btn-success">Create</button>
+						  <button type="submit" class="btn btn-success">Login</button>
 						  <a class="btn" href="main.php">Back</a>
 						</div>
+
 					</form>
 				</div>
 				
