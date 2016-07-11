@@ -1,9 +1,15 @@
 <?php 
-session_start();
-	include("session.php"); 
-	# include database class required to make DB connection
+	
 	require 'database.php';
-	# checks if post request has been made, if post request is made handle the create operation
+	$id = null;
+	if ( !empty($_GET['id'])) {
+		$id = $_REQUEST['id'];
+	}
+	
+	if ( null==$id ) {
+		header("Location: index.php");
+	}
+	
 	if ( !empty($_POST)) {
 		// keep track validation errors
 		$nameError = null;
@@ -35,16 +41,27 @@ session_start();
 			$valid = false;
 		}
 		
-		// insert data
+		// update data
 		if ($valid) {
 			$pdo = Database::connect();
 			$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-			$sql = "INSERT INTO customers (name,email,mobile) values(?, ?, ?)";
+			$sql = "UPDATE customers  set name = ?, email = ?, mobile =? WHERE id = ?";
 			$q = $pdo->prepare($sql);
-			$q->execute(array($name,$email,$mobile));
+			$q->execute(array($name,$email,$mobile,$id));
 			Database::disconnect();
-			header("Location: main.php");
+			header("Location: index.php");
 		}
+	} else {
+		$pdo = Database::connect();
+		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$sql = "SELECT * FROM customers where id = ?";
+		$q = $pdo->prepare($sql);
+		$q->execute(array($id));
+		$data = $q->fetch(PDO::FETCH_ASSOC);
+		$name = $data['name'];
+		$email = $data['email'];
+		$mobile = $data['mobile'];
+		Database::disconnect();
 	}
 ?>
 
@@ -62,10 +79,10 @@ session_start();
     
     			<div class="span10 offset1">
     				<div class="row">
-		    			<h3>Create a Customer</h3>
+		    			<h3>Update a Customer</h3>
 		    		</div>
     		
-	    			<form class="form-horizontal" action="create.php" method="post">
+	    			<form class="form-horizontal" action="update.php?id=<?php echo $id?>" method="post">
 					  <div class="control-group <?php echo !empty($nameError)?'error':'';?>">
 					    <label class="control-label">Name</label>
 					    <div class="controls">
@@ -94,12 +111,13 @@ session_start();
 					    </div>
 					  </div>
 					  <div class="form-actions">
-						  <button type="submit" class="btn btn-success">Create</button>
-						  <a class="btn" href="main.php">Back</a>
+						  <button type="submit" class="btn btn-success">Update</button>
+						  <a class="btn" href="index.php">Back</a>
 						</div>
 					</form>
 				</div>
 				
     </div> <!-- /container -->
+
   </body>
 </html>

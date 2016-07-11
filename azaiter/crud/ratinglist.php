@@ -15,7 +15,7 @@ include("session.php");
     <div class="container">
     		<div class="row">
     			<h3>Hello <?php echo $_SESSION["username"]; ?> !</h3>
-    			<h3>PHP CRUD Grid</h3>
+    			<h3>Rating of products by id</h3>
     		</div>
 			<div class="row">
 				<p>
@@ -25,32 +25,25 @@ include("session.php");
 				<table class="table table-striped table-bordered">
 		              <thead>
 		                <tr>
-		                  <th>Name</th>
-		                  <th>Email Address</th>
-		                  <th>Mobile Number</th>
-		                  <th>Action</th>
+		                  <th>Rating ID</th>
+		                  <th>Product</th>
+		                  <th>Customer</th>
+		                  <th>Rating</th>
 		                </tr>
 		              </thead>
 		              <tbody>
 		              <?php 
 					   //include 'database.php';
 					   $pdo2 = Database::connect();
-					   $sql2 = 'SELECT * FROM customers ORDER BY id DESC';
+					   $sql2 = 'SELECT ratings.rating, ratings.id,customers.name,product.productName FROM ratings,customers,product
+								where ratings.customerID = customers.id
+								and ratings.productID = product.id';
 	 				   foreach ($pdo2->query($sql2) as $row) {
 						   		echo '<tr>';
+							   	echo '<td>'. $row['id'] . '</td>';
+							   	echo '<td>'. $row['productName'] . '</td>';
 							   	echo '<td>'. $row['name'] . '</td>';
-							   	echo '<td>'. $row['email'] . '</td>';
-							   	echo '<td>'. $row['mobile'] . '</td>';
-							   	echo '<td width=250>';
-							   	echo '<a class="btn" href="read.php?id='.
-								   $row['id'].'">Read</a>';
-							   	echo '&nbsp;';
-							   	echo '<a class="btn btn-success" 
-								   href="update.php?id='.$row['id'].'">Update</a>';
-							   	echo '&nbsp;';
-							   	echo '<a class="btn btn-danger" 
-								   href="delete.php?id='.$row['id'].'">Delete</a>';
-							   	echo '</td>';
+							   	echo '<td>'. $row['rating'] . '</td>';
 							   	echo '</tr>';
 					   }
 					   Database::disconnect();

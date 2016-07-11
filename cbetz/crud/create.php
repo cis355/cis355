@@ -1,9 +1,19 @@
 <?php 
-session_start();
-	include("session.php"); 
-	# include database class required to make DB connection
+	# Consider these scenarios.
+	# 1. User clicked the create button on the list screen(index.php)
+	#  If that happens then create.php displays a entry screen
+	
+	# 2. User clicked create button(sumbimt button) on entry screen, but a field was empty
+	#	If that happens then an error messege appears next to the empy field(s)
+	
+	# 3. User clicks the create button and all data is valid
+	#	IF that happens then the PHP code inserts the record and redirects to the list screen
+	
+	
+	# include connection data and functions
 	require 'database.php';
-	# checks if post request has been made, if post request is made handle the create operation
+	# If there was data passed then insert the record,
+	# otherwise do nothing
 	if ( !empty($_POST)) {
 		// keep track validation errors
 		$nameError = null;
@@ -43,9 +53,9 @@ session_start();
 			$q = $pdo->prepare($sql);
 			$q->execute(array($name,$email,$mobile));
 			Database::disconnect();
-			header("Location: main.php");
+			header("Location: index.php");
 		}
-	}
+	} # end if (!empty($_POST))
 ?>
 
 
@@ -66,6 +76,7 @@ session_start();
 		    		</div>
     		
 	    			<form class="form-horizontal" action="create.php" method="post">
+					
 					  <div class="control-group <?php echo !empty($nameError)?'error':'';?>">
 					    <label class="control-label">Name</label>
 					    <div class="controls">
@@ -75,6 +86,7 @@ session_start();
 					      	<?php endif; ?>
 					    </div>
 					  </div>
+					  
 					  <div class="control-group <?php echo !empty($emailError)?'error':'';?>">
 					    <label class="control-label">Email Address</label>
 					    <div class="controls">
@@ -95,7 +107,7 @@ session_start();
 					  </div>
 					  <div class="form-actions">
 						  <button type="submit" class="btn btn-success">Create</button>
-						  <a class="btn" href="main.php">Back</a>
+						  <a class="btn" href="index.php">Back</a>
 						</div>
 					</form>
 				</div>
