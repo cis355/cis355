@@ -1,18 +1,19 @@
 <?php 
-
-	# Consider three scenarios.
-	# 1. User clicked create button on list screen (index.php)
-	#         If that happens then create.php displays entry screen
-	# 2. User clicked create button (submit button) on entry screen but one or more fields were empty
-	#         If that happens then error message(s) appears next to empty field(s)
-	# 3. User clicked create button (submit button) and all data valid
-	#         If that happens then PHP code inserts the record and redirect to list screen (index.php)
+	# Consider these scenarios.
+	# 1. User clicked the create button on the list screen(index.php)
+	#  If that happens then create.php displays a entry screen
+	
+	# 2. User clicked create button(sumbimt button) on entry screen, but a field was empty
+	#	If that happens then an error messege appears next to the empy field(s)
+	
+	# 3. User clicks the create button and all data is valid
+	#	IF that happens then the PHP code inserts the record and redirects to the list screen
+	
 	
 	# include connection data and functions
 	require 'database.php';
-	
-	# if there was data passed, then insert record, 
-	# otherwise do nothing (that is, just display html for create)
+	# If there was data passed then insert the record,
+	# otherwise do nothing
 	if ( !empty($_POST)) {
 		// keep track validation errors
 		$nameError = null;
@@ -54,7 +55,7 @@
 			Database::disconnect();
 			header("Location: index.php");
 		}
-	} # end if ( !empty($_POST))
+	} # end if (!empty($_POST))
 ?>
 
 
@@ -108,9 +109,7 @@
 						  <button type="submit" class="btn btn-success">Create</button>
 						  <a class="btn" href="index.php">Back</a>
 						</div>
-						
 					</form>
-					
 				</div>
 				
     </div> <!-- /container -->

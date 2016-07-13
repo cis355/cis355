@@ -1,11 +1,20 @@
 <?php
 class Database 
 {
+    # commented out code below...
+    /*
 	private static $dbName = 'gpcorser' ; 
 	private static $dbHost = 'localhost' ;
 	private static $dbUsername = 'gpcorser';
 	private static $dbUserPassword = 'remember';
-
+	*/
+	# added code below ...
+	private static $dbName = 'cbetz' ; 
+	private static $dbHost = 'localhost' ;
+	private static $dbUsername = 'cbetz';
+	private static $dbUserPassword = '547295';
+	# added code above ...
+	
 	private static $cont  = null;
 	
 	public function __construct() {

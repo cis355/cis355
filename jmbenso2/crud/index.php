@@ -1,37 +1,26 @@
-<?php
-session_start();
-if (empty($_SESSION['name'])) header("Location: login.php"); // redirect
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<!-- The head section does the following.
-		1. Sets character set
-		2. Includes Bootstrap
-		-->
+	<!-- This head does the following: sets character set, includes link to bootstrap and JavaScript-->
     <meta charset="utf-8">
     <link   href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </head>
 
 <body>
-	<!-- The body section does the following.
-		1. Displays heading
-		2. Displays a "create" button"
-		3. Displays rows of database records (from MySQL database)
-		4. Displays "tutorial" button
-		-->
+	<!-- -->
     <div class="container">
+			<!-- Heading -->
     		<div class="row">
     			<h3>PHP CRUD Grid</h3>
     		</div>
 			<div class="row">
+				<!-- Create button (opens create.php) -->
 				<p>
 					<a href="create.php" class="btn btn-success">Create</a>
-					<a href="logout.php" class="btn btn-danger">Logout</a>
 				</p>
 				
+				<!-- Data table: displays data from customers table in database -->
 				<table class="table table-striped table-bordered">
 		              <thead>
 		                <tr>
@@ -43,19 +32,20 @@ if (empty($_SESSION['name'])) header("Location: login.php"); // redirect
 		              </thead>
 		              <tbody>
 		              <?php 
-					   # database.php contains connection code, including connect and disconnect functions
-					   include 'database.php';
-					   # connect to database and assign object to variable
-					   $pdo = Database::connect();
-					   # assign select statement to variable
-					   $sql = 'SELECT * FROM customers ORDER BY id DESC';
-					   # iterates through every record return by the select statement
-	 				   foreach ($pdo->query($sql) as $row) {
+					   include 'database.php'; //including our database.php file
+					   $pdo = Database::connect(); // Creating connection (PDO) object, named $pdo
+					   $sql = 'SELECT * FROM customers ORDER BY id DESC'; // Assign sql string to $sql
+					   // Construct table body by writing HTML with data from database
+					   
+	 				   foreach ($pdo->query($sql) as $row) { // send query via the connection represented by $pdo
+															 //   the query being sent is $sql
+															 //   as $row -- as you iterate through, the current row will be named $row
+															 //   Now we iterate through the rows selected
 						   		echo '<tr>';
 							   	echo '<td>'. $row['name'] . '</td>';
 							   	echo '<td>'. $row['email'] . '</td>';
 							   	echo '<td>'. $row['mobile'] . '</td>';
-							   	echo '<td width=250>';
+							   	echo '<td width="250">';
 							   	echo '<a class="btn" href="read.php?id='.
 								   $row['id'].'">Read</a>';
 							   	echo '&nbsp;';

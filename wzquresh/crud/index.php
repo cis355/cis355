@@ -1,8 +1,3 @@
-<?php
-session_start();
-if (empty($_SESSION['name'])) header("Location: login.php"); // redirect
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,7 +24,6 @@ if (empty($_SESSION['name'])) header("Location: login.php"); // redirect
 			<div class="row">
 				<p>
 					<a href="create.php" class="btn btn-success">Create</a>
-					<a href="logout.php" class="btn btn-danger">Logout</a>
 				</p>
 				
 				<table class="table table-striped table-bordered">

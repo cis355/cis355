@@ -1,19 +1,6 @@
 <?php 
-
-	# Consider three scenarios.
-	# 1. User clicked create button on list screen (index.php)
-	#         If that happens then create.php displays entry screen
-	# 2. User clicked create button (submit button) on entry screen but one or more fields were empty
-	#         If that happens then error message(s) appears next to empty field(s)
-	# 3. User clicked create button (submit button) and all data valid
-	#         If that happens then PHP code inserts the record and redirect to list screen (index.php)
-	
-	# include connection data and functions
 	require 'database.php';
-	
-	# if there was data passed, then insert record, 
-	# otherwise do nothing (that is, just display html for create)
-	if ( !empty($_POST)) {
+	if ( !empty($_POST)) { // If anything's been posted
 		// keep track validation errors
 		$nameError = null;
 		$emailError = null;
@@ -26,15 +13,15 @@
 		
 		// validate input
 		$valid = true;
-		if (empty($name)) {
-			$nameError = 'Please enter Name';
-			$valid = false;
+		if (empty($name)) { // If no name was read/posted
+			$nameError = 'Please enter Name'; // Show error message
+			$valid = false; // If this is set to false anywhere, prevents us from inserting data later on
 		}
 		
 		if (empty($email)) {
-			$emailError = 'Please enter Email Address';
+			$emailError = 'Please enter Email Address'; // If no email was read/posted
 			$valid = false;
-		} else if ( !filter_var($email,FILTER_VALIDATE_EMAIL) ) {
+		} else if ( !filter_var($email,FILTER_VALIDATE_EMAIL) ) { // Or if email is invalid
 			$emailError = 'Please enter a valid Email Address';
 			$valid = false;
 		}
@@ -46,15 +33,15 @@
 		
 		// insert data
 		if ($valid) {
-			$pdo = Database::connect();
-			$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+			$pdo = Database::connect(); // Connect to database, reference in $pdo variable
+			$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // Set attributes of connection
 			$sql = "INSERT INTO customers (name,email,mobile) values(?, ?, ?)";
 			$q = $pdo->prepare($sql);
 			$q->execute(array($name,$email,$mobile));
 			Database::disconnect();
 			header("Location: index.php");
 		}
-	} # end if ( !empty($_POST))
+	}
 ?>
 
 
@@ -76,16 +63,16 @@
     		
 	    			<form class="form-horizontal" action="create.php" method="post">
 					
-					  <div class="control-group <?php echo !empty($nameError)?'error':'';?>">
+						
+					  <div class="control-group <?php echo !empty($nameError)?'error':'';?>"><!--If we have a value for error, print it here -->
 					    <label class="control-label">Name</label>
 					    <div class="controls">
-					      	<input name="name" type="text"  placeholder="Name" value="<?php echo !empty($name)?$name:'';?>">
+					      	<input name="name" type="text"  placeholder="Name" value="<?php echo !empty($name)?$name:'';?>"> <!-- If we have a value for name, print it here -->
 					      	<?php if (!empty($nameError)): ?>
 					      		<span class="help-inline"><?php echo $nameError;?></span>
 					      	<?php endif; ?>
 					    </div>
 					  </div>
-					  
 					  <div class="control-group <?php echo !empty($emailError)?'error':'';?>">
 					    <label class="control-label">Email Address</label>
 					    <div class="controls">
@@ -110,7 +97,6 @@
 						</div>
 						
 					</form>
-					
 				</div>
 				
     </div> <!-- /container -->
