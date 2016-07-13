@@ -1,6 +1,21 @@
 <?php 
+
+	session_start();
+	if (empty($_SESSION['name'])) header("Location: login.php");
+
 	
+	# Consider three scenarios.
+	# 1. User clicked create button on list screen (index.php)
+	#		If that happens then create.php displays entry screen
+	# 2. User clicked create button (submit button) on entry but one or more fields were empty
+	#		If that happens then error message(s) appears next to empty field(s)
+	# 3. User clicked create button (submit button) and all data valid
+	#		If that happens then PHP code inserts the record and redirect to list screen (index.php)
+	
+	# includes connection to database and functions
 	require 'database.php';
+	
+	# if there is data passed, then insert record, otherwise do nothing 
 	if ( !empty($_POST)) {
 		// keep track validation errors
 		$nameError = null;
@@ -42,7 +57,7 @@
 			Database::disconnect();
 			header("Location: index.php");
 		}
-	}
+	} # end if ( !empty($_POST))
 ?>
 
 

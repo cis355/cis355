@@ -24,21 +24,17 @@
 		-->
     <div class="container">
     		<div class="row">
-    			<h3>PHP CRUD Grid</h3>
+    			<h3>Ratings of Products By Customers</h3>
     		</div>
 			<div class="row">
-				<p>
-					<a href="create.php" class="btn btn-success">Create</a>
-					<a href="logout.php" class="btn btn-danger">Logout</a>
-				</p>
 				
 				<table class="table table-striped table-bordered">
 		              <thead>
 		                <tr>
-		                  <th>Name</th>
-		                  <th>Email Address</th>
-		                  <th>Mobile Number</th>
-		                  <th>Action</th>
+		                  <th>Rating ID</th>
+		                  <th>Product</th>
+		                  <th>Customer</th>
+		                  <th>Rating</th>
 		                </tr>
 		              </thead>
 		              <tbody>
@@ -48,23 +44,15 @@
 					   # connect to database and assign object to variable
 					   $pdo = Database::connect();
 					   # assign select statement to variable
-					   $sql = 'SELECT * FROM customers2 ORDER BY id DESC';
+					   $sql = 'SELECT * FROM `ratings` INNER JOIN `product` INNER JOIN `customers2` WHERE 
+					   product.id = ratings.productID and customers2.id = ratings.customerID';
 					   # iterates through every record, return by the select statement
 	 				   foreach ($pdo->query($sql) as $row) {
 						   		echo '<tr>';
+							   	echo '<td>'. $row['0'] . '</td>';
+							   	echo '<td>'. $row['productName'] . '</td>';
 							   	echo '<td>'. $row['name'] . '</td>';
-							   	echo '<td>'. $row['email'] . '</td>';
-							   	echo '<td>'. $row['mobile'] . '</td>';
-							   	echo '<td width=250>';
-							   	echo '<a class="btn" href="read.php?id='.
-								   $row['id'].'">Read</a>';
-							   	echo '&nbsp;';
-							   	echo '<a class="btn btn-success" 
-								   href="update.php?id='.$row['id'].'">Update</a>';
-							   	echo '&nbsp;';
-							   	echo '<a class="btn btn-danger" 
-								   href="delete.php?id='.$row['id'].'">Delete</a>';
-							   	echo '</td>';
+								echo '<td>'. $row['rating'] . '</td>';
 							   	echo '</tr>';
 					   }
 					   Database::disconnect();
