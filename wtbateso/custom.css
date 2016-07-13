@@ -1,0 +1,32 @@
+.jumbotron {
+	background: black;
+	background-size: cover;
+	background-image: url(https://s-media-cache-ak0.pinimg.com/736x/47/29/7d/47297dd8bb980625a085029a135ad37d.jpg);
+	background-position: 5% 30%;
+	color: white;
+	margin: 0;
+	text-shadow: 0px 0px 11px rgba(255, 147, 78, 1);
+}
+
+html : .container{
+	background-color: black;
+	color: white;
+}
+
+html {
+	background-color: black;
+}
+
+.footer {
+	background-color: black;
+	color: white;
+	text-shadow: 2px 2px 11px rgba(255, 147, 78, 1);
+}
+
+.h1{
+	background: transparent;
+}
+
+.recipients{
+	background-color: #007700;
+}
