@@ -1,7 +1,8 @@
 <?php 
 
-session_start();
-if (empty($_SESSION['name'])) header("Location: login.php"); //redirect
+	session_start();	
+	if(empty($_SESSION['name'])) {header("Location: login.php");}
+
 
 	require 'database.php';
 	$id = null;
@@ -52,7 +53,7 @@ if (empty($_SESSION['name'])) header("Location: login.php"); //redirect
 						     	<?php echo $data['mobile'];?>
 					  </div>
 					    <div class="form-actions">
-						  <a class="btn" href="index.php">Back</a>
+						  <a class="btn btn-primary" href="index.php">Back</a>
 					   </div>
 
 					</div>

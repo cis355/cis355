@@ -1,6 +1,9 @@
 <?php 
-	session_start();
-	if (empty($_SESSION['name'])) header("Location: login.php"); // redirect
+
+	session_start();	
+	if(empty($_SESSION['name'])) {header("Location: login.php");}
+
+	
 	require 'database.php';
 	$id = null;
 	if ( !empty($_GET['id'])) {
@@ -113,7 +116,7 @@
 					  </div>
 					  <div class="form-actions">
 						  <button type="submit" class="btn btn-success">Update</button>
-						  <a class="btn" href="index.php">Back</a>
+						  <a class="btn btn-primary" href="index.php">Back</a>
 						</div>
 					</form>
 				</div>
