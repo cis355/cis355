@@ -1,5 +1,10 @@
 <?php 
 
+
+session_start();
+if (empty($_SESSION['name'])) header("Location: login.php"); //redirect
+
+
 	# Consider three scenarios.
 	# 1. User clicked create button on list screen (index.php)
 	#         If that happens then create.php displays entry screen
@@ -18,11 +23,13 @@
 		$nameError = null;
 		$emailError = null;
 		$mobileError = null;
+		$passwordError = null;
 		
 		// keep track post values
 		$name = $_POST['name'];
 		$email = $_POST['email'];
 		$mobile = $_POST['mobile'];
+		$password = $_POST['password'];
 		
 		// validate input
 		$valid = true;
@@ -44,13 +51,18 @@
 			$valid = false;
 		}
 		
+		if (empty($password)) {
+			$passwordError = 'Please enter Password';
+			$valid = false;
+		}
+		
 		// insert data
 		if ($valid) {
 			$pdo = Database::connect();
 			$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-			$sql = "INSERT INTO customers (name,email,mobile) values(?, ?, ?)";
+			$sql = "INSERT INTO customers (name,email,mobile,password) values(?, ?, ?, ?)";
 			$q = $pdo->prepare($sql);
-			$q->execute(array($name,$email,$mobile));
+			$q->execute(array($name,$email,$mobile,$password));
 			Database::disconnect();
 			header("Location: index.php");
 		}
@@ -104,6 +116,19 @@
 					      	<?php endif;?>
 					    </div>
 					  </div>
+					  
+					  <div class="control-group <?php echo !empty($passwordError)?'error':'';?>">
+					    <label class="control-label">Password</label>
+					    <div class="controls">
+					      	<input name="password" type="text"  placeholder="Password" value="<?php echo !empty($password)?$password:'';?>">
+					      	<?php if (!empty($passwordError)): ?>
+					      		<span class="help-inline"><?php echo $passwordError;?></span>
+					      	<?php endif; ?>
+					    </div>
+					  </div>
+					  
+					  </br>
+					  
 					  <div class="form-actions">
 						  <button type="submit" class="btn btn-success">Create</button>
 						  <a class="btn" href="index.php">Back</a>

@@ -1,18 +1,17 @@
 <?php 
-	
-	session_start();
-	if (empty($_SESSION['name'])) header("Location: login.php");
-	
+
+	# Consider these scenarios.
+	#	1. User clicked create button on list screen (index.php)
+	#		If that happens then create.php displays entry screen
+	#	2. User clicked create button (submit button) on entry screen but one or more fields were empty
+	#		If that happens then error message(s) appears next to empty field(s)
+	#	3. User clicked create button (submit button) and all data is valid
+	#		If that happens then PHP code inserts the record into the database according to database.php
+
+	# include connection data and functions
 	require 'database.php';
-	$id = null;
-	if ( !empty($_GET['id'])) {
-		$id = $_REQUEST['id'];
-	}
 	
-	if ( null==$id ) {
-		header("Location: index.php");
-	}
-	
+	# if there was data passed, then insert the record, otherwise do nothing (that is, just display html)
 	if ( !empty($_POST)) {
 		// keep track validation errors
 		$nameError = null;
@@ -44,28 +43,17 @@
 			$valid = false;
 		}
 		
-		// update data
+		// insert data
 		if ($valid) {
 			$pdo = Database::connect();
 			$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-			$sql = "UPDATE customers  set name = ?, email = ?, mobile =? WHERE id = ?";
+			$sql = "INSERT INTO customers (name,email,mobile) values(?, ?, ?)";
 			$q = $pdo->prepare($sql);
-			$q->execute(array($name,$email,$mobile,$id));
+			$q->execute(array($name,$email,$mobile));
 			Database::disconnect();
 			header("Location: index.php");
 		}
-	} else {
-		$pdo = Database::connect();
-		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$sql = "SELECT * FROM customers where id = ?";
-		$q = $pdo->prepare($sql);
-		$q->execute(array($id));
-		$data = $q->fetch(PDO::FETCH_ASSOC);
-		$name = $data['name'];
-		$email = $data['email'];
-		$mobile = $data['mobile'];
-		Database::disconnect();
-	}
+	}# end if(!empty($_POST))
 ?>
 
 
@@ -82,10 +70,10 @@
     
     			<div class="span10 offset1">
     				<div class="row">
-		    			<h3>Update a Customer</h3>
+		    			<h3>Create a Customer</h3>
 		    		</div>
     		
-	    			<form class="form-horizontal" action="update.php?id=<?php echo $id?>" method="post">
+	    			<form class="form-horizontal" action="create.php" method="post">
 					  <div class="control-group <?php echo !empty($nameError)?'error':'';?>">
 					    <label class="control-label">Name</label>
 					    <div class="controls">
@@ -114,13 +102,12 @@
 					    </div>
 					  </div>
 					  <div class="form-actions">
-						  <button type="submit" class="btn btn-success">Update</button>
+						  <button type="submit" class="btn btn-success">Create</button>
 						  <a class="btn" href="index.php">Back</a>
 						</div>
 					</form>
 				</div>
 				
     </div> <!-- /container -->
-
   </body>
 </html>

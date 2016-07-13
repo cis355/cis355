@@ -1,3 +1,8 @@
+<?php
+	session_start();
+	if (empty($_SESSION['name'])) header("Location: login.php");
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,7 +20,7 @@
 		1. Displays heading
 		2. Displays a "create button"
 		3. Displays rows of database records (from MySQL database)
-		4. 
+		4. Displays "tutorial" button
 		-->
     <div class="container">
     		<div class="row">
@@ -24,6 +29,7 @@
 			<div class="row">
 				<p>
 					<a href="create.php" class="btn btn-success">Create</a>
+					<a href="logout.php" class="btn btn-danger">Logout</a>
 				</p>
 				
 				<table class="table table-striped table-bordered">
@@ -39,8 +45,11 @@
 		              <?php 
 					   # database.php contains connection code, including connect and disconnect funtions
 					   include 'database.php';
+					   # connect to database and assign object to variable
 					   $pdo = Database::connect();
-					   $sql = 'SELECT * FROM customers ORDER BY id DESC';
+					   # assign select statement to variable
+					   $sql = 'SELECT * FROM customers2 ORDER BY id DESC';
+					   # iterates through every record, return by the select statement
 	 				   foreach ($pdo->query($sql) as $row) {
 						   		echo '<tr>';
 							   	echo '<td>'. $row['name'] . '</td>';

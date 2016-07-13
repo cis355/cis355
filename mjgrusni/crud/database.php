@@ -1,8 +1,4 @@
 <?php
-
-	session_start();
-	if (empty($_SESSION['name'])) header("Location: login.php");
-
 class Database 
 {
     # commented out code below...
@@ -13,10 +9,10 @@ class Database
 	private static $dbUserPassword = 'remember';
 	*/
 	# added code below ...
-	private static $dbName = 'wtbateso' ; 
+	private static $dbName = 'mjgrusni' ; 
 	private static $dbHost = 'localhost' ;
-	private static $dbUsername = 'wtbateso';
-	private static $dbUserPassword = '409856';
+	private static $dbUsername = 'mjgrusni';
+	private static $dbUserPassword = '582117';
 	# added code above ...
 	
 	private static $cont  = null;

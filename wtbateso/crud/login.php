@@ -32,7 +32,7 @@
         if ($valid) { 
             $pdo = Database::connect(); 
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); 
-            $sql = "SELECT * FROM customers WHERE name = ? LIMIT 1"; 
+            $sql = "SELECT * FROM customers2 WHERE name = ? LIMIT 1"; 
             $q = $pdo->prepare($sql); 
             $q->execute(array($name)); 
             $results = $q->fetch(PDO::FETCH_ASSOC); 
@@ -48,15 +48,13 @@
         } 
     } # end if ( !empty($_POST)) 
 ?> 
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <link   href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-</head>
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+    <meta charset="utf-8"> 
+    <link   href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"> 
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script> 
+</head> 
 
 <body> 
     <div class="container"> 
@@ -88,10 +86,8 @@
                         </div> 
                       </div> 
                        
-					  </br>
-					   
                       <div class="form-actions"> 
-                          <button type="submit" class="btn btn-success">Login</button> 
+                          <button type="submit" class="btn btn-success">Create</button> 
                           <a class="btn" href="index.php">Back</a> 
                         </div> 
                          
@@ -100,5 +96,5 @@
                 </div> 
                  
     </div> <!-- /container --> 
-  </body>
-</html>
+  </body> 
+</html> 

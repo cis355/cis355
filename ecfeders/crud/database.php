@@ -1,22 +1,19 @@
+
 <?php
-
-	session_start();
-	if (empty($_SESSION['name'])) header("Location: login.php");
-
 class Database 
 {
     # commented out code below...
     /*
-	private static $dbName = 'gpcorser' ; 
+	private static $dbName = 'ecfeders' ; 
 	private static $dbHost = 'localhost' ;
-	private static $dbUsername = 'gpcorser';
-	private static $dbUserPassword = 'remember';
+	private static $dbUsername = 'ecfeders';
+	private static $dbUserPassword = 'Nurseal5';
 	*/
 	# added code below ...
-	private static $dbName = 'wtbateso' ; 
+	private static $dbName = 'ecfeders' ; 
 	private static $dbHost = 'localhost' ;
-	private static $dbUsername = 'wtbateso';
-	private static $dbUserPassword = '409856';
+	private static $dbUsername = 'ecfeders';
+	private static $dbUserPassword = 'Nurseal5';
 	# added code above ...
 	
 	private static $cont  = null;

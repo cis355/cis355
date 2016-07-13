@@ -1,7 +1,5 @@
 <?php  
-     
-    session_start(); 
-     
+     session_start();
     # include connection data and functions 
     require 'database.php'; 
      
@@ -48,15 +46,13 @@
         } 
     } # end if ( !empty($_POST)) 
 ?> 
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <link   href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-</head>
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+    <meta charset="utf-8"> 
+    <link   href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"> 
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script> 
+</head> 
 
 <body> 
     <div class="container"> 
@@ -81,17 +77,15 @@
                       <div class="control-group <?php echo !empty($passwordError)?'error':'';?>"> 
                         <label class="control-label">Password</label> 
                         <div class="controls"> 
-                              <input name="password" type="password" placeholder="password" value="<?php echo !empty($password)?$password:'';?>"> 
+                              <input name="password" type="password" placeholder="Password" value="<?php echo !empty($password)?$password:'';?>"> 
                               <?php if (!empty($passwordError)): ?> 
                                   <span class="help-inline"><?php echo $passwordError;?></span> 
                               <?php endif;?> 
                         </div> 
                       </div> 
                        
-					  </br>
-					   
                       <div class="form-actions"> 
-                          <button type="submit" class="btn btn-success">Login</button> 
+                          <button type="submit" class="btn btn-success">Create</button> 
                           <a class="btn" href="index.php">Back</a> 
                         </div> 
                          
@@ -100,5 +94,5 @@
                 </div> 
                  
     </div> <!-- /container --> 
-  </body>
-</html>
+  </body> 
+</html> 
