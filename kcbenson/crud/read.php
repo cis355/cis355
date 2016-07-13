@@ -1,9 +1,11 @@
 <?php 
-	
-	session_start();
-	if (empty($_SESSION['name'])) header("Location: login.php");
-
 	require 'database.php';
+
+	session_start();
+	$_SESSION['name'] = "";
+	header("Location: read.php"); //redirect
+	session_destroy();
+
 	$id = null;
 	if ( !empty($_GET['id'])) {
 		$id = $_REQUEST['id'];

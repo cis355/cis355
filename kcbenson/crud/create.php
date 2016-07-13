@@ -1,18 +1,21 @@
 <?php 
+	# Consider three scenarios:
+	# 1.User clicked create button on list screen (index.php)
+	#		If that happens, then create.php displays entry screen
+	# 2. User clicked create button (submit button) on entry screen, but a field was empty
+	#		If that happens, an error message shows next to the field
+	# 3. User clicked create button (submit button) on entry screen, and all data was valid
+	# 		If that happens, the PHP code inserts the record into the database and redirects to the list screen.
 	
 	session_start();
-	if (empty($_SESSION['name'])) header("Location: login.php");
+	$_SESSION['name'] = "";
+	header("Location: create.php"); //redirect
+	session_destroy();
 	
+	# include connection data and functions
 	require 'database.php';
-	$id = null;
-	if ( !empty($_GET['id'])) {
-		$id = $_REQUEST['id'];
-	}
 	
-	if ( null==$id ) {
-		header("Location: index.php");
-	}
-	
+	# if there was data passed, then insert the record, otherwise just display the HTML 
 	if ( !empty($_POST)) {
 		// keep track validation errors
 		$nameError = null;
@@ -44,34 +47,27 @@
 			$valid = false;
 		}
 		
-		// update data
+		// insert data
 		if ($valid) {
 			$pdo = Database::connect();
 			$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-			$sql = "UPDATE customers  set name = ?, email = ?, mobile =? WHERE id = ?";
+			$sql = "INSERT INTO customers (name,email,mobile) values(?, ?, ?)";
 			$q = $pdo->prepare($sql);
-			$q->execute(array($name,$email,$mobile,$id));
+			$q->execute(array($name,$email,$mobile));
 			Database::disconnect();
 			header("Location: index.php");
 		}
-	} else {
-		$pdo = Database::connect();
-		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$sql = "SELECT * FROM customers where id = ?";
-		$q = $pdo->prepare($sql);
-		$q->execute(array($id));
-		$data = $q->fetch(PDO::FETCH_ASSOC);
-		$name = $data['name'];
-		$email = $data['email'];
-		$mobile = $data['mobile'];
-		Database::disconnect();
-	}
+	} #end if ( !empty($_POST))
 ?>
 
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	<!-- The head section does the following: 
+		1. Sets the character set
+		2. includes Bootstrap
+		-->
     <meta charset="utf-8">
     <link   href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
@@ -82,10 +78,11 @@
     
     			<div class="span10 offset1">
     				<div class="row">
-		    			<h3>Update a Customer</h3>
+		    			<h3>Create a Customer</h3>
 		    		</div>
     		
-	    			<form class="form-horizontal" action="update.php?id=<?php echo $id?>" method="post">
+	    			<form class="form-horizontal" action="create.php" method="post">
+					
 					  <div class="control-group <?php echo !empty($nameError)?'error':'';?>">
 					    <label class="control-label">Name</label>
 					    <div class="controls">
@@ -95,6 +92,7 @@
 					      	<?php endif; ?>
 					    </div>
 					  </div>
+					  
 					  <div class="control-group <?php echo !empty($emailError)?'error':'';?>">
 					    <label class="control-label">Email Address</label>
 					    <div class="controls">
@@ -104,6 +102,7 @@
 					      	<?php endif;?>
 					    </div>
 					  </div>
+					  
 					  <div class="control-group <?php echo !empty($mobileError)?'error':'';?>">
 					    <label class="control-label">Mobile Number</label>
 					    <div class="controls">
@@ -113,14 +112,18 @@
 					      	<?php endif;?>
 					    </div>
 					  </div>
+					  
 					  <div class="form-actions">
-						  <button type="submit" class="btn btn-success">Update</button>
+						  <button type="submit" class="btn btn-success">Create</button>
 						  <a class="btn" href="index.php">Back</a>
+						  <a href="logout.php" class="btn btn-success">Logout</a
 						</div>
+					
+
+						
 					</form>
 				</div>
 				
     </div> <!-- /container -->
-
   </body>
 </html>
