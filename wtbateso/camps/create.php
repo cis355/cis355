@@ -13,37 +13,43 @@
 	#		If that happens then PHP code inserts the record and redirect to list screen (index.php)
 	
 	# includes connection to database and functions
-	require 'database.php';
+	require '../crud/database.php';
 	
 	# if there is data passed, then insert record, otherwise do nothing 
 	if ( !empty($_POST)) {
 		// keep track validation errors
+		$userNameError = null;
 		$nameError = null;
-		$emailError = null;
-		$mobileError = null;
+		$ratingError = null;
+		$commentsError = null;
 		
 		// keep track post values
+		$userName = $_POST['userName'];
 		$name = $_POST['name'];
-		$email = $_POST['email'];
-		$mobile = $_POST['mobile'];
+		$rating = $_POST['rating'];
+		$comments = $_POST['comments'];
 		
 		// validate input
 		$valid = true;
+		if (empty($userName)) {
+			$userNameError = 'Please enter your User Name';
+			$valid = false;
+		}
 		if (empty($name)) {
 			$nameError = 'Please enter Name';
 			$valid = false;
 		}
 		
-		if (empty($email)) {
-			$emailError = 'Please enter Email Address';
+		if (empty($rating)) {
+			$ratingError = 'Please enter rating';
 			$valid = false;
-		} else if ( !filter_var($email,FILTER_VALIDATE_EMAIL) ) {
-			$emailError = 'Please enter a valid Email Address';
+		} else if ( !filter_var($rating,FILTER_VALIDATE_INT, array("options" => array("min_range"=>0, "max_range"=>5))) ) {
+			$ratingError = 'Please enter a valid rating';
 			$valid = false;
 		}
 		
-		if (empty($mobile)) {
-			$mobileError = 'Please enter Mobile Number';
+		if (empty($comments)) {
+			$commentsError = 'Please enter comments';
 			$valid = false;
 		}
 		
@@ -51,11 +57,11 @@
 		if ($valid) {
 			$pdo = Database::connect();
 			$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-			$sql = "INSERT INTO customers2 (name,email,mobile) values(?, ?, ?)";
+			$sql = "INSERT INTO campRating (userName,campName,rating,comments) values(?, ?, ?, ?)";
 			$q = $pdo->prepare($sql);
-			$q->execute(array($name,$email,$mobile));
+			$q->execute(array($userName,$name,$rating,$comments));
 			Database::disconnect();
-			header("Location: index.php");
+			header("Location: camps.php");
 		}
 	} # end if ( !empty($_POST))
 ?>
@@ -74,12 +80,21 @@
     
     			<div class="span10 offset1">
     				<div class="row">
-		    			<h3>Create a Customer</h3>
+		    			<h3>Create a Rating</h3>
 		    		</div>
     		
 	    			<form class="form-horizontal" action="create.php" method="post">
+					<div class="control-group <?php echo !empty($userNameError)?'error':'';?>">
+					    <label class="control-label">User Name</label>
+					    <div class="controls">
+					      	<input name="userName" type="text"  placeholder="User Name" value="<?php echo !empty($userName)?$userName:'';?>">
+					      	<?php if (!empty($userNameError)): ?>
+					      		<span class="help-inline"><?php echo $userNameError;?></span>
+					      	<?php endif; ?>
+					    </div>
+					  </div>
 					  <div class="control-group <?php echo !empty($nameError)?'error':'';?>">
-					    <label class="control-label">Name</label>
+					    <label class="control-label">Camp Name</label>
 					    <div class="controls">
 					      	<input name="name" type="text"  placeholder="Name" value="<?php echo !empty($name)?$name:'';?>">
 					      	<?php if (!empty($nameError)): ?>
@@ -87,27 +102,27 @@
 					      	<?php endif; ?>
 					    </div>
 					  </div>
-					  <div class="control-group <?php echo !empty($emailError)?'error':'';?>">
-					    <label class="control-label">Email Address</label>
+					  <div class="control-group <?php echo !empty($ratingError)?'error':'';?>">
+					    <label class="control-label">Rating (0 - 5)</label>
 					    <div class="controls">
-					      	<input name="email" type="text" placeholder="Email Address" value="<?php echo !empty($email)?$email:'';?>">
-					      	<?php if (!empty($emailError)): ?>
-					      		<span class="help-inline"><?php echo $emailError;?></span>
+					      	<input name="rating" type="text" placeholder="rating" value="<?php echo !empty($rating)?$rating:'';?>">
+					      	<?php if (!empty($ratingError)): ?>
+					      		<span class="help-inline"><?php echo $ratingError;?></span>
 					      	<?php endif;?>
 					    </div>
 					  </div>
-					  <div class="control-group <?php echo !empty($mobileError)?'error':'';?>">
-					    <label class="control-label">Mobile Number</label>
+					  <div class="control-group <?php echo !empty($commentsError)?'error':'';?>">
+					    <label class="control-label">Comments</label>
 					    <div class="controls">
-					      	<input name="mobile" type="text"  placeholder="Mobile Number" value="<?php echo !empty($mobile)?$mobile:'';?>">
-					      	<?php if (!empty($mobileError)): ?>
-					      		<span class="help-inline"><?php echo $mobileError;?></span>
+					      	<input name="comments" type="text"  placeholder="Comments" value="<?php echo !empty($comments)?$comments:'';?>">
+					      	<?php if (!empty($commentsError)): ?>
+					      		<span class="help-inline"><?php echo $commentsError;?></span>
 					      	<?php endif;?>
 					    </div>
 					  </div>
 					  <div class="form-actions">
 						  <button type="submit" class="btn btn-success">Create</button>
-						  <a class="btn" href="index.php">Back</a>
+						  <a class="btn" href="camps.php">Back</a>
 						</div>
 					</form>
 				</div>
