@@ -1,14 +1,14 @@
 <?php
 
 /* ------------------------------------------------------------------------
-filename  : prog1_classes.php
+filename  : prog2_special.php
 author    : Alexander King
-date      : 2016-07-24
+date      : 2016-07-27
 email     : aiking@svsu.edu
 course    : CIS-355
-link      : csis.svsu.edu/~gpcorser/cis355/aiking/prog1_classes.php
+link      : csis.svsu.edu/~gpcorser/cis355/aiking/prog2_special.php
 backup    : github.com/cis355/cis355
-purpose   : This file serves as Alexander King's program #1, 
+purpose   : This file serves as Alexander King's program #2, 
 			CIS-355: Server Side Web Development, 
 			at Saginaw Valley State University (SVSU)
 copyright : GNU General Public License (http://www.gnu.org/licenses/)
@@ -20,7 +20,7 @@ copyright : GNU General Public License (http://www.gnu.org/licenses/)
 			but WITHOUT ANY WARRANTY; without even the implied warranty of
 			MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.   
 external code used in this file: 
-			George Corser's tdg.php
+			George Corser's tdg.php, Alexander King's prog1_classes.php
 program structure:
 	Session start, class creation {
 		declaration of variables, create function, display function, 
