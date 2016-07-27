@@ -3,23 +3,23 @@
     session_start(); 
      
     # include connection data and functions 
-    require '../crud/database.php'; 
+    require 'database.php'; 
      
     # if there was data passed, then verify password,  
     # otherwise do nothing (that is, just display html for login) 
     if ( !empty($_POST)) { 
         // keep track validation errors 
-        $nameError = null; 
+        $userNameError = null; 
         $passwordError = null; 
          
         // keep track post values 
-        $name = $_POST['name']; 
+        $userName = $_POST['userName']; 
         $password = $_POST['password']; 
          
         // validate input 
         $valid = true; 
-        if (empty($name)) { 
-            $nameError = 'Please enter user name'; 
+        if (empty($userName)) { 
+            $userNameError = 'Please enter user name'; 
             $valid = false; 
         } 
          
@@ -27,25 +27,26 @@
             $passwordError = 'Please enter password'; 
             $valid = false; 
         }  
-         
+
         // verify that password is correct for user name 
         if ($valid) { 
             $pdo = Database::connect(); 
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); 
-            $sql = "SELECT * FROM campUser WHERE name = ? LIMIT 1"; 
-            $q = $pdo->prepare($sql); 
-            $q->execute(array($name)); 
+            $sql = "SELECT * FROM campUser WHERE userName=? LIMIT 1";
+            $q = $pdo->prepare($sql);
+            $q->execute(array($userName)); 
             $results = $q->fetch(PDO::FETCH_ASSOC); 
             if($results['password']==$password) { 
-                $_SESSION['name'] = $name; 
+                $_SESSION['userName'] = $userName; 
                 Database::disconnect(); 
-                header("Location: index.php"); // redirect 
+				var_dump("got here");
+                header("Location: camps.php"); // redirect 
             } 
             else { 
                 $passwordError = 'Password is not valid'; 
                 Database::disconnect(); 
             } 
-        } 
+        }
     } # end if ( !empty($_POST)) 
 ?> 
 <!DOCTYPE html> 
@@ -66,12 +67,12 @@
              
                     <form class="form-horizontal" action="login.php" method="post"> 
                      
-                      <div class="control-group <?php echo !empty($nameError)?'error':'';?>"> 
+                      <div class="control-group <?php echo !empty($userNameError)?'error':'';?>"> 
                         <label class="control-label">User Name</label> 
                         <div class="controls"> 
-                              <input name="name" type="text"  placeholder="Name" value="<?php echo !empty($name)?$name:'';?>"> 
-                              <?php if (!empty($nameError)): ?> 
-                                  <span class="help-inline"><?php echo $nameError;?></span> 
+                              <input name="userName" type="text"  placeholder="userName" value="<?php echo !empty($userName)?$userName:'';?>"> 
+                              <?php if (!empty($userNameError)): ?> 
+                                  <span class="help-inline"><?php echo $userNameError;?></span> 
                               <?php endif; ?> 
                         </div> 
                       </div> 
@@ -88,7 +89,7 @@
                        
                       <div class="form-actions"> 
                           <button type="submit" class="btn btn-success">Create</button> 
-                          <a class="btn" href="index.php">Back</a> 
+                          <a class="btn" href="camps.php">Back</a> 
                         </div> 
                          
                     </form> 

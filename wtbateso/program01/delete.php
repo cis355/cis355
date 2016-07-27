@@ -17,7 +17,7 @@
 		$q = $pdo->prepare($sql);
 		$q->execute(array($id));
 		Database::disconnect();
-		header("Location: ../program01.php");
+		header("Location: program01.php");
 		
 	} 
 ?>
@@ -43,7 +43,7 @@
 					  <p class="alert alert-error">Are you sure to delete ?</p>
 					  <div class="form-actions">
 						  <button type="submit" class="btn btn-danger">Yes</button>
-						  <a class="btn" href="../program01.php">No</a>
+						  <a class="btn" href="program01.php">No</a>
 						</div>
 					</form>
 				</div>

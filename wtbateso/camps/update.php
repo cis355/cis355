@@ -1,49 +1,45 @@
 <?php 
-
+	
 	session_start();
-
+	if (empty($_SESSION['name'])) header("Location: login.php");
 	
-	# Consider three scenarios.
-	# 1. User clicked create button on list screen (index.php)
-	#		If that happens then create.php displays entry screen
-	# 2. User clicked create button (submit button) on entry but one or more fields were empty
-	#		If that happens then error message(s) appears next to empty field(s)
-	# 3. User clicked create button (submit button) and all data valid
-	#		If that happens then PHP code inserts the record and redirect to list screen (index.php)
+	require 'database.php';
+	$id = null;
+	if ( !empty($_GET['id'])) {
+		$id = $_REQUEST['id'];
+	}
 	
-	# includes connection to database and functions
-	require '../crud/database.php';
+	if ( null==$id ) {
+		header("Location: camps.php");
+	}
 	
-	# if there is data passed, then insert record, otherwise do nothing 
 	if ( !empty($_POST)) {
 		// keep track validation errors
 		$userNameError = null;
-		$nameError = null;
+		$campNameError = null;
 		$ratingError = null;
 		$commentsError = null;
 		
 		// keep track post values
 		$userName = $_POST['userName'];
-		$name = $_POST['name'];
+		$campName = $_POST['campName'];
 		$rating = $_POST['rating'];
 		$comments = $_POST['comments'];
 		
 		// validate input
 		$valid = true;
 		if (empty($userName)) {
-			$userNameError = 'Please enter your User Name';
+			$userNameError = 'Please enter User Name';
 			$valid = false;
 		}
-		if (empty($name)) {
-			$nameError = 'Please enter Name';
+		
+		if (empty($campName)) {
+			$campNameError = 'Please enter Camp Name';
 			$valid = false;
 		}
 		
 		if (empty($rating)) {
-			$ratingError = 'Please enter rating';
-			$valid = false;
-		} else if ( !filter_var($rating,FILTER_VALIDATE_INT, array("options" => array("min_range"=>0, "max_range"=>5))) ) {
-			$ratingError = 'Please enter a valid rating';
+			$ratingError = 'Please enter Rating';
 			$valid = false;
 		}
 		
@@ -52,17 +48,29 @@
 			$valid = false;
 		}
 		
-		// insert data
+		// update data
 		if ($valid) {
 			$pdo = Database::connect();
 			$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-			$sql = "INSERT INTO campRating (userName,campName,rating,comments) values(?, ?, ?, ?)";
+			$sql = "UPDATE campRating  set userName = ?, campName = ?, rating =?, comments=? WHERE id = ?";
 			$q = $pdo->prepare($sql);
-			$q->execute(array($userName,$name,$rating,$comments));
+			$q->execute(array($userName,$campName,$rating,$comments,$id));
 			Database::disconnect();
 			header("Location: camps.php");
 		}
-	} # end if ( !empty($_POST))
+	} else {
+		$pdo = Database::connect();
+		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$sql = "SELECT * FROM campRating where id = ?";
+		$q = $pdo->prepare($sql);
+		$q->execute(array($id));
+		$data = $q->fetch(PDO::FETCH_ASSOC);
+		$userName = $data['userName'];
+		$campName = $data['campName'];
+		$rating = $data['rating'];
+		$comments = $data['comments'];
+		Database::disconnect();
+	}
 ?>
 
 
@@ -79,53 +87,54 @@
     
     			<div class="span10 offset1">
     				<div class="row">
-		    			<h3>Create a Rating</h3>
+		    			<h3>Update a Customer</h3>
 		    		</div>
     		
-	    			<form class="form-horizontal" action="create.php" method="post">
-					<div class="control-group <?php echo !empty($userNameError)?'error':'';?>">
+	    			<form class="form-horizontal" action="update.php?id=<?php echo $id?>" method="post">
+					  <div class="control-group <?php echo !empty($userNameError)?'error':'';?>">
 					    <label class="control-label">User Name</label>
 					    <div class="controls">
-					      	<input name="userName" type="text"  placeholder="User Name" value="<?php echo !empty($userName)?$userName:'';?>">
+					      	<input name="userName" type="text"  placeholder="user Name" value="<?php echo !empty($userName)?$userName:'';?>">
 					      	<?php if (!empty($userNameError)): ?>
 					      		<span class="help-inline"><?php echo $userNameError;?></span>
 					      	<?php endif; ?>
 					    </div>
 					  </div>
-					  <div class="control-group <?php echo !empty($nameError)?'error':'';?>">
+					  <div class="control-group <?php echo !empty($campNameError)?'error':'';?>">
 					    <label class="control-label">Camp Name</label>
 					    <div class="controls">
-					      	<input name="name" type="text"  placeholder="Name" value="<?php echo !empty($name)?$name:'';?>">
-					      	<?php if (!empty($nameError)): ?>
-					      		<span class="help-inline"><?php echo $nameError;?></span>
-					      	<?php endif; ?>
+					      	<input name="campName" type="text" placeholder="Camp Name" value="<?php echo !empty($campName)?$campName:'';?>">
+					      	<?php if (!empty($campNameError)): ?>
+					      		<span class="help-inline"><?php echo $campNameError;?></span>
+					      	<?php endif;?>
 					    </div>
 					  </div>
 					  <div class="control-group <?php echo !empty($ratingError)?'error':'';?>">
-					    <label class="control-label">Rating (0 - 5)</label>
+					    <label class="control-label">rating</label>
 					    <div class="controls">
-					      	<input name="rating" type="text" placeholder="rating" value="<?php echo !empty($rating)?$rating:'';?>">
+					      	<input name="rating" type="text"  placeholder="rating" value="<?php echo !empty($rating)?$rating:'';?>">
 					      	<?php if (!empty($ratingError)): ?>
 					      		<span class="help-inline"><?php echo $ratingError;?></span>
 					      	<?php endif;?>
 					    </div>
 					  </div>
 					  <div class="control-group <?php echo !empty($commentsError)?'error':'';?>">
-					    <label class="control-label">Comments</label>
+					    <label class="control-label">comments</label>
 					    <div class="controls">
-					      	<input name="comments" type="text"  placeholder="Comments" value="<?php echo !empty($comments)?$comments:'';?>">
+					      	<input name="comments" type="text"  placeholder="comments" value="<?php echo !empty($comments)?$comments:'';?>">
 					      	<?php if (!empty($commentsError)): ?>
 					      		<span class="help-inline"><?php echo $commentsError;?></span>
 					      	<?php endif;?>
 					    </div>
 					  </div>
 					  <div class="form-actions">
-						  <button type="submit" class="btn btn-success">Create</button>
+						  <button type="submit" class="btn btn-success">Update</button>
 						  <a class="btn" href="camps.php">Back</a>
 						</div>
 					</form>
 				</div>
 				
     </div> <!-- /container -->
+
   </body>
 </html>

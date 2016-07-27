@@ -52,7 +52,7 @@
 						     	<?php echo $data['mobile'];?>
 					  </div>
 					    <div class="form-actions">
-						  <a class="btn" href="../program01.php">Back</a>
+						  <a class="btn" href="program01.php">Back</a>
 					   </div>
 
 					</div>

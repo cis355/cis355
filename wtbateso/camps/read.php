@@ -14,7 +14,7 @@
 	} else {
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$sql = "SELECT * FROM customers2 where id = ?";
+		$sql = "SELECT * FROM campRating where id = ?";
 		$q = $pdo->prepare($sql);
 		$q->execute(array($id));
 		$data = $q->fetch(PDO::FETCH_ASSOC);
@@ -40,19 +40,23 @@
 		    		
 	    			<div class="form-horizontal" >
 					  <div class="control-group">
-					    <label class="control-label">Name</label>
-						     	<?php echo $data['name'];?>
+					    <label class="control-label">User Name</label>
+						     	<?php echo $data['userName'];?>
 					  </div>
 					  <div class="control-group">
-					    <label class="control-label">Email Address</label>
-						     	<?php echo $data['email'];?>
+					    <label class="control-label">Camp Name</label>
+						     	<?php echo $data['campName'];?>
 					  </div>
 					  <div class="control-group">
-					    <label class="control-label">Mobile Number</label>
-						     	<?php echo $data['mobile'];?>
+					    <label class="control-label">Rating</label>
+						     	<?php echo $data['rating'];?>
+					  </div>
+					  <div class="control-group">
+					    <label class="control-label">Comments</label>
+						     	<?php echo $data['commets'];?>
 					  </div>
 					    <div class="form-actions">
-						  <a class="btn" href="../program01.php">Back</a>
+						  <a class="btn" href="camps.php">Back</a>
 					   </div>
 
 					</div>

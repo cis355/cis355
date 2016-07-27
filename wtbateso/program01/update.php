@@ -10,7 +10,7 @@
 	}
 	
 	if ( null==$id ) {
-		header("Location: ../program01.php");
+		header("Location: program01.php");
 	}
 	
 	if ( !empty($_POST)) {
@@ -52,7 +52,7 @@
 			$q = $pdo->prepare($sql);
 			$q->execute(array($name,$email,$mobile,$id));
 			Database::disconnect();
-			header("Location: ../program01.php");
+			header("Location: program01.php");
 		}
 	} else {
 		$pdo = Database::connect();
@@ -115,7 +115,7 @@
 					  </div>
 					  <div class="form-actions">
 						  <button type="submit" class="btn btn-success">Update</button>
-						  <a class="btn" href="../program01.php">Back</a>
+						  <a class="btn" href="program01.php">Back</a>
 						</div>
 					</form>
 				</div>

@@ -3,7 +3,7 @@
     session_start(); 
      
     # include connection data and functions 
-    require 'crud/database.php'; 
+    require 'database.php'; 
      
     # if there was data passed, then verify password,  
     # otherwise do nothing (that is, just display html for login) 
@@ -88,7 +88,7 @@
                        
                       <div class="form-actions"> 
                           <button type="submit" class="btn btn-success">Create</button> 
-                          <a class="btn" href="index.php">Back</a> 
+                          <a class="btn" href="program01.php">Back</a> 
                         </div> 
                          
                     </form> 

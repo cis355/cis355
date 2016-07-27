@@ -32,6 +32,11 @@ program structure :
                
 ------------------------------------------------------------------------- -->
 
+<?php
+	session_start();
+	if (empty($_SESSION['userName'])) header("Location: login.php");
+?>
+
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -219,6 +224,9 @@ program structure :
 							  <th>Camp Name</th>
 							  <th>Rating out of 5</th>
 							  <th>Review</th>
+							  <th>Read File</th>
+							  <th>Update File</th>
+							  <th>Delete File</th>
 							</tr>
 						  </thead>
 						  <tbody>
@@ -233,6 +241,11 @@ program structure :
 											echo '<td>'. $row['campName'] . '</td>';
 											echo '<td>'. $row['rating'] . '</td>';
 											echo '<td>'. $row['comments'] . '</td>';
+											echo '<td> <a class="btn" href="read.php?id='. $row['id'].'">Read</a> </td>';
+											echo '       ';
+											echo '<td> <a class="btn" href="update.php?id='. $row['id'].'">Update</a> </td>';		
+											echo '       ';
+											echo '<td> <a class="btn" href="delete.php?id='. $row['id'].'">Delete</a> </td>';
 											echo '</td>';
 											echo '</tr>';
 								   }
