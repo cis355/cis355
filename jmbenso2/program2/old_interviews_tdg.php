@@ -1,5 +1,24 @@
 <?php
-	require("database.php");
+/* *******************************************************************
+* filename : index.php
+* author : Jon Benson
+* username : jmbenso2
+* course : cs355
+* section : 31-MW
+* semester : Summer 2016
+*
+* PURPOSE : 	This program presents a simple CRUD application
+*  for accessing and manipulating the records in an Interviews
+*  database table. 
+* INPUT : 		N/A
+* PRE : 			N/A 
+* OUTPUT :		Dynamically generated HTML.
+* POST : 			Interactive CRUD application presented.
+*
+* *******************************************************************
+*/
+
+require("database.php");
 
 /* class InterviewGateway()
  ***********************************************************
@@ -19,7 +38,6 @@ class InterviewGateway {
 	 *NOTE:
 	 **********************************************************/
 	public function create($jobID, $resumeID, $time) {
-
 		$mysqli = Database::connect();
 		// SQL to execute:
 		$sql = "INSERT INTO interviews (jobID,resumeID,time) values(?, ?, ?)";
@@ -205,7 +223,7 @@ class InterviewGateway {
 		else {
 			self::displayTable();
 		}
-	}
+	} // End of runIndex
 	
 	/* runCreate ()
 	 ***********************************************************
@@ -285,10 +303,11 @@ class InterviewGateway {
 			
 			// If invalid, show screen again
 			else {
-				$data = self::read($id);
-				self::displayUpdate($id,$data);
+				self::read($id,$blarg);
+				self::displayUpdate($id,$blarg);
 				if ($jobIDError != null) {
 					echo $jobIDError . '<br />';
+					echo $data['id'];
 				}
 				if ($resumeIDError != null) {
 					echo $resumeIDError . '<br />';
@@ -329,11 +348,11 @@ class InterviewGateway {
 	/* displayTable ()
 	 ***********************************************************
 	 *PURPOSE: Prints an HTML table containing all records in database table.
-	           Also prints a create button.
+	           Also prints a create button. Also displays this source code.
 	 *INPUT: N/A
 	 *PRE: N/A
 	 *OUTPUT: N/A
-	 *POST: HTML table & create button printed.
+	 *POST: HTML table & create button & source code printed.
 	 *NOTE:
 	 **********************************************************/	
 	public function displayTable () {
@@ -377,6 +396,9 @@ class InterviewGateway {
 		echo '<input type="hidden" name="cmd" value="create" />';
 		echo '<input type="submit" value="Create" />';
 		echo '</form>';
+		
+		// Show source here
+		show_source(__FILE__);
 			
 	} // End of displayTable
 	
@@ -454,9 +476,8 @@ class InterviewGateway {
 		
 } // End of Class InterviewGateway
 	
-	
-	
-
-
+// Start the application
+$gateway = new InterviewGateway();
+$gateway->runIndex();
 
 ?>
