@@ -1,0 +1,4 @@
+RANDOM NOTES:
+
+The sql thing we did in class:
+SELECT customers1.name , ratings.rating , products.productId FROM `customers1`, `ratings` , `products` WHERE customers1.id = ratings.customerId AND products.id = ratings.productId
