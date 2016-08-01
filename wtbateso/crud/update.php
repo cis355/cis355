@@ -1,7 +1,7 @@
 <?php 
 	
 	session_start();
-	if (empty($_SESSION['name'])) header("Location: login.php");
+	//if (empty($_SESSION['name'])) header("Location: login.php");
 	
 	require 'database.php';
 	$id = null;
@@ -10,7 +10,7 @@
 	}
 	
 	if ( null==$id ) {
-		header("Location: index.php");
+		header("Location: ../program01.php");
 	}
 	
 	if ( !empty($_POST)) {
@@ -48,16 +48,16 @@
 		if ($valid) {
 			$pdo = Database::connect();
 			$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-			$sql = "UPDATE customers  set name = ?, email = ?, mobile =? WHERE id = ?";
+			$sql = "UPDATE customers2  set name = ?, email = ?, mobile =? WHERE id = ?";
 			$q = $pdo->prepare($sql);
 			$q->execute(array($name,$email,$mobile,$id));
 			Database::disconnect();
-			header("Location: index.php");
+			header("Location: ../program01.php");
 		}
 	} else {
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$sql = "SELECT * FROM customers where id = ?";
+		$sql = "SELECT * FROM customers2 where id = ?";
 		$q = $pdo->prepare($sql);
 		$q->execute(array($id));
 		$data = $q->fetch(PDO::FETCH_ASSOC);
@@ -115,7 +115,7 @@
 					  </div>
 					  <div class="form-actions">
 						  <button type="submit" class="btn btn-success">Update</button>
-						  <a class="btn" href="index.php">Back</a>
+						  <a class="btn" href="../program01.php">Back</a>
 						</div>
 					</form>
 				</div>

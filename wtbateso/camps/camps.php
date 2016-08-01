@@ -4,7 +4,7 @@ filename  : camps.html
 author    : William Bateson
 date      : 2016-07-10
 email     : wtbateso@svsu.edu
-course    : CIS-255
+course    : CIS-355
 link      : csis.svsu.edu/~gpcorser/cis355/wtbateso/camps/camps.html
 backup    : github.com/cis355/cis355
 purpose   : This file serves as a menu template for the course, 
@@ -19,8 +19,11 @@ copyright : GNU General Public License (http://www.gnu.org/licenses/)
 			but WITHOUT ANY WARRANTY; without even the implied warranty of
 			MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.   
 external code used in this file: 
+			http://www.ussportscamps.com/basketball/nike/michigan/#camp-dates
+			http://camps.mgoblue.com/Summer_Camps/Boys_Basketball/Player_Development_Camp.htm
+			http://pistonsacademy.com/wp-content/uploads/2015/05/HS-Hoopfest-Details.pdf
+			http://www.sportcamps.msu.edu/
 			
-			http://www.bcam.org/camp-clinics/all
 program structure : 
 	<head> 	
 	
@@ -28,6 +31,11 @@ program structure :
    
                
 ------------------------------------------------------------------------- -->
+
+<?php
+	session_start();
+	if (empty($_SESSION['userName'])) header("Location: login.php");
+?>
 
 <html lang="en">
 <head>
@@ -130,6 +138,12 @@ program structure :
                     <h2>Detroit</h2>
                 </div>
             </div>
+			<div class="item">
+                <div class="fill" style="background-image:url('https://i.ytimg.com/vi/cBlM3Sx5uFg/maxresdefault.jpg');"></div>
+                <div class="carousel-caption">
+                    <h2>Lansing</h2>
+                </div>
+            </div>
             <div class="item">
                 <div class="fill" style="background-image:url('http://jameshowephotography.com/wp-content/uploads/2010/11/DSC7428And8more-full.jpg');"></div>
                 <div class="carousel-caption">
@@ -158,43 +172,151 @@ program structure :
         <!-- Marketing Icons Section -->
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">
-                    Welcome to Michigan
-                </h1>
+                <h1 class="page-header">Welcome to Michigan Basketball</h1>
             </div>
-            <div class="col-md-4">
+			
+            <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h4><i class="fa fa-fw fa-check"></i>About Me</h4>
-                    </div> <!-- End of panel heading div -->
-                    <div class="panel-body">
-                        <p></p>
-                        <a href="http://csis.svsu.edu/~wtbateso/cis255/wtbateso/Ceevee10/Ceevee10/index.html" class="btn btn-default">Learn More About Me</a>
+						<table class="table table-striped table-bordered">
+						  <thead>
+							<tr>
+							  <th>Camp Name</th>
+							  <th>Start Date</th>
+							  <th>End Date</th>
+							</tr>
+						  </thead>
+						  <tbody>
+							  <?php 
+								   # database.php contains connection code, including connect and disconnect funtions
+								   include 'database.php';
+								   # connect to database and assign object to variable
+								   $pdo = Database::connect();
+								   # assign select statement to variable
+								   $sql = 'SELECT * FROM camps ORDER BY id DESC';
+								   # iterates through every record, return by the select statement
+								   foreach ($pdo->query($sql) as $row) {
+											echo '<tr>';
+											echo '<td>'. $row['campName'] . '</td>';
+											echo '<td>'. $row['startDate'] . '</td>';
+											echo '<td>'. $row['endDate'] . '</td>';
+											echo '</td>';
+											echo '</tr>';
+								   }
+								   Database::disconnect();
+							  ?>
+						  </tbody>
+						</table>
                     </div> <!-- End of panel body div -->
                 </div>  <!-- End of panel panel div -->
             </div>  <!-- End of col div -->
 			
+			</div> <!-- End of Row -->
 			
-        </div> <!-- End of Row -->
+		<div class="row">
+			<div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+						<table class="table table-striped table-bordered">
+						  <thead>
+							<tr>
+							  <th>User Name</th>
+							  <th>Camp Name</th>
+							  <th>Rating out of 5</th>
+							  <th>Review</th>
+							  <th>Read File</th>
+							  <th>Update File</th>
+							  <th>Delete File</th>
+							</tr>
+						  </thead>
+						  <tbody>
+							  <?php 
+								  
+								   # assign select statement to variable
+								   $sql = 'SELECT * FROM campRating ORDER BY id DESC';
+								   # iterates through every record, return by the select statement
+								   foreach ($pdo->query($sql) as $row) {
+											echo '<tr>';
+											echo '<td>'. $row['userName'] . '</td>';
+											echo '<td>'. $row['campName'] . '</td>';
+											echo '<td>'. $row['rating'] . '</td>';
+											echo '<td>'. $row['comments'] . '</td>';
+											echo '<td> <a class="btn" href="read.php?id='. $row['id'].'">Read</a> </td>';
+											echo '       ';
+											echo '<td> <a class="btn" href="update.php?id='. $row['id'].'">Update</a> </td>';		
+											echo '       ';
+											echo '<td> <a class="btn" href="delete.php?id='. $row['id'].'">Delete</a> </td>';
+											echo '</td>';
+											echo '</tr>';
+								   }
+								   Database::disconnect();
+							  ?>
+						  </tbody>
+						</table>
+                    </div> <!-- End of panel body div -->
+                </div>  <!-- End of panel panel div -->
+            </div>  <!-- End of col div -->
+		</div>	
+		
+		<div class="row">
+				<p>
+					<a href="create.php" class="btn btn-success">Create a rating</a>
+				</p>
+		</div>
+		
+       <br />
+	   
+	   <div class="row">
+			<div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+						<table class="table table-striped table-bordered">
+						  <thead>
+							<tr>
+							  <th>User Name</th>
+							  <th>User Number</th>
+							</tr>
+						  </thead>
+						  <tbody>
+							  <?php 
+								  
+								   # assign select statement to variable
+								   $sql = 'SELECT * FROM campUser ORDER BY id DESC';
+								   # iterates through every record, return by the select statement
+								   foreach ($pdo->query($sql) as $row) {
+											echo '<tr>';
+											echo '<td>'. $row['userName'] . '</td>';
+											echo '<td>'. $row['userNumber'] . '</td>';
+											echo '</td>';
+											echo '</tr>';
+								   }
+								   Database::disconnect();
+							  ?>
+						  </tbody>
+						</table>
+                    </div> <!-- End of panel body div -->
+                </div>  <!-- End of panel panel div -->
+            </div>  <!-- End of col div -->
+		</div>	
 		
 		
         <div class="row">
             <div class="col-lg-12">
-                <h2 class="page-header">Pictures of Pure Michigan</h2>
+                <h2 class="page-header">Michigan Fame</h2>
             </div> <!-- End of Div -->
             <div class="col-md-4 col-sm-6">
                 <a href="#">
-                    <img class="img-responsive img-portfolio img-hover" src="http://mediad.publicbroadcasting.net/p/wnmu/files/201211/pure%20michigan%20winter.jpg" alt="">
+                    <img class="img-responsive img-portfolio img-hover" src="http://cache3.asset-cache.net/gc/515407590-earvin-johnson-a-freshman-for-michigan-state-gettyimages.jpg?v=1&c=IWSAsset&k=2&d=X7WJLa88Cweo9HktRLaNXvlNffp2g8fFIlBimJAvBMEcn2%2FvzeOKsForCVPhZp4dCgu7KiZ4r1FcDZSOjgoy1g%3D%3D" alt="">
                 </a>
             </div>
             <div class="col-md-4 col-sm-6">
                 <a href="#">
-                    <img class="img-responsive img-portfolio img-hover" src="http://i.imgur.com/wr5jCYg.jpg" alt="">
+                    <img class="img-responsive img-portfolio img-hover" src="http://thumb.usatodaysportsimages.com/image/thumb/650-510nw/8409999.jpg" alt="">
                 </a>
             </div>
             <div class="col-md-4 col-sm-6">
                 <a href="#">
-                    <img class="img-responsive img-portfolio img-hover" src="https://wcmu.org/news/wp-content/uploads/2014/01/pure-michigan-winter.jpg" alt="">
+                    <img class="img-responsive img-portfolio img-hover" src="http://blogcdn.champssports.com/assets/2015/03/juwan-howard-jalen-rose-chris-webber-fab-5-michigan-600x500.jpg" alt="">
                 </a>
             </div>
         </div>
@@ -258,6 +380,7 @@ program structure :
                 </div>
             </div>
         </footer>
+		
     </div><!-- End of Container -->
     
 	<br /><br /><br />

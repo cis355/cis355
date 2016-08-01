@@ -1,4 +1,10 @@
 <?php 
+	// Redirect if not logged in
+	session_start();
+	if (empty($_SESSION['name'])) {
+		header("Location: login.php"); // Redirect
+	}
+
 	require 'database.php';
 	if ( !empty($_POST)) { // If anything's been posted
 		// keep track validation errors
