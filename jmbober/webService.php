@@ -42,5 +42,5 @@ $cust = new Customer;
 $cust->outputJSON();
 echo '<br /><br /><br />'; 
 
-
+show_source(__FILE__); 
 ?>
