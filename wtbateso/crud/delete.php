@@ -13,11 +13,11 @@
 		// delete data
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$sql = "DELETE FROM customers  WHERE id = ?";
+		$sql = "DELETE FROM customers2 WHERE id = ?";
 		$q = $pdo->prepare($sql);
 		$q->execute(array($id));
 		Database::disconnect();
-		header("Location: index.php");
+		header("Location: ../program01.php");
 		
 	} 
 ?>
@@ -43,7 +43,7 @@
 					  <p class="alert alert-error">Are you sure to delete ?</p>
 					  <div class="form-actions">
 						  <button type="submit" class="btn btn-danger">Yes</button>
-						  <a class="btn" href="index.php">No</a>
+						  <a class="btn" href="../program01.php">No</a>
 						</div>
 					</form>
 				</div>
