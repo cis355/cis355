@@ -1,3 +1,8 @@
+<?php
+session_start();
+if (empty($_SESSION['name'])) header("Location: login.php"); //redirect
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,6 +29,7 @@
 			<div class="row">
 				<p>
 					<a href="create.php" class="btn btn-success">Create</a>
+					<a href="logout.php" class="btn btn-danger">Logout</a>
 				</p>
 				
 				<table class="table table-striped table-bordered">
@@ -32,6 +38,7 @@
 		                  <th>Name</th>
 		                  <th>Email Address</th>
 		                  <th>Mobile Number</th>
+						  <th>Password</th>
 		                  <th>Action</th>
 		                </tr>
 		              </thead>
@@ -49,6 +56,7 @@
 							   	echo '<td>'. $row['name'] . '</td>';
 							   	echo '<td>'. $row['email'] . '</td>';
 							   	echo '<td>'. $row['mobile'] . '</td>';
+								echo '<td>'. $row['password'] . '</td>';
 							   	echo '<td width=250>';
 							   	echo '<a class="btn" href="read.php?id='.
 								   $row['id'].'">Read</a>';
