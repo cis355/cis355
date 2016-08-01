@@ -184,6 +184,9 @@ program structure :
 							  <th>Camp Name</th>
 							  <th>Start Date</th>
 							  <th>End Date</th>
+							  <th>Read File</th>
+							  <th>Update File</th>
+							  <th>Delete File</th>
 							</tr>
 						  </thead>
 						  <tbody>
@@ -200,6 +203,11 @@ program structure :
 											echo '<td>'. $row['campName'] . '</td>';
 											echo '<td>'. $row['startDate'] . '</td>';
 											echo '<td>'. $row['endDate'] . '</td>';
+											echo '<td> <a class="btn" href="read2.php?id='. $row['id'].'">Read</a> </td>';
+											echo '       ';
+											echo '<td> <a class="btn" href="update2.php?id='. $row['id'].'">Update</a> </td>';		
+											echo '       ';
+											echo '<td> <a class="btn" href="delete2.php?id='. $row['id'].'">Delete</a> </td>';
 											echo '</td>';
 											echo '</tr>';
 								   }
@@ -212,6 +220,12 @@ program structure :
             </div>  <!-- End of col div -->
 			
 			</div> <!-- End of Row -->
+			
+		<div class="row">
+			<p>
+				<a href="create2.php" class="btn btn-success">Create a camp</a>
+			</p>
+		</div>
 			
 		<div class="row">
 			<div class="col-md-12">

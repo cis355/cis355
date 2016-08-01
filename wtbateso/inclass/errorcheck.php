@@ -1,4 +1,5 @@
 <?php 
+
 // ----- set error reporting for testing phase of development ----- 
 
 // error_reporting(E_ALL); 
@@ -96,29 +97,35 @@ $pattern = '/[a-m]/';
 phpreg($pattern, $check); 
 $check = 'rqn'; 
 phpreg($pattern, $check); 
-$pattern = '/^[0-9]$/
+$pattern = '/^[0-9]$/';// same as below 
+$pattern = '/\d{2}/';// same as above 
+$check = '3'; 
+phpreg($pattern, $check); 
+$check = '(989)998-8989'; 
+$pattern =  
+phpreg($pattern, $check); 
 
 // ----- set cookie ----- 
-/* 
-$name = "Username"; 
+
+$varname = "Username"; // cookie variable name 
 $value = "Ricardo"; 
 $expiryTime = time()+60*60*24; 
 
-echo "hello"; 
+echo "begin cookification"; 
 
 if( !isset($_COOKIE["Username"]) ) { 
     //no valid cookie found 
-    setcookie($name, $value, $expiryTime); 
+    setcookie($varname, $value, $expiryTime); 
     echo "cookie was set"; 
 } 
 else { 
     echo "The value retrieved from the cookie is:"; 
-    echo $_COOKIE["Username"]; 
+    echo "Welcome back, " . $_COOKIE["Username"]; 
 } 
 
-*/ 
+
+
 
 
 echo "<br /><br /><br /><br />"; 
-
 ?>
