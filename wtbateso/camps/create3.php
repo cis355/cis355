@@ -2,7 +2,6 @@
 
 	session_start();
 
-	
 	# Consider three scenarios.
 	# 1. User clicked create button on list screen (index.php)
 	#		If that happens then create.php displays entry screen
@@ -18,37 +17,21 @@
 	if ( !empty($_POST)) {
 		// keep track validation errors
 		$userNameError = null;
-		$nameError = null;
-		$ratingError = null;
-		$commentsError = null;
+		$passwordError = null;
 		
 		// keep track post values
-		$userName = $_POST['userName'];
-		$name = $_POST['name'];
-		$rating = $_POST['rating'];
-		$comments = $_POST['comments'];
+		$campName = $_POST['campName'];
+		$startDate = $_POST['startDate'];
+
 		
 		// validate input
 		$valid = true;
-		if (empty($userName)) {
-			$userNameError = 'Please enter your User Name';
+		if (empty($campName)) {
+			$campNameError = 'Please enter your camp Name';
 			$valid = false;
 		}
-		if (empty($name)) {
-			$nameError = 'Please enter Name';
-			$valid = false;
-		}
-		
-		if (empty($rating)) {
-			$ratingError = 'Please enter rating';
-			$valid = false;
-		} else if ( !filter_var($rating,FILTER_VALIDATE_INT, array("options" => array("min_range"=>0, "max_range"=>5))) ) {
-			$ratingError = 'Please enter a valid rating';
-			$valid = false;
-		}
-		
-		if (empty($comments)) {
-			$commentsError = 'Please enter comments';
+		if (empty($startDate)) {
+			$startDateError = 'Please enter Date';
 			$valid = false;
 		}
 		
@@ -56,9 +39,9 @@
 		if ($valid) {
 			$pdo = Database::connect();
 			$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-			$sql = "INSERT INTO campRating (userName,campName,rating,comments) values(?, ?, ?, ?)";
+			$sql = "INSERT INTO campUser (campName,startDate,) values(?, ?)";
 			$q = $pdo->prepare($sql);
-			$q->execute(array($userName,$name,$rating,$comments));
+			$q->execute(array($campName,$startDate));
 			Database::disconnect();
 			header("Location: camps.php");
 		}
@@ -79,10 +62,10 @@
     
     			<div class="span10 offset1">
     				<div class="row">
-		    			<h3>Create a Rating</h3>
+		    			<h3>Create a User</h3>
 		    		</div>
     		
-	    			<form class="form-horizontal" action="create.php" method="post">
+	    			<form class="form-horizontal" action="create3.php" method="post">
 					<div class="control-group <?php echo !empty($userNameError)?'error':'';?>">
 					    <label class="control-label">User Name</label>
 					    <div class="controls">
@@ -92,31 +75,13 @@
 					      	<?php endif; ?>
 					    </div>
 					  </div>
-					  <div class="control-group <?php echo !empty($nameError)?'error':'';?>">
-					    <label class="control-label">Camp Name</label>
+					  <div class="control-group <?php echo !empty($startDateError)?'error':'';?>">
+					    <label class="control-label">Start Date</label>
 					    <div class="controls">
-					      	<input name="name" type="text"  placeholder="Name" value="<?php echo !empty($name)?$name:'';?>">
-					      	<?php if (!empty($nameError)): ?>
-					      		<span class="help-inline"><?php echo $nameError;?></span>
+					      	<input name="password" type="password"  placeholder="password" value="<?php echo !empty($password)?$password:'';?>">
+					      	<?php if (!empty($passwordError)): ?>
+					      		<span class="help-inline"><?php echo $passwordError;?></span>
 					      	<?php endif; ?>
-					    </div>
-					  </div>
-					  <div class="control-group <?php echo !empty($ratingError)?'error':'';?>">
-					    <label class="control-label">Rating (0 - 5)</label>
-					    <div class="controls">
-					      	<input name="rating" type="text" placeholder="rating" value="<?php echo !empty($rating)?$rating:'';?>">
-					      	<?php if (!empty($ratingError)): ?>
-					      		<span class="help-inline"><?php echo $ratingError;?></span>
-					      	<?php endif;?>
-					    </div>
-					  </div>
-					  <div class="control-group <?php echo !empty($commentsError)?'error':'';?>">
-					    <label class="control-label">Comments</label>
-					    <div class="controls">
-					      	<input name="comments" type="text"  placeholder="Comments" value="<?php echo !empty($comments)?$comments:'';?>">
-					      	<?php if (!empty($commentsError)): ?>
-					      		<span class="help-inline"><?php echo $commentsError;?></span>
-					      	<?php endif;?>
 					    </div>
 					  </div>
 					  <div class="form-actions">
