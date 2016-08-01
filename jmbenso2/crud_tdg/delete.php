@@ -1,40 +1,31 @@
-<?php 
-	// Redirect if not logged in
-	session_start();
-	if (empty($_SESSION['name'])) {
-		header("Location: login.php"); // Redirect
-	}
-
-	require 'database.php';
-	$id = 0;
+<?php
+/* delete.php
+	 ***********************************************************
+	 *PURPOSE: Demonstrates the delete method.
+	 **********************************************************/
+	 
+	require('tdg.php');
 	
+	// Read id to delete
+	$id = 0;
 	if ( !empty($_GET['id'])) {
 		$id = $_REQUEST['id'];
 	}
 	
+	// Create gateway object
+	$gateway = new CustomerGateway();
+	
+	// When we hit confirm button, the id from $_GET is posted
 	if ( !empty($_POST)) {
-		// keep track post values
+		// read id
 		$id = $_POST['id'];
 		
 		// delete data
-		$pdo = Database::connect();
-		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$sql = "DELETE FROM customers  WHERE id = ?";
-		$q = $pdo->prepare($sql);
-		$q->execute(array($id));
-		Database::disconnect();
+		$gateway->delete($id);
 		header("Location: index.php");
 		
 	} 
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <link   href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-</head>
 
 <body>
     <div class="container">
@@ -55,5 +46,4 @@
 				</div>
 				
     </div> <!-- /container -->
-  </body>
-</html>
+</body>

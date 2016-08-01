@@ -1,63 +1,28 @@
-<?php 
-	// Redirect if not logged in
-	session_start();
-	if (empty($_SESSION['name'])) {
-		header("Location: login.php"); // Redirect
-	}
+<?php
+	/* create.php
+	 ***********************************************************
+	 *PURPOSE: Demonstrates the create method.
+	 **********************************************************/
 
-	require 'database.php';
+	require('tdg.php');
+	
 	if ( !empty($_POST)) { // If anything's been posted
-		// keep track validation errors
-		$nameError = null;
-		$emailError = null;
-		$mobileError = null;
-		
-		// keep track post values
+		// Read posted input values
 		$name = $_POST['name'];
 		$email = $_POST['email'];
 		$mobile = $_POST['mobile'];
 		
-		// validate input
-		$valid = true;
-		if (empty($name)) { // If no name was read/posted
-			$nameError = 'Please enter Name'; // Show error message
-			$valid = false; // If this is set to false anywhere, prevents us from inserting data later on
-		}
+		// Create our CustomerGateway object, validate input
+		$gateway = new CustomerGateway();
+		$gateway->isNewDataValid($name,$email,$mobile,$nameError,$emailError,$mobileError,$valid);
 		
-		if (empty($email)) {
-			$emailError = 'Please enter Email Address'; // If no email was read/posted
-			$valid = false;
-		} else if ( !filter_var($email,FILTER_VALIDATE_EMAIL) ) { // Or if email is invalid
-			$emailError = 'Please enter a valid Email Address';
-			$valid = false;
-		}
-		
-		if (empty($mobile)) {
-			$mobileError = 'Please enter Mobile Number';
-			$valid = false;
-		}
-		
-		// insert data
 		if ($valid) {
-			$pdo = Database::connect(); // Connect to database, reference in $pdo variable
-			$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // Set attributes of connection
-			$sql = "INSERT INTO customers (name,email,mobile) values(?, ?, ?)";
-			$q = $pdo->prepare($sql);
-			$q->execute(array($name,$email,$mobile));
-			Database::disconnect();
+			// Call the create method of our CustomerGateway, then redirect to index.
+			$gateway->create($name,$email,$mobile);
 			header("Location: index.php");
 		}
 	}
 ?>
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <link   href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-</head>
 
 <body>
     <div class="container">
@@ -106,5 +71,4 @@
 				</div>
 				
     </div> <!-- /container -->
-  </body>
-</html>
+</body>

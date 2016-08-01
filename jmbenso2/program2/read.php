@@ -1,37 +1,26 @@
 <?php 
-	// Redirect if not logged in
-	session_start();
-	if (empty($_SESSION['name'])) {
-		header("Location: login.php"); // Redirect
-	}
+	/* read.php
+	 ***********************************************************
+	 *PURPOSE: Demonstrates the read method.
+	 **********************************************************/
 
-	require 'database.php';
+	require ('tdg.php');
+	
+	// Read requested $id
 	$id = null;
 	if ( !empty($_GET['id'])) {
 		$id = $_REQUEST['id'];
 	}
-	
+	// If no $id posted, redirect to index
 	if ( null==$id ) {
 		header("Location: index.php");
+		
+	// Otherwise, read the passed id
 	} else {
-		$pdo = Database::connect();
-		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$sql = "SELECT * FROM customers where id = ?";
-		$q = $pdo->prepare($sql);
-		$q->execute(array($id));
-		$data = $q->fetch(PDO::FETCH_ASSOC);
-		Database::disconnect();
+		$gateway = new CustomerGateway();
+		$gateway->read($id,$data);
 	}
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <link   href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-</head>
-
 <body>
     <div class="container">
     

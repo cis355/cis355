@@ -1,83 +1,45 @@
-<?php 
-	// Redirect if not logged in
-	session_start();
-	if (empty($_SESSION['name'])) {
-		header("Location: login.php"); // Redirect
-	}
-	
-	require 'database.php';
+<?php
+	/* create.php
+	 ***********************************************************
+	 *PURPOSE: Demonstrates the update method.
+	 **********************************************************/
+
+	require('tdg.php');
+
+	// Read id to be updated
 	$id = null;
 	if ( !empty($_GET['id'])) {
 		$id = $_REQUEST['id'];
 	}
-	
-	if ( null==$id ) {
+	if ( null==$id ) { // If no id provided, redirect to index
 		header("Location: index.php");
 	}
 	
+	// Create our CustomerGateway object
+	$gateway = new CustomerGateway();
+	
+	// Once something's posted, we do this:
 	if ( !empty($_POST)) {
-		// keep track validation errors
-		$nameError = null;
-		$emailError = null;
-		$mobileError = null;
-		
-		// keep track post values
+		// Read posted input values
 		$name = $_POST['name'];
 		$email = $_POST['email'];
 		$mobile = $_POST['mobile'];
 		
 		// validate input
-		$valid = true;
-		if (empty($name)) {
-			$nameError = 'Please enter Name';
-			$valid = false;
-		}
-		
-		if (empty($email)) {
-			$emailError = 'Please enter Email Address';
-			$valid = false;
-		} else if ( !filter_var($email,FILTER_VALIDATE_EMAIL) ) {
-			$emailError = 'Please enter a valid Email Address';
-			$valid = false;
-		}
-		
-		if (empty($mobile)) {
-			$mobileError = 'Please enter Mobile Number';
-			$valid = false;
-		}
+		$gateway->isNewDataValid($name,$email,$mobile,$nameError,$emailError,$mobileError,$valid);
 		
 		// update data
 		if ($valid) {
-			$pdo = Database::connect();
-			$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-			$sql = "UPDATE customers  set name = ?, email = ?, mobile =? WHERE id = ?";
-			$q = $pdo->prepare($sql);
-			$q->execute(array($name,$email,$mobile,$id));
-			Database::disconnect();
+			$gateway->update($id,$name,$email,$mobile);
 			header("Location: index.php");
 		}
-	} else {
-		$pdo = Database::connect();
-		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$sql = "SELECT * FROM customers where id = ?";
-		$q = $pdo->prepare($sql);
-		$q->execute(array($id));
-		$data = $q->fetch(PDO::FETCH_ASSOC);
-		$name = $data['name'];
-		$email = $data['email'];
-		$mobile = $data['mobile'];
-		Database::disconnect();
+		
+	// Before anything's posted, we do this:
+	} else { 
+		// Get current data to display
+		$gateway->updateGetCurrentData($id,$name,$email,$mobile);
 	}
 ?>
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <link   href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-</head>
 
 <body>
     <div class="container">
