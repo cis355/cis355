@@ -1,9 +1,11 @@
 <?php 
 	
 	session_start();
+	$_SESSION['login_user']= $username;
+	
 	
 	# include connection data and functions
-	require 'database.php';
+	require 'elitedatabase.php';
 	
 	# if there was data passed, then verify password, 
 	# otherwise do nothing (that is, just display html for login)
@@ -39,7 +41,7 @@
 			if($results['password']==$password) {
 				$_SESSION['name'] = $name;
 				Database::disconnect();
-				header("Location: index.php"); // redirect
+				header("Location: elite.php"); // redirect
 			}
 			else {
 				$passwordError = 'Password is not valid';
@@ -65,7 +67,7 @@
 		    			<h3>Login</h3>
 		    		</div>
     		
-	    			<form class="form-horizontal" action="login.php" method="post">
+	    			<form class="form-horizontal" action="loginelite.php" method="post">
 					
 					  <div class="control-group <?php echo !empty($nameError)?'error':'';?>">
 					    <label class="control-label">User Name</label>
@@ -89,7 +91,7 @@
 					  
 					  <div class="form-actions">
 						  <button type="submit" class="btn btn-primary">Login</button>
-						  <a href="create.php" class="btn btn-success">Create</a>
+						  <a href="../prg1/create.php" class="btn btn-success">Create</a>
 						</div>
 						
 					</form>
