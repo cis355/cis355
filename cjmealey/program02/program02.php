@@ -274,6 +274,6 @@ class Athlete {
 }
 // Actually declare a Customer, iterate correct buttons
 $ath1 = new Athlete;
-
 show_source(__FILE__);
+
 ?>
