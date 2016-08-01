@@ -1,26 +1,25 @@
 <?php 
 
-echo '<a href="webService.php">webService</a><br />';
-
-// SVSU COURSES API
+echo '<a href="../webService.php">webService</a><br />';
+// ----- SVSU COURSES API ---- 
 
 // get contents of svsu courses api 
 $url = 'http://api.svsu.edu/courses?prefix=CIS&term=16/FA'; 
 $json = file_get_contents($url); 
 // var_dump($json); 
 $obj = json_decode($json); 
-//var_dump($obj); 
-
-foreach ($obj->courses as $course){  
+// var_dump($obj); 
+// print 
+foreach ($obj->courses as $course){ 
 
     echo $course->prefix . '-'; 
     echo $course->courseNumber . ' '; 
     echo $course->title; 
-    echo ' {' . $course->meetingTimes[0]->instructor . ') ';
-    foreach ($course->meetingTimes as $meeting){
-      echo $meeting->days . ': ';
-      echo $meeting->building . '-' . $meeting->room . ' ';
-    }
+    echo ' (' . $course->meetingTimes[0]->instructor . ') '; 
+    foreach ($course->meetingTimes as $meeting) { 
+        echo $meeting->days . ':'; 
+        echo $meeting->building . '-' . $meeting->room . ' '; 
+    } // end foreach 
     echo '<br />'; 
 
 }//end foreach 
@@ -31,10 +30,8 @@ $json = file_get_contents($url);
 $obj = json_decode($json); 
 var_dump($obj); 
 
-foreach ($obj->query->results->channel->item->forecast as $f) {
-  echo $f->date . ': high of ' . $f->high . ', low of ' . $f->low . '<br />';
-}
-
-show_source(__FILE__); 
+foreach ($obj->query->results->channel->item->forecast as $f) { 
+    echo $f->date. ' ' . $f->high . ' ' . $f->low . '<br />'; 
+} 
 
 ?>
