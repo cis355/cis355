@@ -12,13 +12,13 @@
 	
 		
 		// keep track post values
-		$name = $_POST['name'];
-		$password = $_POST['email'];
+		$username = $_POST['username'];
+		$password = $_POST['password'];
 		
 		// validate input
 		$valid = true;
-		if (empty($name)) {
-			$nameError = 'Please enter Username';
+		if (empty($username)) {
+			$usernameError = 'Please enter Username';
 			$valid = false;
 		}
 		
@@ -31,12 +31,12 @@
 		if ($valid) {
 			$pdo = Database::connect();
 			$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-			$sql = "SELECT * FROM customers WHERE name = ? LIMIT 1";
+			$sql = "SELECT * FROM users WHERE username = ? LIMIT 1";
 			$q = $pdo->prepare($sql);
-			$q->execute(array($name));
+			$q->execute(array($username));
       $results = $q->fetch(PDO::FETCH_ASSOC);
       if($result['password']==$password) {
-        $_session['name'] = $name;
+        $_session['username'] = $username;
         Database::disconnect();
         header("Location: index.php"); // redirect
       }
@@ -65,12 +65,12 @@
 		    		</div>
     		
 	    			<form class="form-horizontal" action="login.php" method="post">
-					  <div class="control-group <?php echo !empty($nameError)?'error':'';?>">
-					    <label class="control-label">Name</label>
+					  <div class="control-group <?php echo !empty($usernameError)?'error':'';?>">
+					    <label class="control-label">Username</label>
 					    <div class="controls">
-					      	<input name="name" type="text"  placeholder="Name" value="<?php echo !empty($name)?$name:'';?>">
-					      	<?php if (!empty($nameError)): ?>
-					      		<span class="help-inline"><?php echo $nameError;?></span>
+					      	<input name="username" type="text"  placeholder="Username" value="<?php echo !empty($username)?$username:'';?>">
+					      	<?php if (!empty($usernameError)): ?>
+					      		<span class="help-inline"><?php echo $usernameError;?></span>
 					      	<?php endif; ?>
 					    </div>
 					  </div>
@@ -83,11 +83,14 @@
 					      	<?php endif;?>
 					    </div>
 					  </div>
-					 
+					  </br>
 					  <div class="form-actions">
-						  <button type="submit" class="btn btn-success">Create</button>
-						  <a class="btn" href="index.php">Back</a>
+						  <button type="submit" class="btn btn-success">Login</button>
+						  <a class="btn" href="create.php" class="btn btn-success">Create new account</a>
+             <!-- <a class="btn" href="index.php">Back</a> -->
 						</div>
+            
+         
 					</form>
 				</div>
 				
