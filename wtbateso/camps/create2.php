@@ -43,17 +43,17 @@
 			$valid = false;
 		} 
 		
-		
+		//echo "got to here"; exit();
 		
 		// insert data
 		if ($valid) {
 			$pdo = Database::connect();
 			$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-			$sql = "INSERT INTO camps (campName,startDate,endDate,) values(?, ?, ?)";
+			$sql = "INSERT INTO camps (campName,startDate,endDate) values(?, ?, ?)";
 			$q = $pdo->prepare($sql);
 			$q->execute(array($campName,$startDate,$endDate));
 			Database::disconnect();
-			header("Location: camps.php");
+			header("Location: camps2.php");
 		}
 	} # end if ( !empty($_POST))
 ?>
@@ -105,7 +105,7 @@
 					  </div>
 					  <div class="form-actions">
 						  <button type="submit" class="btn btn-success">Create</button>
-						  <a class="btn" href="camps.php">Back</a>
+						  <a class="btn" href="camps2.php">Back</a>
 						</div>
 					</form>
 				</div>

@@ -1,25 +1,24 @@
-<?php 	
-	require 'database.php';
-	$id = 0;
+<?php 
 	
+	session_start();
+
+	require 'database.php';
+	$id = null;
 	if ( !empty($_GET['id'])) {
 		$id = $_REQUEST['id'];
 	}
 	
-	if ( !empty($_POST)) {
-		// keep track post values
-		$id = $_POST['id'];
-		
-		// delete data
+	if ( null==$id ) {
+		header("Location: index.php");
+	} else {
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$sql = "DELETE FROM campRating WHERE id = ?";
+		$sql = "SELECT * FROM campUser where id = ?";
 		$q = $pdo->prepare($sql);
 		$q->execute(array($id));
+		$data = $q->fetch(PDO::FETCH_ASSOC);
 		Database::disconnect();
-		header("Location: camps2.php");
-		
-	} 
+	}
 ?>
 
 <!DOCTYPE html>
@@ -35,17 +34,22 @@
     
     			<div class="span10 offset1">
     				<div class="row">
-		    			<h3>Delete a Rating</h3>
+		    			<h3>Read a User</h3>
 		    		</div>
-		    		
-	    			<form class="form-horizontal" action="delete.php" method="post">
-	    			  <input type="hidden" name="id" value="<?php echo $id;?>"/>
-					  <p class="alert alert-error">Are you sure to delete ?</p>
-					  <div class="form-actions">
-						  <button type="submit" class="btn btn-danger">Yes</button>
-						  <a class="btn" href="camps2.php">No</a>
-						</div>
-					</form>
+	    			<div class="form-horizontal" >
+					  <div class="control-group">
+					    <label class="control-label">User Name</label>
+						     	<?php echo $data['userName'];?>
+					  </div>
+					  <div class="control-group">
+					    <label class="control-label">User Number</label>
+						     	<?php echo $data['userNumber'];?>
+					  </div>
+					    <div class="form-actions">
+						  <a class="btn" href="camps2.php">Back</a>
+					   </div>
+
+					</div>
 				</div>
 				
     </div> <!-- /container -->

@@ -185,6 +185,8 @@ program structure :
 							  <th>Start Date</th>
 							  <th>End Date</th>
 							  <th>Read File</th>
+							  <th>Update File</th>
+							  <th>Delete File</th>
 							</tr>
 						  </thead>
 						  <tbody>
@@ -202,7 +204,10 @@ program structure :
 											echo '<td>'. $row['startDate'] . '</td>';
 											echo '<td>'. $row['endDate'] . '</td>';
 											echo '<td> <a class="btn" href="read2.php?id='. $row['id'].'">Read</a> </td>';
-											echo '       ';	
+											echo '       ';
+											echo '<td> <a class="btn" href="update2.php?id='. $row['id'].'">Update</a> </td>';		
+											echo '       ';
+											echo '<td> <a class="btn" href="delete2.php?id='. $row['id'].'">Delete</a> </td>';
 											echo '</td>';
 											echo '</tr>';
 								   }
@@ -234,7 +239,8 @@ program structure :
 							  <th>Rating out of 5</th>
 							  <th>Review</th>
 							  <th>Read File</th>
-
+							  <th>Update File</th>
+							  <th>Delete File</th>
 							</tr>
 						  </thead>
 						  <tbody>
@@ -251,6 +257,9 @@ program structure :
 											echo '<td>'. $row['comments'] . '</td>';
 											echo '<td> <a class="btn" href="read.php?id='. $row['id'].'">Read</a> </td>';
 											echo '       ';
+											echo '<td> <a class="btn" href="update.php?id='. $row['id'].'">Update</a> </td>';		
+											echo '       ';
+											echo '<td> <a class="btn" href="delete.php?id='. $row['id'].'">Delete</a> </td>';
 											echo '</td>';
 											echo '</tr>';
 								   }
@@ -280,6 +289,9 @@ program structure :
 							<tr>
 							  <th>User Name</th>
 							  <th>User Number</th>
+							  <th>Read File</th>
+							  <th>Update File</th>
+							  <th>Delete File</th>
 							</tr>
 						  </thead>
 						  <tbody>
@@ -292,6 +304,11 @@ program structure :
 											echo '<tr>';
 											echo '<td>'. $row['userName'] . '</td>';
 											echo '<td>'. $row['userNumber'] . '</td>';
+											echo '<td> <a class="btn" href="read3.php?id='. $row['id'].'">Read</a> </td>';
+											echo '       ';
+											echo '<td> <a class="btn" href="update3.php?id='. $row['id'].'">Update</a> </td>';		
+											echo '       ';
+											echo '<td> <a class="btn" href="delete3.php?id='. $row['id'].'">Delete</a> </td>';
 											echo '</td>';
 											echo '</tr>';
 								   }
@@ -303,6 +320,11 @@ program structure :
                 </div>  <!-- End of panel panel div -->
             </div>  <!-- End of col div -->
 		</div>	
+		<div class="row">
+				<p>
+					<a href="create3.php" class="btn btn-success">Create a user</a>
+				</p>
+		</div>
 		
 		
         <div class="row">

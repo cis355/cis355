@@ -1,6 +1,93 @@
 <?php
 	session_start(); 
 	require ("database.php"); 
+
+	if ( !empty($_POST)) {
+		if (!array_key_exists('id', $_POST)) {
+			// keep track validation errors
+			$jobNameError = null;
+			$jobSalaryError = null;
+			$companyNameError = null;
+			
+			$jobName = $_POST['jobName'];
+			$jobSalary = $_POST['jobSalary'];
+			$companyName = $_POST['companyName'];
+			
+			// validate input
+			$valid = true;
+			if (empty($jobName)) {
+				$jobNameError = 'Please enter job Name';
+				$valid = false;
+			}
+			
+			if (empty($jobSalary)) {
+				$jobSalaryError = 'Please enter Job Salary';
+				$valid = false;
+			} 
+			
+			if (empty($companyName)) {
+				$companyNameError = 'Please enter Company Name';
+				$valid = false;
+			}
+			
+			// insert data
+			if ($valid) {
+				$pdo = Database::connect();
+				$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+				$sql = "INSERT INTO jobs (jobName,jobSalary,companyName) values(?, ?, ?)";
+				$q = $pdo->prepare($sql);
+				$q->execute(array($jobName,$jobSalary,$companyName));
+				Database::disconnect();
+				header("Location: program02.php");
+			}
+		} else {
+			// keep track post values
+			$id = $_POST['id'];
+			$jobName = $_POST['jobName'];
+			$jobSalary = $_POST['jobSalary'];
+			$companyName = $_POST['companyName'];
+			
+			// validate input
+			$valid = true;
+			if (empty($jobName)) {
+				$jobNameError = 'Please enter job Name';
+				$valid = false;
+			}
+			
+			if (empty($jobSalary)) {
+				$jobSalaryError = 'Please enter Job Salary';
+				$valid = false;
+			} 
+			
+			if (empty($companyName)) {
+				$companyNameError = 'Please enter Company Name';
+				$valid = false;
+			}
+			
+				// update data
+			if ($valid) {
+				$pdo = Database::connect();
+				$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+				$sql = "UPDATE jobs  set jobName = ?, jobSalary = ?, companyName =? WHERE id = ?";
+				$q = $pdo->prepare($sql);
+				$q->execute(array($jobName,$jobSalary,$companyName,$id));
+				Database::disconnect();
+				header("Location: program02.php");
+			}
+			else {
+				$pdo = Database::connect();
+				$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+				$sql = "SELECT * FROM jobs where id = ?";
+				$q = $pdo->prepare($sql);
+				$q->execute(array($id));
+				$data = $q->fetch(PDO::FETCH_ASSOC);
+				$jobName = $data['jobName'];
+				$jobSalary = $data['jobSalary'];
+				$companyName = $data['companyName'];
+				Database::disconnect();
+			}
+		}
+	} # end if ( !empty($_POST))
 	
 	class Customer { 
 
@@ -11,24 +98,6 @@
 		private static $companyName; 
 		
 		 
-		// insert a new row into table
-		public function insertNew () { 
-		 
-			echo "<a href='create.php' class='btn btn-success'>Create New</a><br />";
-			
-			$jobName = "Janitor"; 
-			$jobSalary = "24,000"; 
-			$companyName = "Cleaning Inc."; 
-		 
-			$pdo = Database::connect(); 
-			$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); 
-			$sql = "INSERT INTO jobs (jobName,jobSalary,companyName) values(?, ?, ?)"; 
-			$q = $pdo->prepare($sql); 
-			$q->execute(array($jobName,$jobSalary,$companyName)); 
-			Database::disconnect(); 
-			// header("Location: program02.php"); 
-		} 
-		 
 		// show records in table format
 		public function displayRecords () { 
 			echo '<br />';
@@ -37,9 +106,9 @@
 			echo '<table class="table table-striped table-bordered"> 
 					<thead> 
 					<tr> 
-					  <th>jobName</th> 
-					  <th>jobSalary</th> 
-					  <th>companyName</th> 
+					  <th>Job Name</th> 
+					  <th>Job Salary</th> 
+					  <th>Company Name</th> 
 					</tr> 
 				  </thead> 
 				  <tbody>'; 
@@ -51,11 +120,11 @@
 				echo '<td>'. $row['companyName'] . '</td>'; 
 				echo '<td width=200>'; 
 				echo '       ';
-				echo '<a class="btn" href="read.php?id='. $row['id'].'">Read</a>';
+				echo '<a class="btn" href="program02.php?button=read&id='. $row['id'].'">Read</a>';
 				echo '       ';
-				echo '<a class="btn" href="update.php?id='. $row['id'].'">Update</a>';		
+				echo '<a class="btn" href="program02.php?button=update&id='. $row['id'].'">Update</a>';		
 				echo '       ';
-				echo '<a class="btn" href="delete.php?id='. $row['id'].'">Delete</a>';				
+				echo '<a class="btn" href="program02.php?button=delete&id='. $row['id'].'">Delete</a>';				
 				echo '&nbsp;';  
 				echo '</td>'; 
 				echo '</tr>'; 
@@ -63,31 +132,41 @@
 			echo '</tbody></table>'; 
 			Database::disconnect(); 
 		} 
-		 
-		function displayDeleteButton () { 
-			echo "<a href='delete.php' class='btn btn-success'>Delete </a><br />"; 
-		} 
-		 
-		function displayLoginButton () { 
-			echo '<div class=container><div class="offset1 span10"><div class=row><h3>Login</h3></div>
-			<form action=program02.php class=form-horizontal method=post><div class=control-group>
-			<label class=control-label>User Name</label><div class=controls><input name=userName placeholder=userName>
-			</div></div><div class=control-group><label class=control-label>Password</label><div class=controls>
-			<input name=password placeholder=password type=password></div></div><div class=form-actions>
-			<button class="btn btn-success"type=submit>Create</button> <a class=btn href=camps.php>Back</a></div>
-			</form></div></div>'; 
-		} 
 		
-		/function displayCreateScreen(){
+		function displayCreateScreen(){
 			echo '<div class="container"> <div class="span10 offset1"> <div class="row"> <h3>Create a Job</h3>
-			</div><form class="form-horizontal" action="program02.php" method="post"><input name="jobName" value="create" type="hidden"> 
-			<div class="control-group <label class="control-label">Name</label> <div class="controls"> 
+			</div><form class="form-horizontal" action="program02.php" method="post">
+			<div class="control-group <label class="control-label">Job Name</label> <div class="controls"> 
 			<input name="jobName" type="text" placeholder="Name" > </div></div><div class="control-group"> 
 			<label class="control-label">Job Salary</label> <div class="controls"> 
 			<input name="jobSalary" type="text" placeholder="Job Salary"/> </div></div><div class="control-group"> 
 			<label class="control-label">Company Name</label> <div class="controls"> 
 			<input name="companyName" type="text" placeholder="Company Name"/> </div></div><div class="form-actions"> 
-			<button type="submit" class="btn btn-success">Create</button> <a class="btn" href="program02.php">Back</a></div>
+			<button name="create" type="submit" class="btn btn-success">Create</button> <a class="btn" href="program02.php">Back</a></div>
+			</form></div></div>';
+		}
+		
+		function displayUpdateScreen($id){
+			$pdo = Database::connect();
+			$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+			$sql = "SELECT * FROM jobs where id = ?";
+			$q = $pdo->prepare($sql);
+			$q->execute(array($id));
+			$data = $q->fetch(PDO::FETCH_ASSOC);
+			$jobName = $data['jobName'];
+			$jobSalary = $data['jobSalary'];
+			$companyName = $data['companyName'];
+			Database::disconnect();
+			
+			echo '<div class="container"> <div class="span10 offset1"> <div class="row"> <h3>Update a Job</h3>
+			</div><form class="form-horizontal" action="program02.php" method="post"><input name="id" value="'.$id.'" type="hidden"> 
+			<div class="control-group <label class="control-label">Job Name</label> <div class="controls"> 
+			<input name="jobName" type="text" value="'.$jobName.'"></div></div><div class="control-group"> 
+			<label class="control-label">Job Salary</label> <div class="controls"> 
+			<input name="jobSalary" type="text" value="'.$jobSalary.'"/></div></div><div class="control-group"> 
+			<label class="control-label">Company Name</label> <div class="controls"> 
+			<input name="companyName" type="text" value="'.$companyName.'"/></div></div><div class="form-actions"> 
+			<button name="update" type="submit" class="btn btn-success">Update</button>
 			</form></div></div>';
 		}
 		
@@ -100,25 +179,67 @@
 			Database::disconnect();
 			header("Location: program02.php");
 		}
-	} 
-	
-	$cust1 = new Customer; 
-	
-	
-	if(!empty($_POST['create'])) {
-		$jobName = $_POST['jobName'];
-		$jobSalary = $_POST['jobSalary'];
-		$companyName = $_POST['companyName'];
-		$cust1->displayRecords($jobName, $jobSalary, $companyName);
+		
+		function deleteRecord($id) {
+			$pdo = Database::connect();
+			$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+			$sql = "DELETE FROM jobs WHERE id = ?";
+			$q = $pdo->prepare($sql);
+			$q->execute(array($id));
+			Database::disconnect();
+			header("Location: program02.php");
+		}
+		
+		function readRecords($id) {
+			echo '<br />';
+			
+			$pdo = Database::connect();
+			$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+			$sql = "SELECT * FROM jobs where id = ?";
+			$q = $pdo->prepare($sql);
+			$q->execute(array($id));
+			$data = $q->fetch(PDO::FETCH_ASSOC);
+			$jobName = $data['jobName'];
+			$jobSalary = $data['jobSalary'];
+			$companyName = $data['companyName'];
+			Database::disconnect();
+			
+			echo '<table class="table table-striped table-bordered"> 
+				<thead> 
+				<tr> 
+				  <th>Job Name</th> 
+				  <th>Job Salary</th> 
+				  <th>Company Name</th> 
+				</tr> 
+			  </thead> 
+			  <tbody>'; 
+			echo '<tr>'; 
+			echo '<td>'. $jobName . '</td>'; 
+			echo '<td>'. $jobSalary . '</td>'; 
+			echo '<td>'. $companyName . '</td>';  
+			echo '</tr>'; 
+			echo '</tbody></table>'; 
+			Database::disconnect(); 
+		}
 	}
+	
+	$cust1 = new Customer; 	
 	$cust1->displayCreateScreen(); 
-	$cust1->insertNew();  
-	//$cust1->displayLoginButton(); 
 	$cust1->displayRecords(); 
 	echo "<br /><br /><br />"; 
 	
-
+	if ($_GET['button'] == 'update') {
+		$id = $_GET['id'];
+		$cust1->displayUpdateScreen($id);
+	}
+	
+	if ($_GET['button'] == 'delete') {
+		$id = $_GET['id'];
+		$cust1->deleteRecord($id);
+	}
+	
+	if ($_GET['button'] == 'read') {
+		$id = $_GET['id'];
+		$cust1->readRecords($id);
+	}
 ?>
-
-<!DOCTYPE html>
-<html lang="en">

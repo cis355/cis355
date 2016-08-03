@@ -17,7 +17,7 @@
 		$q = $pdo->prepare($sql);
 		$q->execute(array($id));
 		Database::disconnect();
-		header("Location: camps.php");
+		header("Location: camps2.php");
 		
 	} 
 ?>
@@ -35,7 +35,7 @@
     
     			<div class="span10 offset1">
     				<div class="row">
-		    			<h3>Delete a Rating</h3>
+		    			<h3>Delete a Camp</h3>
 		    		</div>
 		    		
 	    			<form class="form-horizontal" action="delete2.php" method="post">
@@ -43,7 +43,7 @@
 					  <p class="alert alert-error">Are you sure to delete ?</p>
 					  <div class="form-actions">
 						  <button type="submit" class="btn btn-danger">Yes</button>
-						  <a class="btn" href="camps.php">No</a>
+						  <a class="btn" href="camps2.php">No</a>
 						</div>
 					</form>
 				</div>
