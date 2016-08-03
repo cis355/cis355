@@ -16,19 +16,40 @@
 	# otherwise do nothing (that is, just display html for create)
 	if ( !empty($_POST)) {
 		// keep track validation errors
-		$nameError = null;
+		$firstnameError = null;
+    $lastnameError = null;
+    $usernameError = null;
+    $passwordError = null;
 		$emailError = null;
-		$mobileError = null;
+
 		
 		// keep track post values
-		$name = $_POST['name'];
+		$firstname = $_POST['firstname'];
+		$lastname = $_POST['lastname'];
+		$username = $_POST['username'];
+    $password = $_POST['password'];
 		$email = $_POST['email'];
-		$mobile = $_POST['mobile'];
+		
 		
 		// validate input
 		$valid = true;
-		if (empty($name)) {
-			$nameError = 'Please enter Name';
+		if (empty($firstname)) {
+			$firstnameError = 'Please enter first name';
+			$valid = false;
+		}
+    
+		if (empty($lastname)) {
+			$lastnameError = 'Please enter last name';
+			$valid = false;
+		}
+    
+		if (empty($username)) {
+			$usernameError = 'Please enter username';
+			$valid = false;
+		}
+    
+    if (empty($password)) {
+			$passwordError = 'Please enter password';
 			$valid = false;
 		}
 		
@@ -39,19 +60,16 @@
 			$emailError = 'Please enter a valid Email Address';
 			$valid = false;
 		}
-		
-		if (empty($mobile)) {
-			$mobileError = 'Please enter Mobile Number';
-			$valid = false;
-		}
+    
+ 
 		
 		// insert data
 		if ($valid) {
 			$pdo = Database::connect();
 			$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-			$sql = "INSERT INTO customers (name,email,mobile) values(?, ?, ?)";
+			$sql = "INSERT INTO users (firstname,lastname,username,password,email,) values(?, ?, ?, ?, ?)";
 			$q = $pdo->prepare($sql);
-			$q->execute(array($name,$email,$mobile));
+			$q->execute(array($firstname,$lastname,$username,$password,$email));
 			Database::disconnect();
 			header("Location: index.php");
 		}
@@ -72,37 +90,61 @@
     
     			<div class="span10 offset1">
     				<div class="row">
-		    			<h3>Create a Customer</h3>
+		    			<h3>Create an account</h3>
 		    		</div>
     		
 	    			<form class="form-horizontal" action="create.php" method="post">
-					  <div class="control-group <?php echo !empty($nameError)?'error':'';?>">
-					    <label class="control-label">Name</label>
+					  <div class="control-group <?php echo !empty($firstnameError)?'error':'';?>">
+					    <label class="control-label">First Name</label>
 					    <div class="controls">
-					      	<input name="name" type="text"  placeholder="Name" value="<?php echo !empty($name)?$name:'';?>">
-					      	<?php if (!empty($nameError)): ?>
-					      		<span class="help-inline"><?php echo $nameError;?></span>
+					      	<input name="firstname" type="text"  placeholder="John" value="<?php echo !empty($firstname)?$firstname:'';?>">
+					      	<?php if (!empty($firstnameError)): ?>
+					      		<span class="help-inline"><?php echo $firstnameError;?></span>
 					      	<?php endif; ?>
 					    </div>
 					  </div>
+            
+             <div class="control-group <?php echo !empty($lastnameError)?'error':'';?>">
+					    <label class="control-label">Last Name</label>
+					    <div class="controls">
+					      	<input name="lastname" type="text"  placeholder="Doe" value="<?php echo !empty($lastname)?$lastname:'';?>">
+					      	<?php if (!empty($lastnameError)): ?>
+					      		<span class="help-inline"><?php echo $lastnameError;?></span>
+					      	<?php endif; ?>
+					    </div>
+					  </div>
+            
+             <div class="control-group <?php echo !empty($usernameError)?'error':'';?>">
+					    <label class="control-label">Username</label>
+					    <div class="controls">
+					      	<input name="username" type="text"  placeholder="johndoe10" value="<?php echo !empty($username)?$username:'';?>">
+					      	<?php if (!empty($usernameError)): ?>
+					      		<span class="help-inline"><?php echo $usernameError;?></span>
+					      	<?php endif; ?>
+					    </div>
+					  </div>
+            
+             <div class="control-group <?php echo !empty($passwordError)?'error':'';?>">
+					    <label class="control-label">Password</label>
+					    <div class="controls">
+					      	<input name="password" type="password"  placeholder="password" value="<?php echo !empty($password)?$password:'';?>">
+					      	<?php if (!empty($passwordError)): ?>
+					      		<span class="help-inline"><?php echo $passwordError;?></span>
+					      	<?php endif; ?>
+					    </div>
+					  </div>
+            
 					  <div class="control-group <?php echo !empty($emailError)?'error':'';?>">
 					    <label class="control-label">Email Address</label>
 					    <div class="controls">
-					      	<input name="email" type="text" placeholder="Email Address" value="<?php echo !empty($email)?$email:'';?>">
+					      	<input name="email" type="text" placeholder="johndoe@john.doe" value="<?php echo !empty($email)?$email:'';?>">
 					      	<?php if (!empty($emailError)): ?>
 					      		<span class="help-inline"><?php echo $emailError;?></span>
 					      	<?php endif;?>
 					    </div>
 					  </div>
-					  <div class="control-group <?php echo !empty($mobileError)?'error':'';?>">
-					    <label class="control-label">Mobile Number</label>
-					    <div class="controls">
-					      	<input name="mobile" type="text"  placeholder="Mobile Number" value="<?php echo !empty($mobile)?$mobile:'';?>">
-					      	<?php if (!empty($mobileError)): ?>
-					      		<span class="help-inline"><?php echo $mobileError;?></span>
-					      	<?php endif;?>
-					    </div>
-					  </div>
+            
+            </br>
 					  <div class="form-actions">
 						  <button type="submit" class="btn btn-success">Create</button>
 						  <a class="btn" href="index.php">Back</a>

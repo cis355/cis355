@@ -1,14 +1,11 @@
 <?php
   session_start();
   if(empty($_SESSION['name'])) header("Location: login.php"); //redirect
-
-  $name=$_SESSION['name'];
-  ?>
+?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<h1><?php echo $name;?></h1>
 	<!-- The head section does the following.
 		1. Sets character set
 		2. Includes Bootstrap
@@ -38,10 +35,10 @@
 				<table class="table table-striped table-bordered">
 		              <thead>
 		                <tr>
-		                  <th>Name</th>
-		                  <th>Email Address</th>
-		                  <th>Mobile Number</th>
-		                  <th>Action</th>
+		                  <th>Rating Id</th>
+		                  <th>Product</th>
+		                  <th>Customer</th>
+		                  <th>Rating</th>
 		                </tr>
 		              </thead>
 		              <tbody>
@@ -51,23 +48,14 @@
 					   # connect to database and assign object to variable
 					   $pdo = Database::connect();
 					   # assign select statement to variable
-					   $sql = 'SELECT * FROM customers ORDER BY id DESC';
+					   $sql = 'SELECT ratings.id, product.productName, customers.name, ratings.rating FROM `ratings` INNER JOIN `product` INNER JOIN `customers` WHERE product.id = ratings.productID AND customers.id = ratings.customerID';
 					   # iterates through every record return by the select statement
 	 				   foreach ($pdo->query($sql) as $row) {
 						   		echo '<tr>';
+							   	echo '<td>'. $row['id'] . '</td>';
+							   	echo '<td>'. $row['productName'] . '</td>';
 							   	echo '<td>'. $row['name'] . '</td>';
-							   	echo '<td>'. $row['email'] . '</td>';
-							   	echo '<td>'. $row['mobile'] . '</td>';
-							   	echo '<td width=250>';
-							   	echo '<a class="btn" href="read.php?id='.
-								   $row['id'].'">Read</a>';
-							   	echo '&nbsp;';
-							   	echo '<a class="btn btn-success" 
-								   href="update.php?id='.$row['id'].'">Update</a>';
-							   	echo '&nbsp;';
-							   	echo '<a class="btn btn-danger" 
-								   href="delete.php?id='.$row['id'].'">Delete</a>';
-							   	echo '</td>';
+                  echo '<td>'. $row['rating'] . '</td>';
 							   	echo '</tr>';
 					   }
 					   Database::disconnect();
