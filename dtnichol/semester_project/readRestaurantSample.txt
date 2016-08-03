@@ -1,0 +1,25 @@
+if ( !empty($_POST)) {
+		// keep track validation errors
+		
+		
+		
+		
+		// keep track post values
+		
+		$thisCustomer = $_SESSION['id'];
+		$thisRestaurant = $_POST['restaurant'];
+		
+		print_r($_POST);
+		print_r($_SESSION);
+		
+		
+		
+		
+		
+		
+	} // end if (!empty($_POST))
+	else {
+		$thisCustomer = $_SESSION['id'];
+		$thisRestaurant = $_GET['id'];
+		
+	}
