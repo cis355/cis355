@@ -242,4 +242,11 @@
 		$id = $_GET['id'];
 		$cust1->readRecords($id);
 	}
+	
 ?>
+
+
+<?php 
+	echo "<br /><br /><br /><br />"; 
+	show_source(__FILE__); 
+?> 
