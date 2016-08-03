@@ -1,57 +1,67 @@
-<?php
-	# Consider three scenarios.
-	# 1. User clicked create button on list screen (index.php)
-	#         If that happens then create.php displays entry screen
-	# 2. User clicked create button (submit button) on entry screen but one or more fields were empty
-	#         If that happens then error message(s) appears next to empty field(s)
-	# 3. User clicked create button (submit button) and all data valid
-	#         If that happens then PHP code inserts the record and redirect to list screen (index.php)
+<?php 
 	
-	# include connection data and functions
 	require 'database.php';
+	$id = null;
+	if ( !empty($_GET['id'])) {
+		$id = $_REQUEST['id'];
+	}
 	
-	# if there was data passed, then insert record, 
-	# otherwise do nothing (that is, just display html for create)
-    if ( !empty($_POST)) {
-    		// keep track validation errors
-    		$questionError = null;
-    		$categoryError = null;
-    		$difficultyError = null;
-    		
-    		// keep track post values
-    		$question = $_POST['question'];
-    		$category = $_POST['category'];
-    		$difficulty = $_POST['difficulty'];
-    		
-    		// validate input
-    		$valid = true;
-    		if (empty($question)) {
-    			$questionError = 'Please enter a Question';
-    			$valid = false;
-    		}
-    		
-    		if (empty($category)) {
-    			$categoryError = 'Please enter a Category';
-    			$valid = false;
-    		}
-    		
-    		if (empty($difficulty)) {
-    			$difficultyError = 'Please enter a difficulty';
-    			$valid = false;
-    		}
-    		
-    		// insert data
-    		if ($valid) {
-    			$pdo = Database::connect();
-    			$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    			$sql = "INSERT INTO questions (question,category,difficulty) values(?, ?, ?)";
-    			$q = $pdo->prepare($sql);
-    			$q->execute(array($question,$category,$difficulty));
-    			Database::disconnect();
-    			header("Location: prg2.php");
-    		}
-    	} # end if ( !empty($_POST))
+	if ( null==$id ) {
+		header("Location: prg2.php");
+	}
+	
+	if ( !empty($_POST)) {
+		// keep track validation errors
+		$questionError = null;
+		$categoryError = null;
+		$difficultyError = null;
+		
+		// keep track post values
+		$question = $_POST['question'];
+		$category = $_POST['category'];
+		$difficulty = $_POST['difficulty'];
+		
+		// validate input
+		$valid = true;
+		if (empty($question)) {
+			$questionError = 'Please enter question';
+			$valid = false;
+		}
+		
+		if (empty($category)) {
+			$categoryError = 'Please enter category';
+			$valid = false;
+		}
+		
+		if (empty($difficulty)) {
+			$difficultyError = 'Please enter difficulty';
+			$valid = false;
+		}
+		
+		// update data
+		if ($valid) {
+			$pdo = Database::connect();
+			$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+			$sql = "UPDATE questions set question = ?, category = ?, difficulty =? WHERE id = ?";
+			$q = $pdo->prepare($sql);
+			$q->execute(array($question,$category,$difficulty,$id));
+			Database::disconnect();
+			header("Location: prg1.php");
+		}
+	} else {
+		$pdo = Database::connect();
+		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$sql = "SELECT * FROM questions where id = ?";
+		$q = $pdo->prepare($sql);
+		$q->execute(array($id));
+		$data = $q->fetch(PDO::FETCH_ASSOC);
+		$question = $data['question'];
+		$category = $data['category'];
+		$difficulty = $data['difficulty'];
+		Database::disconnect();
+	}
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -66,11 +76,10 @@
     
     			<div class="span10 offset1">
     				<div class="row">
-		    			<h3>Create a Question</h3>
+		    			<h3>Update a Customer</h3>
 		    		</div>
     		
-	    			<form class="form-horizontal" action="create.php" method="post">
-					
+	    			<form class="form-horizontal" action="update.php?id=<?php echo $id?>" method="post">
 					  <div class="control-group <?php echo !empty($questionError)?'error':'';?>">
 					    <label class="control-label">Question</label>
 					    <div class="controls">
@@ -80,7 +89,6 @@
 					      	<?php endif; ?>
 					    </div>
 					  </div>
-					  
 					  <div class="control-group <?php echo !empty($categoryError)?'error':'';?>">
 					    <label class="control-label">Category</label>
 					    <div class="controls">
@@ -90,7 +98,6 @@
 					      	<?php endif;?>
 					    </div>
 					  </div>
-					  
 					  <div class="control-group <?php echo !empty($difficultyError)?'error':'';?>">
 					    <label class="control-label">Difficulty</label>
 					    <div class="controls">
@@ -100,16 +107,14 @@
 					      	<?php endif;?>
 					    </div>
 					  </div>
-				
 					  <div class="form-actions">
-						  <button type="submit" class="btn btn-success">Create</button>
+						  <button type="submit" class="btn btn-success">Update</button>
 						  <a class="btn" href="prg2.php">Back</a>
 						</div>
-						
 					</form>
-					
 				</div>
 				
     </div> <!-- /container -->
+
   </body>
 </html>

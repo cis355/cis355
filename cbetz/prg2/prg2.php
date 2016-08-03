@@ -6,64 +6,6 @@
         private static $category; 
         private static $difficulty; 
         
-        function create() {
-		
-		
-		if ( !empty($_POST)) {
-		// keep track validation errors
-		$questionError = null;
-		$categoryError = null;
-		$difficultyError = null;
-		
-		// keep track post values
-		$question = $_POST['question'];
-		$category = $_POST['category'];
-		$difficulty = $_POST['difficulty'];
-		
-		// validate input
-		$valid = true;
-		if (empty($question)) {
-			$questionError = 'Please enter a question';
-			$valid = false;
-		}
-		
-		if (empty($category)) {
-			$categoryError = 'Please enter category';
-			$valid = false;
-		} else if ( !filter_var($category,FILTER_VALIDATE_EMAIL) ) {
-			$categoryError = 'Please enter a valid category';
-			$valid = false;
-		}
-		
-		if (empty($difficulty)) {
-			$difficultyError = 'Please enter a difficulty';
-			$valid = false;
-		}
-		
-		// MYSQLI Connect Variables 
-        $servername = "localhost"; 
-        $username = "cbetz"; 
-        $password = "547295"; 
-        $dbname = "cbetz"; 
-         
-        // Create connection 
-        $conn = new mysqli($servername, $username, $password, $dbname); 
-        // Check connection 
-        if ($conn->connect_error) { 
-            die("Connection failed: " . $conn->connect_error); 
-        }  
-		// insert data
-		if ($valid) {
-			$sql = "INSERT INTO questions (question,category,difficulty) values(?, ?, ?)";
-			$q = $pdo->prepare($sql);
-			$q->execute(array($question,$category,$difficulty));
-			$conn->close();
-			header("Location: prg2.php");
-		}
-	} # end if ( !empty($_POST))
-		}
-		
-         
         public function displayRecords () {  
 ?>     
         <html lang="en"> 
@@ -86,11 +28,7 @@
                     <div class="row"> 
                         <h3>Questions</h3> 
                     </div> 
-                    <div class="row"> 
-                        <p> 
-                            <a href="create.php"  class="btn btn-success">Create</a> 
-                        </p> 
-                         
+                    <div class="row">                  
                         <!-- Table Titles !--> 
                         <table class="table table-striped table-bordered"> 
                             <thead> 
@@ -148,18 +86,59 @@
             </div> <!-- /container --> 
         </body> 
         </html>
-	 
+	  
 <?php 		 
+	}
+	
+	// This function display the create new person button, it has a link to the create.php link for creation
+	    // of a new user.
+	    function displayCreateButton() {
+	    	
+	    	echo "<a href='create.php' class='btn btn-success'>Create a New Question!!</a><br />";
+	    	
+	    } 
+	    
+	    // This function shows the read button to the right of each person.
+	    // This has a link to the read.php file where it shows the contents of the person.
+	    function readButton () { 
+         
+            echo "<a href='read.php' class='btn btn-success'></a><br />"; 
          
         } 
+	    
+	    // This function shows the update button to the right of each person.
+	    // This has a link to the update.php where it shows the create screen but with the original
+	    // contents from the user you choose and lets you change anything and update.
+	    function updateButton() {
+	    	
+	    	echo "<a href='update.php' class='btn btn-success'></a><br />"; 
+	    }
+	    
+	    // This function shows the delete button to the right of each person.
+	    // This has a link to the delete.php where it asks if you are sure about deleting.
+	    // Depending on whcih you choose if will delete the record or take you back.
+	    function deleteButton() {
+	    	
+	    	echo "<a href='delete.php' class='btn btn-success'></a><br />"; 
+	    }
+}
+
+// Create a new instance of class Customer
+$cust1 = new Questions; 
+echo "BETZ PROGRAM 2";
+echo "<br />";
+echo "<br />";
+// Display the create new person button
+$cust1->displayCreateButton();
+echo "<br />";
+// display the record in your customer table
+$cust1->displayRecords(); 
+
+echo "<br />";
+echo "<br />";
          
      
-}  
 
-    //Create instantiation and call fucntion 
-    $cust1 = new Questions; 
-    $cust1->displayRecords(); 
-     
     show_source (__FILE__); 
 
 ?>
