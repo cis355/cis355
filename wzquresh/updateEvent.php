@@ -27,7 +27,7 @@
 			$valid = false;
 		}
 		
-		if (empty($eventTitleError)) {
+		if (empty($eventTitle)) {
 			$eventTitleError = 'Please enter Event Title';
 			$valid = false;
 		}
@@ -77,22 +77,23 @@
 					  <div class="control-group <?php echo !empty($eventDateError)?'error':'';?>">
 					    <label class="control-label">Event Date</label>
 					    <div class="controls">
-					      	<input name="eventDate" type="text"  placeholder="Date" value="<?php echo !empty($eventDate)?$eventDate:'';?>">
+					      	<input name="eventDate" type="date"  placeholder="Date" value="<?php echo !empty($eventDate)?$eventDate:'';?>">
 					      	<?php if (!empty($eventDateError)): ?>
 					      		<span class="help-inline"><?php echo $eventDateError;?></span>
 					      	<?php endif; ?>
 					    </div>
 					  </div>
             
-					  <div class="control-group <?php echo !empty($eventTitle)?'error':'';?>">
+					  <div class="control-group <?php echo !empty($eventTitleError)?'error':'';?>">
 					    <label class="control-label">Event Title</label>
 					    <div class="controls">
-					      	<input name="eventTitle" type="text" placeholder="Title" value="<?php echo !empty($eventTitle)?$eventTitle:'';?>">
+					      	<input name="eventTitle" type="text" placeholder="Event Title" value="<?php echo !empty($eventTitle)?$eventTitle:'';?>">
 					      	<?php if (!empty($eventTitleError)): ?>
 					      		<span class="help-inline"><?php echo $eventTitleError;?></span>
 					      	<?php endif;?>
 					    </div>
 					  </div>
+            
 					  <div class="control-group">
 					    <label class="control-label">Event Description</label>
 					    <div class="controls">

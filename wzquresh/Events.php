@@ -1,9 +1,9 @@
 <?php
-//Purpose: Add new event data to the database table Event
-//PreConditions: Date and Title should have POST values
-//Input: eventDate, eventTitle, eventDescription.
-//Output: None.
-//PostConditions: Entered data added to table Event.
+//Created By: Waqas Qureshi
+//Course: CIS 355
+//Professor: Dr. George Corser
+//Purpose: CRUD application to add and display events to the
+//Event database table
 
 //Define how the database connects
 require ("crud/database.php");
@@ -14,7 +14,11 @@ session_start();
     private static $eventTitle;
     private static $eventDescription;
     
-    
+    //Purpose: displays the events table
+    //Input: None
+    //Preconditions: Event table must exist
+    //Output: table
+    //Postcondition: None.
     public function displayEventsTable () {
       $mysqli = new mysqli("localhost", "wzquresh", "446287", "wzquresh");
       $sql = "SELECT * FROM Event ORDER BY id";
@@ -52,10 +56,20 @@ session_start();
       Database::disconnect();
     }
     
+    //Purpose: Default constructor
+    //Input: None
+    //Precondition: Create object
+    //Output: None
+    //Postcondition: Object created
     function __construct () {
 	
-	}
-  
+    }
+    
+    //Purpose: Display create button 
+    //Input: None
+    //Precondition: createEvent.php file should exist
+    //Output: Button displayed
+    //Postcondition: None
     function displayCreateScreen(){
       echo "<a href='createEvent.php' class='btn btn-primary'>Create</a><br/>";
     }
@@ -83,17 +97,12 @@ echo '<div class="container">';
   echo '</div>';
 echo '</div>';
 
-
-echo "<br/><br/><br/>";
-print_r ($_SESSION);
 echo "<br/><br/><br/>";
 echo "<br/><br/>";
 echo '</body>';
 echo '</html>';
 echo '<br/><br/><br/>';
-  
-  
-  
-  
+echo "<a href='Qureshi_EventClassDiagram.png' class='btn btn-success'>Events Class UML Diagram</a>";
+echo '<br/><br/><br/>';  
 show_source(__FILE__); 
 ?>

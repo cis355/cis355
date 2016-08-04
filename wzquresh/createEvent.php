@@ -70,7 +70,7 @@
 					  <div class="control-group <?php echo !empty($eventDateError)?'error':'';?>">
 					    <label class="control-label">Event Date</label>
 					    <div class="controls">
-					      	<input name="eventDate" type="text"  placeholder="Date/Time" value="<?php echo !empty($eventDate)?$eventDate:'';?>">
+					      	<input name="eventDate" type="date"  placeholder="Date/Time" value="<?php echo !empty($eventDate)?$eventDate:'';?>">
 					      	<?php if (!empty($eventDateError)): ?>
 					      		<span class="help-inline"><?php echo $eventDateError;?></span>
 					      	<?php endif; ?>
