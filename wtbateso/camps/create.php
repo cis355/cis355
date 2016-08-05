@@ -12,7 +12,7 @@
 	#		If that happens then PHP code inserts the record and redirect to list screen (index.php)
 	
 	# includes connection to database and functions
-	require '../crud/database.php';
+	require 'database.php';
 	
 	# if there is data passed, then insert record, otherwise do nothing 
 	if ( !empty($_POST)) {
