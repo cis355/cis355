@@ -1,0 +1,6 @@
+ header("Location: index.php"); --> redirect
+ 
+ database examples:
+ insert = "INSERT INTO customers (name,email,mobile) values(?, ?, ?)"
+ 
+ $q->execute(array($name,$email,$mobile));
