@@ -1,4 +1,8 @@
 <?php 
+	//keeps track of a users login session
+	session_start();
+	if (empty($_SESSION['id'])) header("Location: login1.php"); //redirect
+	
 	require 'database.php';
 	$id = 0;
 	
@@ -13,7 +17,7 @@
 		// delete data
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$sql = "DELETE FROM customers  WHERE id = ?";
+		$sql = "DELETE FROM customers1  WHERE id = '$id'";
 		$q = $pdo->prepare($sql);
 		$q->execute(array($id));
 		Database::disconnect();

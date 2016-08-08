@@ -1,0 +1,4 @@
+git add --all
+git commit -m //directtory here"
+git pull
+git push

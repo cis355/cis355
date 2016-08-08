@@ -1,4 +1,5 @@
 <?php
+//database connection
 class Database 
 {
     # commented out code below...
@@ -15,6 +16,7 @@ class Database
 	private static $dbUserPassword = 'remember';*/
 	# added code above ...
 	
+	//credentials
 	private static $dbName = 'dtnichol' ; 
 	private static $dbHost = 'localhost' ;
 	private static $dbUsername = 'dtnichol';

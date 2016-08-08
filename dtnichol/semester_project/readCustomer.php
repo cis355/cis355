@@ -1,11 +1,13 @@
 <?php
+//keeps track of users session who are logged in
 session_start();
 if (empty($_SESSION['id'])) header("Location: login1.php"); //redirect
 
 ?>
 
 <?php 
-	require 'database.php';
+	//populates the read section for customers to read their info
+	require 'database.php';//connects to database
 	$id = null;
 	if ( !empty($_GET['id'])) {
 		$id = $_REQUEST['id'];
@@ -13,7 +15,7 @@ if (empty($_SESSION['id'])) header("Location: login1.php"); //redirect
 	
 	if ( null==$id ) {
 		header("Location: index1.php");
-	} else {
+	} else {//sql statement to pull info from database
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		$sql = "SELECT * FROM customers1 where id = ?";
