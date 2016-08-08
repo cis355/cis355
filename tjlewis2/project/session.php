@@ -1,4 +1,26 @@
+
 <?php
+/* *******************************************************************  
+* filename     : session.php 
+* author       : Terry Lewis  
+* username     : tjlewis2  
+* course       : cs355  
+* section      : 1  
+* semester : Summer 2016  
+*  
+* description  : 
+*  
+* input        : none  
+* processing   : The program steps are as follows.    
+*          1. start session
+*		   2. check session
+*		   3. redirect if session does not exist
+* output       : none  
+*  
+* precondition : user is logged in
+* postcondition: session is checked
+* *******************************************************************
+*/
    include('database.php');
    session_start();
    

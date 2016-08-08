@@ -1,19 +1,12 @@
 <?php
 class Database 
 {
-    # commented out code below...
-    /*
-	private static $dbName = 'gpcorser' ; 
-	private static $dbHost = 'localhost' ;
-	private static $dbUsername = 'gpcorser';
-	private static $dbUserPassword = 'remember';
-	*/
-	# added code below ...
+
 	private static $dbName = 'tjlewis2' ; 
 	private static $dbHost = 'localhost' ;
 	private static $dbUsername = 'tjlewis2';
 	private static $dbUserPassword = '547247';
-	# added code above ...
+
 	
 	private static $cont  = null;
 	
@@ -23,7 +16,6 @@ class Database
 	
 	public static function connect()
 	{
-	   // One connection through whole application
        if ( null == self::$cont )
        {      
         try 

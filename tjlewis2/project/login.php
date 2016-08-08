@@ -1,16 +1,37 @@
 <?php 
-	
+
+/* *******************************************************************  
+* filename     : login.php 
+* author       : Terry Lewis  
+* username     : tjlewis2  
+* course       : cs355  
+* section      : 1  
+* semester : Summer 2016  
+*  
+* description  : This file is responsible for displaying the login page and allowing
+*				 users to sign on 
+*  
+* input        : none  
+* processing   : The program steps are as follows.    
+*          1. connect to database
+*		   2. verify user input
+*		   3. find user in database and log them in. Otherwise, display message telling user	
+*			  that username or password is incorrect
+* output       : none  
+*  
+* precondition : user is already in database
+* postcondition: user is logged in
+* *******************************************************************
+*/
 	session_start();
 	
 	# include connection data and functions
 	require 'database.php';
+	// keep track validation errors
+	$error = "";
 	
-	# if there was data passed, then verify password, 
-	# otherwise do nothing (that is, just display html for login)
 	if ( !empty($_POST)) {
-		// keep track validation errors
-		$nameError = null;
-		$passwordError = null;
+
 		
 		// keep track post values
 		$name = $_POST['username'];
@@ -19,12 +40,12 @@
 		// validate input
 		$valid = true;
 		if (empty($name)) {
-			$nameError = 'Please enter user name';
+			$error = $error . 'Please enter user name <br />';
 			$valid = false;
 		}
 		
 		if (empty($password)) {
-			$passwordError = 'Please enter password';
+			$error = $error . 'Please enter password <br />';
 			$valid = false;
 		} 
 		
@@ -36,20 +57,20 @@
 			$q = $pdo->prepare($sql);
 			$q->execute(array($name));
 			$results = $q->fetch(PDO::FETCH_ASSOC);
+			
+			
 			if($results['password']==$password) {
 				$_SESSION['name'] = $name;
 				Database::disconnect();
-				header("Location: home.php"); // redirect
+				header("Location: mylistings.php"); // redirecting
 			}
 			else {
-				header("Location: failed.php");
+				$error = $error . 'username or password incorrect <br />';
 				Database::disconnect();
 			}
 		}
-	} # end if ( !empty($_POST))
+	} 
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -98,31 +119,14 @@
 
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#">Logo</a>
-    </div>
-    <div class="collapse navbar-collapse" id="myNavbar">
-      <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Home</a></li>
-        <li><a href="#">Profiles</a></li>
-        <li><a href="#">Listings</a></li>
-        <li><a href="#">About</a></li>
-		
-      </ul>
+    
       
 		<form action = "" method = "post">
 			<ul class="nav navbar-nav navbar-right">
-			<li><input style="margin-top:10px; width:100px; margin-right:15px; display:inline"; type="text"  class="form-control" name="username"  placeholder="Username"></input></li>
-			<li><input style="margin-top:10px; width:100px; margin-right:15px; display:inline"; type="password" class="form-control" name="password"  placeholder="Password"></input></li>
-			<li><input style="margin-top: 10px; margin-right:15px; width:80px;display:inline "; type = "submit" class="form-control" value = "Login"/></input></li>
+			<li><p style="margin-top:15px; margin-right:15px;"><font color="white" size="3">WELCOME, Please <a href="login.php" class="btn btn-default btn-md blue-color">Login</a> Or <a href="register.php" class="btn btn-default btn-md blue-color">Register</a></font></p></li>
+			<li></li> 
 		</form>
 		
-		<a href="register.php"><button style="margin-top: 10px; margin-right:15px; width:80px; display:inline"; type="button" class="btn btn-primary">Register</button></li>
 		</ul>
       </ul>
     </div>
@@ -131,31 +135,32 @@
   
 <div class="container-fluid text-center">
   <div class="row content">
-    <div class="col-sm-2 sidenav">
-      <p><a href="#">Link</a></p>
-      <p><a href="#">Link</a></p>
-      <p><a href="#">Link</a></p>
-    </div>
+	<?php include("sidenav.php"); ?>
     <div class="col-sm-8 text-left">
-      <h1>WELCOME </h1>
-      <p>This is still a work in progress :D</p>
-      <hr>
-      <h3>Info</h3>
-      <p>This is info</p>
+      <h1>Welcome to Roommate Finder. Find your new roommate!</h1>
+      <p>Please login: </p>
+	  <form align="center" id="loginform" action="" method="post" novalidate autocomplete="off" class="idealforms login">
+			<div class="form-group">
+				<label for="username">Username</label>
+				<input type="text" class="form-control" name="username" id="username" placeholder="Username">
+			</div>
+			<div class="form-group">
+				<label for="password">Password</label>
+				<input type="password" class="form-control" name="password" id="password" placeholder="Password">
+			</div>
+			<button type="submit" name="submit" class="btn btn-default btn-lg blue-color"> 
+				<span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Login
+			</button>
+			<div align="center"><p><font color="red"><?php echo $error; ?></font></p></div>
+			<div class="clearfix"></div>
+		</form><!-- end .login -->
     </div>
-    <div class="col-sm-2 sidenav">
-      <div class="well">
-        <p>ADS</p>
-      </div>
-      <div class="well">
-        <p>ADS</p>
-      </div>
-    </div>
+	<?php include("sidenav2.php"); ?>
   </div>
 </div>
 
 <footer class="container-fluid text-center">
-  <p>Footer Text</p>
+  <p>Roommate Finder</p>
 </footer>
 
 </body>
