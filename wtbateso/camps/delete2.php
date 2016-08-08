@@ -1,3 +1,26 @@
+<!-- ------------------------------------------------------------------------
+* filename : delete2.php
+* author : William Bateson
+* username : wtbateso
+* course : cs355
+* section : 11-MW
+* semester : Summer 2016
+*
+* description : this file deletes information from the basketball camps
+*
+* input : N/A
+* processing : The program steps are as follows.
+* 1. initialize session
+* 2. display buttons
+* 3. delete from table using id
+*
+* output : buttons
+*
+* precondition : check for login
+* postcondition: information printed to the screen, and delete information from tables
+* 
+*              
+------------------------------------------------------------------------- -->
 <?php 	
 	require 'database.php';
 	$id = 0;

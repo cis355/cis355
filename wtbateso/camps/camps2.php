@@ -1,35 +1,41 @@
 <!DOCTYPE html>
 <!-- ------------------------------------------------------------------------
-filename  : camps.html
-author    : William Bateson
-date      : 2016-07-10
-email     : wtbateso@svsu.edu
-course    : CIS-355
-link      : csis.svsu.edu/~gpcorser/cis355/wtbateso/camps/camps.html
-backup    : github.com/cis355/cis355
-purpose   : This file serves as a menu template for the course, 
-			CIS-255: Client Side Web Development, 
-			at Saginaw Valley State University (SVSU)
-copyright : GNU General Public License (http://www.gnu.org/licenses/)
-			This program is free software: you can redistribute it and/or modify
-			it under the terms of the GNU General Public License as published by
-			the Free Software Foundation, either version 3 of the License, or
-			(at your option) any later version.
-			This program is distributed in the hope that it will be useful,
-			but WITHOUT ANY WARRANTY; without even the implied warranty of
-			MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.   
-external code used in this file: 
-			http://www.ussportscamps.com/basketball/nike/michigan/#camp-dates
-			http://camps.mgoblue.com/Summer_Camps/Boys_Basketball/Player_Development_Camp.htm
-			http://pistonsacademy.com/wp-content/uploads/2015/05/HS-Hoopfest-Details.pdf
-			http://www.sportcamps.msu.edu/
-			
-program structure : 
-	<body>	navbar
-			SQL tables
-			former michigan greats
-			ratings widget
-               
+* filename : camps.php
+* author : William Bateson
+* username : wtbateso
+* course : cs355
+* section : 11-MW
+* semester : Summer 2016
+*
+* description : This program shows basketball camps within the state of michigan
+* for users to rate and recommend. This program utilizes the CRUD application
+*
+* input : taken from the create and update files
+* processing : The program steps are as follows.
+* 1. initialize session
+* 2. display tables
+* 3. print array
+* 4. print sum of array elements
+*
+* output : camps tables
+*
+* precondition : check for login
+* postcondition: information printed to the screen,
+* 
+* external code used in this file: 
+*			http://www.ussportscamps.com/basketball/nike/michigan/#camp-dates
+*			http://camps.mgoblue.com/Summer_Camps/Boys_Basketball/Player_Development_Camp.htm
+*			http://pistonsacademy.com/wp-content/uploads/2015/05/HS-Hoopfest-Details.pdf
+*			http://www.sportcamps.msu.edu/
+*			Used some code from cis255 projects
+*			bootstraped from cis255
+*			
+* program structure : 
+*    <body>	navbar
+*			SQL tables
+*			former michigan greats
+*			ratings widget
+*              
 ------------------------------------------------------------------------- -->
 
 <?php

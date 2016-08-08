@@ -1,3 +1,27 @@
+<!-- ------------------------------------------------------------------------
+* filename : create.php
+* author : William Bateson
+* username : wtbateso
+* course : cs355
+* section : 11-MW
+* semester : Summer 2016
+*
+* description : this file creates a new rating for the basketball camps
+*
+* input : camp name, camp start date, and camp end date
+* processing : The program steps are as follows.
+* 1. initialize session
+* 2. display form
+* 3. take input
+* 4. post input to sql tables
+*
+* output : forms
+*
+* precondition : check for login
+* postcondition: information printed to the screen, and post information to tables
+* 
+*              
+------------------------------------------------------------------------- -->
 <?php 
 
 	session_start();
