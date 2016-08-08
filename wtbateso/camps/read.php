@@ -10,7 +10,7 @@
 	}
 	
 	if ( null==$id ) {
-		header("Location: index.php");
+		header("Location: camps.php");
 	} else {
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

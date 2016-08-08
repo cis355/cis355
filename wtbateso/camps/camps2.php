@@ -25,10 +25,10 @@ external code used in this file:
 			http://www.sportcamps.msu.edu/
 			
 program structure : 
-	<head> 	
-	
-    <body>	navbar
-   
+	<body>	navbar
+			SQL tables
+			former michigan greats
+			ratings widget
                
 ------------------------------------------------------------------------- -->
 
@@ -203,7 +203,7 @@ program structure :
 											echo '<td>'. $row['campName'] . '</td>';
 											echo '<td>'. $row['startDate'] . '</td>';
 											echo '<td>'. $row['endDate'] . '</td>';
-											echo '<td> <a class="btn" href="read2.php?id='. $row['id'].'">Read</a> </td>';
+											echo '<td> <a class="btn" href="read6.php?id='. $row['id'].'">Read</a> </td>';
 											echo '       ';
 											echo '<td> <a class="btn" href="update2.php?id='. $row['id'].'">Update</a> </td>';		
 											echo '       ';
@@ -223,7 +223,7 @@ program structure :
 			
 		<div class="row">
 			<p>
-				<a href="create2.php" class="btn btn-success">Create a camp</a>
+				<a href="create4.php" class="btn btn-success">Create a camp</a>
 			</p>
 		</div>
 			
@@ -255,11 +255,11 @@ program structure :
 											echo '<td>'. $row['campName'] . '</td>';
 											echo '<td>'. $row['rating'] . '</td>';
 											echo '<td>'. $row['comments'] . '</td>';
-											echo '<td> <a class="btn" href="read.php?id='. $row['id'].'">Read</a> </td>';
+											echo '<td> <a class="btn" href="read4.php?id='. $row['id'].'">Read</a> </td>';
 											echo '       ';
-											echo '<td> <a class="btn" href="update.php?id='. $row['id'].'">Update</a> </td>';		
+											echo '<td> <a class="btn" href="update4.php?id='. $row['id'].'">Update</a> </td>';		
 											echo '       ';
-											echo '<td> <a class="btn" href="delete.php?id='. $row['id'].'">Delete</a> </td>';
+											echo '<td> <a class="btn" href="delete4.php?id='. $row['id'].'">Delete</a> </td>';
 											echo '</td>';
 											echo '</tr>';
 								   }
@@ -274,7 +274,7 @@ program structure :
 		
 		<div class="row">
 				<p>
-					<a href="create.php" class="btn btn-success">Create a rating</a>
+					<a href="create5.php" class="btn btn-success">Create a rating</a>
 				</p>
 		</div>
 		
@@ -434,8 +434,6 @@ program structure :
 	<script type="text/javascript" src="http://www.jqwidgets.com/jquery-widgets-documentation/jqwidgets/jqxdatetimeinput.js"></script>
 	<script type="text/javascript" src="http://www.jqwidgets.com/jquery-widgets-documentation/jqwidgets/jqxcalendar.js"></script>
 	<script type="text/javascript" src="http://www.jqwidgets.com/jquery-widgets-documentation/jqwidgets/jqxrating.js"></script>
-    <script type="text/javascript" src="http://www.jqwidgets.com/jquery-widgets-documentation/jqwidgets/jqxloader.js"></script>
-    <script type="text/javascript" src="http://www.jqwidgets.com/jquery-widgets-documentation/jqwidgets/jqxbuttons.js"></script>
     <script type="text/javascript" src="http://www.jqwidgets.com/jquery-widgets-documentation/jqwidgets/jqxdraw.js"></script>
     <script type="text/javascript" src="http://www.jqwidgets.com/jquery-widgets-documentation/jqwidgets/jqxknob.js"></script>
     <script type="text/javascript" src="http://www.jqwidgets.com/jquery-widgets-documentation/jqwidgets/jqxnumberinput.js"></script>

@@ -10,7 +10,7 @@
 	}
 	
 	if ( null==$id ) {
-		header("Location: camps.php");
+		header("Location: camps2.php");
 	} else {
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -52,7 +52,7 @@
 						     	<?php echo $data['endDate'];?>
 					  </div>
 					    <div class="form-actions">
-						  <a class="btn" href="camps.php">Back</a>
+						  <a class="btn" href="camps2.php">Back</a>
 					   </div>
 
 					</div>

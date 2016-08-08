@@ -1,7 +1,7 @@
 <?php 
 	
 	session_start();
-	
+
 
 	require 'database.php';
 	$id = null;
@@ -10,11 +10,11 @@
 	}
 	
 	if ( null==$id ) {
-		header("Location: camps.php");
+		header("Location: camps2.php");
 	} else {
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$sql = "SELECT * FROM camps where id = ?";
+		$sql = "SELECT * FROM campRating where id = ?";
 		$q = $pdo->prepare($sql);
 		$q->execute(array($id));
 		$data = $q->fetch(PDO::FETCH_ASSOC);
@@ -35,24 +35,28 @@
     
     			<div class="span10 offset1">
     				<div class="row">
-		    			<h3>Read a Camp</h3>
+		    			<h3>Read a Customer</h3>
 		    		</div>
 		    		
 	    			<div class="form-horizontal" >
+					  <div class="control-group">
+					    <label class="control-label">User Name</label>
+						     	<?php echo $data['userName'];?>
+					  </div>
 					  <div class="control-group">
 					    <label class="control-label">Camp Name</label>
 						     	<?php echo $data['campName'];?>
 					  </div>
 					  <div class="control-group">
-					    <label class="control-label">Start Date</label>
-						     	<?php echo $data['startDate'];?>
+					    <label class="control-label">Rating</label>
+						     	<?php echo $data['rating'];?>
 					  </div>
 					  <div class="control-group">
-					    <label class="control-label">End Date</label>
-						     	<?php echo $data['endDate'];?>
+					    <label class="control-label">Comments</label>
+						     	<?php echo $data['commets'];?>
 					  </div>
 					    <div class="form-actions">
-						  <a class="btn" href="camps.php">Back</a>
+						  <a class="btn" href="camps2.php">Back</a>
 					   </div>
 
 					</div>

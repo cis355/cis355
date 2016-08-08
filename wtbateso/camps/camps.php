@@ -23,12 +23,14 @@ external code used in this file:
 			http://camps.mgoblue.com/Summer_Camps/Boys_Basketball/Player_Development_Camp.htm
 			http://pistonsacademy.com/wp-content/uploads/2015/05/HS-Hoopfest-Details.pdf
 			http://www.sportcamps.msu.edu/
+			Used some code from cis255 projects
+			bootstraped from cis255
 			
 program structure : 
-	<head> 	
-	
     <body>	navbar
-   
+			SQL tables
+			former michigan greats
+			ratings widget
                
 ------------------------------------------------------------------------- -->
 
@@ -218,7 +220,7 @@ program structure :
 			
 		<div class="row">
 			<p>
-				<a href="create2.php" class="btn btn-success">Create a camp</a>
+				<a href="create6.php" class="btn btn-success">Create a camp</a>
 			</p>
 		</div>
 			
@@ -412,8 +414,6 @@ program structure :
 	<script type="text/javascript" src="http://www.jqwidgets.com/jquery-widgets-documentation/jqwidgets/jqxdatetimeinput.js"></script>
 	<script type="text/javascript" src="http://www.jqwidgets.com/jquery-widgets-documentation/jqwidgets/jqxcalendar.js"></script>
 	<script type="text/javascript" src="http://www.jqwidgets.com/jquery-widgets-documentation/jqwidgets/jqxrating.js"></script>
-    <script type="text/javascript" src="http://www.jqwidgets.com/jquery-widgets-documentation/jqwidgets/jqxloader.js"></script>
-    <script type="text/javascript" src="http://www.jqwidgets.com/jquery-widgets-documentation/jqwidgets/jqxbuttons.js"></script>
     <script type="text/javascript" src="http://www.jqwidgets.com/jquery-widgets-documentation/jqwidgets/jqxdraw.js"></script>
     <script type="text/javascript" src="http://www.jqwidgets.com/jquery-widgets-documentation/jqwidgets/jqxknob.js"></script>
     <script type="text/javascript" src="http://www.jqwidgets.com/jquery-widgets-documentation/jqwidgets/jqxnumberinput.js"></script>
