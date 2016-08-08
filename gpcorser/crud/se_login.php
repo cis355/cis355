@@ -1,5 +1,5 @@
 <?php 
-	
+	print_r($_POST);
 	session_start();
 	
 	# include connection data and functions
@@ -32,7 +32,7 @@
 		if ($valid) {
 			$pdo = Database::connect();
 			$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-			$sql = "SELECT * FROM customers WHERE name = ? LIMIT 1";
+			$sql = "SELECT * FROM se_customers WHERE name = ? LIMIT 1";
 			$q = $pdo->prepare($sql);
 			$q->execute(array($name));
 			$results = $q->fetch(PDO::FETCH_ASSOC);
@@ -40,7 +40,7 @@
 				$_SESSION['name'] = $name;
 				$_SESSION['cust_id'] = $results['id'];
 				Database::disconnect();
-				header("Location: index.php"); // redirect
+				header("Location: se_answers.php"); // redirect
 			}
 			else {
 				$passwordError = 'Password is not valid';
@@ -62,10 +62,10 @@
     
     			<div class="span10 offset1">
     				<div class="row">
-		    			<h3>Login</h3>
+		    			<h3>Sherwood Elementary: Login</h3>
 		    		</div>
     		
-	    			<form class="form-horizontal" action="login.php" method="post">
+	    			<form class="form-horizontal" action="se_login.php" method="post">
 					
 					  <div class="control-group <?php echo !empty($nameError)?'error':'';?>">
 					    <label class="control-label">User Name</label>
@@ -80,7 +80,7 @@
 					  <div class="control-group <?php echo !empty($passwordError)?'error':'';?>">
 					    <label class="control-label">Password</label>
 					    <div class="controls">
-					      	<input name="password" type="password" placeholder="password Address" value="<?php echo !empty($password)?$password:'';?>">
+					      	<input name="password" type="password" placeholder="password" value="<?php echo !empty($password)?$password:'';?>">
 					      	<?php if (!empty($passwordError)): ?>
 					      		<span class="help-inline"><?php echo $passwordError;?></span>
 					      	<?php endif;?>
@@ -88,7 +88,7 @@
 					  </div>
 					  
 					  <div class="form-actions">
-						  <button type="submit" class="btn btn-success">Create</button>
+						  <button type="submit" class="btn btn-success">Login</button>
 						  <a class="btn" href="index.php">Back</a>
 						</div>
 						
