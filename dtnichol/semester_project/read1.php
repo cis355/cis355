@@ -20,7 +20,7 @@ if (empty($_SESSION['id'])) header("Location: login1.php"); //redirect
 		
 		print_r($_POST);
 		print_r($_SESSION);
-		
+		//sql to select an join to populate the ratings and reviews table
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		$sql = 'SELECT * FROM `ratings1` INNER JOIN `restaurant` WHERE restaurant.id = ratings1.restaurantID';;

@@ -5,7 +5,8 @@
 
 
 <?php 
-
+	//create a customer
+	//keeps track of users session who are logged in
 	session_start();
 	if (empty($_SESSION['id'])) header("Location: login1.php"); //redirect
 

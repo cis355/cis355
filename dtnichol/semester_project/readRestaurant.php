@@ -6,19 +6,19 @@ if (empty($_SESSION['id'])) header("Location: login1.php"); //redirect
 ?>
 
 <?php 
-	//populates the read section for customers to read their info
-	require 'database.php';//connects to database
+	//populates the about me section for customers to read
+	require 'database.php'; //connects to database
 	$id = null;
 	if ( !empty($_GET['id'])) {
 		$id = $_REQUEST['id'];
 	}
 	
 	if ( null==$id ) {
-		header("Location: index1.php");
-	} else {//sql statement to pull info from database
+		header("Location: restaurant.php");
+	} else { //sql statement to pull info from database
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$sql = "SELECT * FROM customers1 where id = ?";
+		$sql = "SELECT * FROM restaurant where id = ?";
 		$q = $pdo->prepare($sql);
 		$q->execute(array($id));
 		$data = $q->fetch(PDO::FETCH_ASSOC);
@@ -32,36 +32,52 @@ if (empty($_SESSION['id'])) header("Location: login1.php"); //redirect
     <meta charset="utf-8">
     <link   href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="restaurantStyle.css">
 </head>
-
+<style>
+h3 {
+	color:white;
+}
+label {
+	color:white;
+}
+div {
+	color:white;
+}
+</style>
 <body>
     <div class="container">
     
     			<div class="span10 offset1">
     				<div class="row">
-		    			<h3>Read a Customer</h3>
+		    			<h3>About Me</h3>
 		    		</div>
 		    		
 	    			<div class="form-horizontal" >
 					  <div class="control-group">
-					    <label class="control-label">Name</label>
-						     	<?php echo $data['name'];?>
+					    <label class="control-label">Name:</label>
+						     	<?php echo $data['venueName'];?>
 					  </div>
 					  <div class="control-group">
-					    <label class="control-label">Email Address</label>
-						     	<?php echo $data['email'];?>
+					    <label class="control-label">Address:</label>
+						     	<?php echo $data['address'];?>
 					  </div>
 					  <div class="control-group">
-					    <label class="control-label">Mobile Number</label>
-						     	<?php echo $data['mobile'];?>
+					    <label class="control-label">Venue Type:</label>
+						     	<?php echo $data['type'];?>
+					  </div>
+					  <div class="control-group">
+					    <label class="control-label">Dining Information:</label>
+						     	<?php echo $data['info'];?>
 					  </div>
 					    <div class="form-actions">
-						  <a class="btn" href="index1.php">Back</a>
+						  <a class="btn btn-default" href="restaurant.php">Back</a>
 					   </div>
 
 					</div>
 				</div>
 				
     </div> <!-- /container -->
+	<div id="background"><img class="stretch" src="blue.jpg"/></div>
   </body>
 </html>

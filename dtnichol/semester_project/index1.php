@@ -1,4 +1,5 @@
 <?php
+//keeps track of a users login session
 session_start();
 if (empty($_SESSION['id'])) header("Location: login1.php"); //redirect
 
@@ -20,8 +21,13 @@ function login ($empl_id){
     <meta charset="utf-8">
     <link   href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="restaurantStyle.css">
 </head>
-
+<style>
+h3 {
+	color:white;
+}
+</style>
 <body>
 	<!-- The body section does the following.
 	1. Displays heading
@@ -66,12 +72,24 @@ function login ($empl_id){
 							   	echo '<a class="btn" href="readCustomer.php?id='.
 								   $row['id'].'">Read</a>';
 							   	echo '&nbsp;';
-							   	if ($_SESSION['id'] == $row['id']) {
+								//the if statements wil show buttons depending on the user logged in.
+								//will be different views for admin and regular user
+							   	if ($_SESSION['id'] == $row['id'] && $_SESSION['id']!= 1) {
 									echo '<a class="btn btn-success" 
 									href="update1.php?id='.$row['id'].'">Update</a>';
+								}
 									echo '&nbsp;';
+								if ($_SESSION['id'] == $row['id'] && $_SESSION['id']!= 1){
 									echo '<a class="btn btn-danger" 
 									href="delete1.php?id='.$row['id'].'">Delete</a>';
+								}
+								if ($_SESSION['id'] == 1){
+									echo '<a class="btn btn-danger" 
+									href="delete1.php?id='.$row['id'].'">Delete</a>';
+								}
+								if ($_SESSION['id'] == 1){
+									echo '<a class="btn btn-success" 
+									href="update1.php?id='.$row['id'].'">Update</a>';
 								}
 								echo '&nbsp;';
 								echo '<a class="btn" href="ratingsList1.php?id='.$row['id'].'">Rate</a>';
@@ -90,8 +108,8 @@ function login ($empl_id){
 				
     	</div>
     </div> <!-- /container -->
-	<div>
 	
-	</div>
+	<div id="background"><img class="stretch" src="blue.jpg"/></div>
+	
   </body>
 </html>

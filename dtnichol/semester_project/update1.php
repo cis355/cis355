@@ -1,13 +1,15 @@
  <?php
+ //keeps track of users session who are logged in
 session_start();
 if (empty($_SESSION['id'])) header("Location: login1.php"); //redirect
 
 ?>
  
  <?php 
-	
+	//connect to database
 	require 'database.php';
 	$id = null;
+	//get id if there
 	if ( !empty($_GET['id'])) {
 		$id = $_REQUEST['id'];
 	}
@@ -57,7 +59,7 @@ if (empty($_SESSION['id'])) header("Location: login1.php"); //redirect
 			Database::disconnect();
 			header("Location: index1.php");
 		}
-	} else {
+	} else {//populates the text input fields
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		$sql = "SELECT * FROM customers1 where id = ?";
