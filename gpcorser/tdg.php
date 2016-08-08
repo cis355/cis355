@@ -95,11 +95,36 @@ class Customer {
 	function login ($empl_id) {
 		$_SESSION['empl_id'] = $empl_id; 
 	}
-
+	
+	function displayCreateScreen () {
+		echo ' <div class="container"> <div class="span10 offset1"> <div class="row"> <h3>Create a Customer</h3> </div><form class="form-horizontal" action="tdg.php" method="post"> 
+		<input name="create" value="create" type="hidden">
+		<div class="control-group <label class="control-label">Name</label> <div class="controls"> <input name="name" type="text" placeholder="Name" > </div></div><div class="control-group"> <label class="control-label">Email Address</label> <div class="controls"> <input name="email" type="text" placeholder="Email Address"/> </div></div><div class="control-group"> <label class="control-label">Mobile Number</label> <div class="controls"> <input name="mobile" type="text" placeholder="Mobile Number"/> </div></div><div class="form-actions"> <button type="submit" class="btn btn-success">Create</button> <a class="btn" href="index.php">Back</a></div></form></div></div>
+		';
+	}
+	
+	function createRecord($name, $email, $mobile) {
+		$pdo = Database::connect();
+		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$sql = "INSERT INTO customers (name,email,mobile) values(?, ?, ?)";
+		$q = $pdo->prepare($sql);
+		$q->execute(array($name,$email,$mobile));
+		Database::disconnect();
+		header("Location: tdg.php");
+	}
+	
 }
 
 $cust1 = new Customer;
-$cust1->insertFred();
+if(!empty($_POST['create'])) {
+	$name = $_POST['name'];
+	$email = $_POST['email'];
+	$mobile = $_POST['mobile'];
+    $cust1->createRecord($name, $email, $mobile);
+}
+
+
+// $cust1->insertFred();
 $cust1->displayDeleteFredButton();
 $cust1->displayLoginButton();
 if ($_GET['empl_id'] == 1) $cust1->login(1);
@@ -109,6 +134,8 @@ $cust1->displayRecords();
 echo "<br /><br /><br />";
 print_r ($_SESSION);
 echo "<br /><br /><br />";
+
+$cust1->displayCreateScreen(); 
 
 
 

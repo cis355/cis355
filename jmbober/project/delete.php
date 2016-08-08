@@ -13,7 +13,7 @@
 		// delete data
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$sql = "DELETE FROM customers  WHERE id = ?";
+		$sql = "DELETE FROM songs WHERE id = ?";
 		$q = $pdo->prepare($sql);
 		$q->execute(array($id));
 		Database::disconnect();
@@ -35,7 +35,7 @@
     
     			<div class="span10 offset1">
     				<div class="row">
-		    			<h3>Delete a Customer</h3>
+		    			<h3>Delete a Song</h3>
 		    		</div>
 		    		
 	    			<form class="form-horizontal" action="delete.php" method="post">

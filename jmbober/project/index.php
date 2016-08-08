@@ -1,6 +1,6 @@
 <?php
  session_start();
- if (empty($_SESSION['name'])) header("Location: login.php"); // redirect
+// if (empty($_SESSION['username'])) header("Location: login.php"); // redirect
 
 ?>
 
@@ -19,7 +19,7 @@
     		</div>
 			<div class="row">
 				<p>
-					<a href="create.php" class="btn btn-success">Create</a>
+				  <a href="uploadSong.php" class="btn btn-success">Add a song</a> 
 					<a href="logout.php" class="btn btn-success">Logout</a>
           
 				</p>
@@ -27,10 +27,10 @@
 				<table class="table table-striped table-bordered">
 		              <thead>
 		                <tr>
-		                  <th>Name</th>
-		                  <th>Singer</th>
+		                  <th>Title</th>
+		                  <th>Artist</th>
 		                  <th>Genre</th>
-		                  <th>File</th>
+		              <!--    <th>File</th> -->
 		                </tr>
 		              </thead>
 		              <tbody>
@@ -40,13 +40,14 @@
 					   $sql = 'SELECT * FROM songs ORDER BY id DESC';
 	 				   foreach ($pdo->query($sql) as $row) {
 						   		echo '<tr>';
-							   	echo '<td>'. $row['name'] . '</td>';
-							   	echo '<td>'. $row['singer'] . '</td>';
+							   	echo '<td>'. $row['title'] . '</td>';
+							   	echo '<td>'. $row['artist'] . '</td>';
 							   	echo '<td>'. $row['genre'] . '</td>';
-                  echo '<td>'. $row['file'] . '</td>';
+                 // echo '<td>'. $row['file'] . '</td>';
 							   	echo '<td width=250>';
-							   	echo '<a class="btn" href="read.php?id='.
-								   $row['id'].'">Read</a>';
+                  echo '<a class="btn" href='.$row['link'].'">Listen</a>';
+							  // 	echo '<a class="btn" href="listen.php?id='.
+								  // $row['id'].'">Listen</a>';
 							   	echo '&nbsp;';
 							   	echo '<a class="btn btn-success" 
 								   href="update.php?id='.$row['id'].'">Update</a>';
