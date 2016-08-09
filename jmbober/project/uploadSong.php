@@ -45,7 +45,7 @@
 		}
     
     if (empty($link)) {
-			$linkError = 'Please enter a url that links to the song'
+			$linkError = 'Please enter a url that links to the song';
 			$valid = false;
 		}
 		
@@ -61,6 +61,8 @@
 			header("Location: index.php");
 		}
 	} # end if(!empty($_POST))
+    
+
 ?>
 
 
@@ -133,3 +135,4 @@
     </div> <!-- /container -->
   </body>
 </html>
+<?php   show_source(__FILE__); ?>

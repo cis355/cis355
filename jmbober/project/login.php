@@ -18,7 +18,7 @@
 		// validate input
 		$valid = true;
 		if (empty($username)) {
-			$usernameError = 'Please enter Username';
+			$usernameError = 'Please enter username';
 			$valid = false;
 		}
 		
@@ -34,14 +34,14 @@
 			$sql = "SELECT * FROM users WHERE username = ? LIMIT 1";
 			$q = $pdo->prepare($sql);
 			$q->execute(array($username));
-      $results = $q->fetch(PDO::FETCH_ASSOC);
-      if($result['password']==$password) {
-        $_session['username'] = $username;
-        Database::disconnect();
-        header("Location: index.php"); // redirect
-      }
-      else $passwordError = 'Password is not valid.';
-  		Database::disconnect();
+			$result = $q->fetch(PDO::FETCH_ASSOC);
+			if($result['password']==$password) {
+				$_SESSION['username'] = $username;
+				Database::disconnect();
+				header("Location: index.php"); // redirect
+		    }
+			else $passwordError = 'Password is not valid.';
+			Database::disconnect();
 			
 		}#end if valid
 	} # end if(!empty($_POST))
@@ -97,3 +97,4 @@
     </div> <!-- /container -->
   </body>
 </html>
+<?php   show_source(__FILE__); ?>
