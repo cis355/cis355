@@ -12,3 +12,4 @@ SELECT customers1.name, customers1.email, ratings.rating from `customers1`, `rat
 
 3. What are the customer names, product descriptions and ratings of all products that have even-numbered ratings?
 SELECT customers1.name, products.productDescription, ratings.rating FROM `customers1`, `products`, `ratings` WHERE customers1.id = ratings.customerId AND products.id = ratings.productId AND ratings.rating % 2 = 0
+
