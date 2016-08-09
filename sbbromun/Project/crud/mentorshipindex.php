@@ -45,7 +45,7 @@
 				<a class="navbar-brand" href="#">League of Learners</a>
 				</div>
 				<ul class="nav navbar-nav">
-				<li><a href="playerindex.php">Players</a></li>
+				<li><a href="index.php">Players</a></li>
 				<li><a href="mentorindex.php">Mentors</a></li> 
 				<li><a href="mentorshipindex.php">Mentorships</a></li> 
 				</ul>
