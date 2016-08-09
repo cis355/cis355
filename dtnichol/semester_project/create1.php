@@ -1,4 +1,27 @@
-
+ <!--/* *******************************************************************
+* filename : create1.php
+* author : Derek Nichols
+* username : dtnichol
+* course : cs355
+* section : 11-MW
+* semester : Summer 2016
+*
+* description : displays the customer registration form and when submitted it inserts it into to database. *               
+*               
+*
+* input : user enters information into the customer registration form and is inserted into Customers1 table
+* processing : The program steps are as follows.
+* 		1. user enters registration information
+* 		2. submit form
+* 		3. information is inserted into database table
+* 		
+* output : none
+*
+* precondition : register button must be clicked
+* postcondition: information added in database
+* 				 
+* *******************************************************************
+*/-->
 
 
 

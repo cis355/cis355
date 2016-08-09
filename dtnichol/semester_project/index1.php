@@ -1,3 +1,27 @@
+<!--/* *******************************************************************
+* filename : index1.php
+* author : Derek Nichols
+* username : dtnichol
+* course : cs355
+* section : 11-MW
+* semester : Summer 2016
+*
+* description : displays the customer list of profiles.
+*
+* input : no input for this file
+* processing : The program steps are as follows.
+* 		1. displays customer list
+* 		
+* 		
+* 		
+* output : prints the form table onto the website 
+*
+* precondition : none
+* postcondition: information printed to the screen 
+* 				 
+* *******************************************************************
+*/-->
+
 <?php
 //keeps track of a users login session
 session_start();
@@ -91,8 +115,8 @@ h3 {
 									echo '<a class="btn btn-success" 
 									href="update1.php?id='.$row['id'].'">Update</a>';
 								}
-								echo '&nbsp;';
-								echo '<a class="btn" href="ratingsList1.php?id='.$row['id'].'">Rate</a>';
+								//echo '&nbsp;';
+								//echo '<a class="btn" href="ratingsList1.php?id='.$row['id'].'">Rate</a>';
 							   	
 								echo '</td>';
 							   	echo '</tr>';

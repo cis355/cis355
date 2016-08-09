@@ -1,3 +1,28 @@
+ <!--/* *******************************************************************
+* filename : update1.php
+* author : Derek Nichols
+* username : dtnichol
+* course : cs355
+* section : 11-MW
+* semester : Summer 2016
+*
+* description : displays the customers list and the customer logged in can choose to update and then 	*				sends updates to database when submitted.
+*               
+*
+* input : no input for this file
+* processing : The program steps are as follows.
+* 		1. displays database table to be changed
+* 		2. changes database if changes were made
+* 		
+* 		
+* output : none
+*
+* precondition : none
+* postcondition: information changed in database
+* 				 
+* *******************************************************************
+*/-->
+
  <?php
  //keeps track of users session who are logged in
 session_start();

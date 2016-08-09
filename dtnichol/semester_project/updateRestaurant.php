@@ -1,3 +1,28 @@
+ <!--/* *******************************************************************
+* filename : updateRestaurant.php
+* author : Derek Nichols
+* username : dtnichol
+* course : cs355
+* section : 11-MW
+* semester : Summer 2016
+*
+* description : displays the venue that is chosen to be updated and then sends updates to database when
+*               submitted.
+*
+* input : no input for this file
+* processing : The program steps are as follows.
+* 		1. displays database table to be changed
+* 		2. changes database if changes were made
+* 		
+* 		
+* output : none
+*
+* precondition : none
+* postcondition: information changed in database
+* 				 
+* *******************************************************************
+*/-->
+ 
  <?php
  //keeps track of users session who are logged in
 session_start();
@@ -117,7 +142,7 @@ width: 200px;
     
     			<div class="span10 offset1">
     				<div class="row">
-		    			<h3>Update a Restaurant</h3>
+		    			<h3>Update a Venue</h3>
 		    		</div>
     		
 	    			<form class="form-horizontal"  action="updateRestaurant.php?id=<?php echo $id?>" method="post">
@@ -159,9 +184,9 @@ width: 200px;
 					    </div>
 					  </div>
 					  <div class="control-group <?php echo !empty($infoError)?'error':'';?>">
-					    <label class="control-label">Dining Information</label>
+					    <label class="control-label">Venue Information</label>
 					    <div class="controls">
-					      	<input class="wideInput" name="info" type="text"  placeholder="Dining Info"  value="<?php echo !empty($info)?$info:'';?>">
+					      	<input class="wideInput" name="info" type="text"  placeholder="Venue Info"  value="<?php echo !empty($info)?$info:'';?>">
 					      	<?php if (!empty($infoError)): ?>
 					      		<span class="help-inline"><?php echo $infoError;?></span>
 					      	<?php endif;?>

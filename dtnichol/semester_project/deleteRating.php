@@ -1,3 +1,29 @@
+<!--/* *******************************************************************
+* filename : deleteRating.php
+* author : Derek Nichols
+* username : dtnichol
+* course : cs355
+* section : 11-MW
+* semester : Summer 2016
+*
+* description : deletes rating from the database.                
+*               
+*
+* input : none
+* processing : The program steps are as follows.
+* 		1. admin clicks delete button for rating
+* 		2. submits delete form that follows
+* 		3. rating is deleted from database table
+* 		
+* output : none
+*
+* precondition : none
+* postcondition: rating deleted from database
+* 				 
+* *******************************************************************
+*/-->
+
+
 <?php 
 	//delete customer rating
 	//keeps track of users session who are logged in
