@@ -2,13 +2,13 @@
 	session_start();
 	if (empty($_SESSION['username'])) header("Location: login.php");
  
-	$id = $_GET['id'];
+	$id = intval($_GET['id']);
 	
 	require 'database.php';
 		
   $pdo = Database::connect();
   $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-  $sql = 'Select * from songs where songs.id = ?';
+  $sql = 'SELECT * FROM songs WHERE id = ?';
   $q = $pdo->prepare($sql);
   $q->execute(array($id));
   $data = $q->fetch(PDO::FETCH_ASSOC);
@@ -30,6 +30,9 @@
         <div class="row">
           <?php echo '<h3>Ratings/comments for '. $data["title"] .' by '. $data["artist"] .'</h3>' ?>
         </div>
+        <div>
+          <a class="btn" href="index.php">Back</a>
+        </div>
         <table class="table table-striped table-bordered">
           <thead>
             <tr>
@@ -42,8 +45,8 @@
                 
             <?php 					   
               $pdo = Database::connect();
-              $sql = "SELECT songs.title, songs.artist, users.username, songRatings.rating, songRatings.comment FROM `songs`, `users`, `songRatings` WHERE songs.id = ? AND songs.id = songRatings.songID AND users.id = songRatings.userID"
-              //******FIX******
+              $sql = "SELECT songs.title, songs.artist, users.username, songRatings.rating, songRatings.comment FROM `songs`, `users`, `songRatings` WHERE songs.id = $id AND songs.id = songRatings.songID AND users.id = songRatings.userID";
+                            
               foreach ($pdo->query($sql) as $row) {
                 echo '<tr>';
                 echo '<td>'. $row['username'] . '</td>';

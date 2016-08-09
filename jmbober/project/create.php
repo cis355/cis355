@@ -1,13 +1,5 @@
 <?php 
 
-	# Consider three scenarios
-	# 1. User clicked "create" button on list screen (index.php)
-	#		-create.php displays blank entry screen
-	# 2. User clicked "create" button (submit button) on entry screen, but a field was empty
-	#		-Displays an error message next to the empty field
-	# 3. User clicked "create" button (submit button) on entry screen and all data valid
-	# 		-PHP code inserts the record and redirects to the list screen
-	
 	
 	# include connection data and functions
 	require 'database.php';

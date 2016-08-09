@@ -20,6 +20,7 @@
           <div class="row">
             <p>
               <a href="uploadSong.php" class="btn btn-success">Add a song</a> 
+             <!-- <a href="readAllRatings.php" class="btn btn-success">View all song ratings</a> -->
               <a href="logout.php" class="btn btn-success">Logout</a>
 
             </p>
@@ -44,7 +45,7 @@
               echo '<td>'. $row['artist'] . '</td>';
               echo '<td>'. $row['genre'] . '</td>';
               
-              echo '<td width=350>';
+              echo '<td width=300>';
               echo '<a class="btn" href='.$row['link'].'">Listen</a>';
               echo '<a class="btn" href="rate.php?id='.$row['id'].'">Rate</a>';
               echo '<a class="btn" href="update.php?id='.$row['id'].'">Update</a>';
