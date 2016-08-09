@@ -86,11 +86,11 @@
                        
                       <div class="form-actions"> 
                           <button type="submit" class="btn btn-success">Create</button> 
-                          <a class="btn" href="index.php">Back</a> 
+                          <a href="createAccount.php" class="btn btn-danger">Sign Up</a>
                         </div> 
                          
                     </form> 
-                     
+                    
                 </div> 
                  
     </div> <!-- /container --> 

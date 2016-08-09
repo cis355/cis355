@@ -1,0 +1,7 @@
+CREATE TABLE  `se_donations` (
+`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+`cust_id` INT NOT NULL ,
+`wish_id` INT NOT NULL ,
+`qty` INT NOT NULL ,
+`comments` VARCHAR( 100 )
+) ENGINE = INNODB;
