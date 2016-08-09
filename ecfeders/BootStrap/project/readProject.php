@@ -20,7 +20,7 @@
  * output       : form with the sheet information
  *  
  * precondition : css documents and php files in same directory/databaseProject.php
- * postcondition: actions based on button clicks
+ * postcondition: Sheet info is displayed and has option to go back
  * *******************************************************************   */ 
  ?>
  

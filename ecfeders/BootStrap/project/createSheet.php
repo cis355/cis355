@@ -22,7 +22,7 @@
  * output       : table with correct information
  *  
  * precondition : css documents and php files in same directory/databaseProject.php
- * postcondition: actions based on button clicks
+ * postcondition: adds a sheet to that businesses catalog
  * *******************************************************************   */ 
  ?>
 

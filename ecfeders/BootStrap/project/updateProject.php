@@ -5,11 +5,11 @@
 *  				 https://startbootstrap.com/template-overviews/simple-sidebar/
 				 https://www.startutorial.com/
 * username     : ecfeders  
-* course       : cs355  
+* course       : CIS-355  
 * section      : 11-MW  
 * semester : Summer 2016  
 *  
-* description  : php file lets the user update a record in the databse
+* description  : php file lets the user update a sheet in the databse
  *  
  * processing   : The program steps are as follows.   
  *          1. display form
@@ -19,8 +19,8 @@
  
  * output       : updated information in dtaabse and table
  *  
- * precondition : css documents and php files
- * postcondition: actions based on button clicks
+ * precondition : css documents and php files in the same folder/requires databaseProject.php
+ * postcondition: updates sheet information
  * *******************************************************************   */ 
  ?>
 
@@ -106,17 +106,11 @@
 			
 			$pdo = Database::connect();
 			$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-			echo "Before SQL";
-		
 			$sql = "UPDATE sheet set buss_id = ?, worker_id = ?, grill1 = ?, grill2 = ?,
 			fryer1 = ?, fryer2 = ?, creamer = ? WHERE id = ?";
 			$q = $pdo->prepare($sql);
-			echo "After SQL";
-			
 			$q->execute(array($buss_id,$worker_id,$grill1,$grill2,$fryer1,$fryer2,$creamer,$id));
-			echo "After Execute";
 			Database::disconnect();
-			
 			header("Location: project.php");
 			echo $dateMod;
 			

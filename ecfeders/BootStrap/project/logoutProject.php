@@ -17,7 +17,7 @@
  * output       : logout user
  *  
  * precondition : css documents and php files in same directory/databaseProject.php
- * postcondition: actions based on button clicks
+ * postcondition: sets session to nothing which means logged out
  * *******************************************************************   */ 
  ?>
 <?php

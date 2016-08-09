@@ -4,7 +4,7 @@
 * author       : Erik Federspiel & Star Tutorial
 				 https://www.startutorial.com/
 * username     : ecfeders  
-* course       : cs355  
+* course       : CIS-355  
 * section      : 11-MW  
 * semester : Summer 2016  
 *  
@@ -16,10 +16,10 @@
  *          2. connect to databse with info
  *          3. have disconnect frunction
  
- * output       : table with correct information
+ * output       : nothing connects to the database
  *  
- * precondition : css documents and php filescss documents and php files in same directory
- * postcondition: actions based on button clicks
+ * precondition : that datbase exists and cedentials work
+ * postcondition: connects to the database
  
 //Pre - none
 //Post - exit

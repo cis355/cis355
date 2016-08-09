@@ -80,14 +80,24 @@
                 </li>
 				<!-- List for options -->
                 <li>
-                    <a href="loginProject.php">Login</a>
-                </li>
-                <li>
                     <a href="logoutProject.php">Logout</a>
+                </li>
+				<li>
+				    <?php
+						echo '<a href="changePassword.php?id='.$_SESSION['id'].'">Change Password</a>';
+					?>
                 </li>
                 <li>
                     <a href="createSheet.php">Create</a>
                 </li>
+				<?php
+				    //If admin display button
+				    if($_SESSION['name'] == "admin"){
+						echo"<li>
+							<a href='deleteUser.php'>Delete Worker</a>
+						</li>";
+					}
+				?>
                 </li>
             </ul>
         </div>

@@ -20,8 +20,8 @@
  
  * output       : created account
  *  
- * precondition : css documents and php files
- * postcondition: actions based on button clicks
+ * precondition : css documents and php files in same directory/databaseProject.php
+ * postcondition: signs up a user
  * *******************************************************************   */ 
  ?>
 
@@ -138,7 +138,7 @@
 					  <div class="control-group <?php echo !empty($passwordError)?'error':'';?>">
 					    <label class="control-label">Password</label>
 					    <div class="controls">
-					      	<input name="password" type="text"  placeholder="Password" value="<?php echo !empty($password)?$password:'';?>">
+					      	<input name="password" type="password"  placeholder="Password" value="<?php echo !empty($password)?$password:'';?>">
 					      	<?php if (!empty($passwordError)): ?>
 					      		<span class="help-inline"><?php echo $passwordError;?></span>
 					      	<?php endif;?>

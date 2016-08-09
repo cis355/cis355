@@ -5,7 +5,7 @@
 *  				 https://startbootstrap.com/template-overviews/simple-sidebar/
 				 https://www.startutorial.com/
 * username     : ecfeders  
-* course       : cs355  
+* course       : CIS-355 
 * section      : 11-MW  
 * semester : Summer 2016  
 *  
@@ -21,7 +21,7 @@
  * output       : see if correct login to go to create account page
  *  
  * precondition : css documents and php files in same directory/databaseProject.php
- * postcondition: actions based on button clicks
+ * postcondition: logs in user
  * *******************************************************************   */ 
  ?>
  
@@ -66,7 +66,8 @@
             $results = $q->fetch(PDO::FETCH_ASSOC); 
             if($results['password']==$password) { 
 			    $_SESSION['name'] = $name;
-                $_SESSION['buss-id'] = $results['buss_id']; 
+                $_SESSION['buss-id'] = $results['buss_id'];
+				$_SESSION['id'] = $results['id'];
                 Database::disconnect(); 
                 header("Location: project.php"); // redirect 
             } 
