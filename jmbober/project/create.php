@@ -17,9 +17,9 @@
 	if ( !empty($_POST)) {
 		// keep track validation errors
 		$firstnameError = null;
-    $lastnameError = null;
-    $usernameError = null;
-    $passwordError = null;
+		$lastnameError = null;
+		$usernameError = null;
+		$passwordError = null;
 		$emailError = null;
 
 		
@@ -27,7 +27,7 @@
 		$firstname = $_POST['firstname'];
 		$lastname = $_POST['lastname'];
 		$username = $_POST['username'];
-    $password = $_POST['password'];
+		$password = $_POST['password'];
 		$email = $_POST['email'];
 		
 		
@@ -67,7 +67,7 @@
 		if ($valid) {
 			$pdo = Database::connect();
 			$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-			$sql = "INSERT INTO users (firstname,lastname,username,password,email,) values(?, ?, ?, ?, ?)";
+			$sql = "INSERT INTO users (firstname,lastname,username,password,email) values(?, ?, ?, ?, ?)";
 			$q = $pdo->prepare($sql);
 			$q->execute(array($firstname,$lastname,$username,$password,$email));
 			Database::disconnect();
