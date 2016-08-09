@@ -1,11 +1,11 @@
 <!-- 
-filename  : elmclean.html
+filename  : program03.php
 author    : Erika McLean
 date      : 2016-05-10
 email     : elmclean@svsu.edu
-course    : CIS-255
-link      : csis.svsu.edu/~elmclean/cis255/elmclean/elmclean.html
-backup    : github.com/cis255/cis255
+course    : CIS-355
+link      : csis.svsu.edu/~elmclean/cis355/elmclean/program03/program03.html
+backup    : github.com/cis355/cis355
 purpose   : This file serves as a menu template for the course, 
 			CIS-255: Client Side Web Development, 
 			at Saginaw Valley State University (SVSU)
@@ -21,6 +21,53 @@ external code used in this file:
 			Based off various bootstrap templates 
 
 program structure : 
-	<head> metadata
-	<body> The links to all project work
+	php: start session, require database file
+	class Visits: private variables, public print() function
+    main: new Visits class object and call to print() function
+    final: show php source function
 -->
+
+<?php 
+    session_start();  // create session 
+    require ("database.php");  // database connection file
+
+    /**
+     *  Visit class creates an instance of a park tourist visit
+     */
+    class Visit {  
+        // create static fields 
+        private static $park_id;  
+        private static $tourist_id;  
+        private static $visit_date;
+
+		/**
+	     *  Display link for UML class diagram
+	     */
+        function umlDiagram() {
+        	echo '<p><a href="http://csis.svsu.edu/~elmclean/cis355/elmclean/program03/McLean_Program03Diagram.png">Click here for UML class diagram</a></p>';
+        }
+
+        /**
+	     *  Select data from the table into an array, then a JSON object
+	     */
+        function printTable() {
+        	$connection = mysqli_connect('localhost', 'elmclean', '604577', 'elmclean');
+        	$sql = 'SELECT * FROM visits ORDER BY park_id DESC';  // select statement
+        	
+        	$dataArray = [];  // initialize empty array
+        	foreach (mysqli_query($connection, $sql) as $row) {  // loop through each record
+            	array_push($dataArray, $row);  // push record into array
+        	} 
+        	echo json_encode($dataArray);  // convert array into JSON object and print to screen
+        }
+    }
+
+
+    // create new object and print
+	$visit = new Visit;
+	$visit->umlDiagram();
+	$visit->printTable();
+
+	echo '<br /><br />';
+    show_source(__FILE__);  // show source code
+?>
