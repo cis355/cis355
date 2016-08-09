@@ -38,6 +38,7 @@
 			$results = $q->fetch(PDO::FETCH_ASSOC);
 			if($results['password']==$password) {
 				$_SESSION['name'] = $name;
+				$_SESSION['cust_id'] = $results['id'];
 				Database::disconnect();
 				header("Location: index.php"); // redirect
 			}

@@ -1,7 +1,7 @@
 <?php 
 	
 	session_start();
-	if (empty($_SESSION['name'])) header("Location: login.php");
+	//if (empty($_SESSION['name'])) header("Location: login.php");
 
 	require 'database.php';
 	$id = null;
@@ -14,7 +14,7 @@
 	} else {
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$sql = "SELECT * FROM customers where id = ?";
+		$sql = "SELECT * FROM customers2 where id = ?";
 		$q = $pdo->prepare($sql);
 		$q->execute(array($id));
 		$data = $q->fetch(PDO::FETCH_ASSOC);
@@ -52,7 +52,7 @@
 						     	<?php echo $data['mobile'];?>
 					  </div>
 					    <div class="form-actions">
-						  <a class="btn" href="index.php">Back</a>
+						  <a class="btn" href="../program01.php">Back</a>
 					   </div>
 
 					</div>

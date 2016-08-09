@@ -39,7 +39,7 @@
             if($results['password']==$password) { 
                 $_SESSION['name'] = $name; 
                 Database::disconnect(); 
-                header("Location: index.php"); // redirect 
+                header("Location: ../program01.php"); // redirect 
             } 
             else { 
                 $passwordError = 'Password is not valid'; 
@@ -88,7 +88,7 @@
                        
                       <div class="form-actions"> 
                           <button type="submit" class="btn btn-success">Create</button> 
-                          <a class="btn" href="index.php">Back</a> 
+                          <a class="btn" href="../program01.php">Back</a> 
                         </div> 
                          
                     </form> 

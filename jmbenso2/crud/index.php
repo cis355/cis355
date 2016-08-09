@@ -1,3 +1,11 @@
+<?php
+	// Redirect if not logged in
+	session_start();
+	if (empty($_SESSION['name'])) {
+		header("Location: login.php"); // Redirect
+	}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,6 +26,7 @@
 				<!-- Create button (opens create.php) -->
 				<p>
 					<a href="create.php" class="btn btn-success">Create</a>
+					<a href="logout.php" class="btn btn-danger">Log Out</a>
 				</p>
 				
 				<!-- Data table: displays data from customers table in database -->
