@@ -1,4 +1,27 @@
-
+ <!--/* *******************************************************************
+* filename : createRestaurant.php
+* author : Derek Nichols
+* username : dtnichol
+* course : cs355
+* section : 11-MW
+* semester : Summer 2016
+*
+* description : displays the create restaurant form and when submitted it inserts it into the restaurants *				 database.                
+*               
+*
+* input : admin enters information into the add new venue form and is inserted into restaurant table
+* processing : The program steps are as follows.
+* 		1. admin enters new venue information
+* 		2. submit form
+* 		3. information is inserted into database table
+* 		
+* output : new venue will be displayed on screen
+*
+* precondition : admin must be logged in to add new venue when button is clicked
+* postcondition: information added in database
+* 				 
+* *******************************************************************
+*/-->
 
 
 
@@ -143,9 +166,9 @@ label {
 					    </div>
 					  </div>
 					  <div class="control-group <?php echo !empty($infoError)?'error':'';?>">
-					    <label class="control-label">Dining Information</label>
+					    <label class="control-label">Venue Information</label>
 					    <div class="controls">
-					      	<textarea name="info" type="textarea"  placeholder="Dining Info" rows="4" cols="25" value="<?php echo !empty($info)?$info:'';?>"></textarea>
+					      	<textarea name="info" type="textarea"  placeholder="Venue Info" rows="4" cols="25" value="<?php echo !empty($info)?$info:'';?>"></textarea>
 					      	<?php if (!empty($infoError)): ?>
 					      		<span class="help-inline"><?php echo $infoError;?></span>
 					      	<?php endif;?>

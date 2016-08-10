@@ -16,7 +16,7 @@
 * 		
 * output : prints the table onto the website as JSON object 
 *
-* precondition : must instantiate a new class to begin and have information in the table
+* precondition : none
 * postcondition: information printed to the screen as JSON object
 * 				 
 * *******************************************************************

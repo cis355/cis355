@@ -1,34 +1,12 @@
+test
 <?php
-
-$filename1 = "test1.php";
-$username1 = "Jimmy Joe";
-$value1 = 23;
-
-$filename2 = "test2.php";
-$username2 = "Billy Bob";
-$value2 = 32;
-
-echo "<select>";
-echo "<option value='$value1'>$username1 ($filename1)</option>";
-echo '<option value=' . $value2 . '>' . $username2 . ' (' . $filename2 . ')</option>';
-echo "</select><br /><br /><br />";
-
-$product = "box";
-$weight = 1.2345689;
-printf("This %s is %.2f pounds", $product, $weight);
-
-echo "<br /><br /><br />";
-$fahr = 32;
-$cels = FtC($fahr);
-echo $cels . "<br />";
-echo $fahr . "<br />";
-
-function FtC(&$fahr) {
-	$cels = ($fahr - 32) / 1.8;
-	$fahr = 0;
-	return $cels;
-}
-
-
+$json = '{"item": [
+        {"name":"Bill", "id": 2, "school":"SVSU", "clubs":{"A":"VR-DEV", "B":"ACM"}},
+        {"name":"Jean", "id": 4, "school":"MSU", "clubs":{"A":"ABC", "B":"DEF"}},
+        {"name":"Jon", "id": 6, "school":"GVSU", "clubs":{"A":"XYZ", "B":"PDQ"}},
+        {"name":"Tim", "id": 12, "school":"UM", "clubs":{"A":"GHI", "B":"JKL"}},
+        {"name":"River", "id": 30, "school":"MYU", "clubs":{"A":"MNO", "B":"TUV"}}
+        ]}';
+$obj = json_decode ($json);
+echo ($obj->item[2]->clubs->A);
 ?>
-

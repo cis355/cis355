@@ -1,3 +1,28 @@
+<!--/* *******************************************************************
+* filename : deleteRestaurant.php
+* author : Derek Nichols
+* username : dtnichol
+* course : cs355
+* section : 11-MW
+* semester : Summer 2016
+*
+* description : deletes venue from the database.                
+*               
+*
+* input : none
+* processing : The program steps are as follows.
+* 		1. admin clicks delete button for venue
+* 		2. submits delete form that follows
+* 		3. venue is deleted from database table restaurants
+* 		
+* output : none
+*
+* precondition : none
+* postcondition: venue deleted from database
+* 				 
+* *******************************************************************
+*/-->
+
 <?php 
 	//delete restaurant for admin use only
 	//keeps track of users session who are logged in

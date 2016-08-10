@@ -1,3 +1,28 @@
+ <!--/* *******************************************************************
+* filename : delete1.php
+* author : Derek Nichols
+* username : dtnichol
+* course : cs355
+* section : 11-MW
+* semester : Summer 2016
+*
+* description : deletes customer from the database.                
+*               
+*
+* input : none
+* processing : The program steps are as follows.
+* 		1. user clicks delete button
+* 		2. submits delete form that follows
+* 		3. information is deleted from database table
+* 		
+* output : none
+*
+* precondition : none
+* postcondition: information deleted from database
+* 				 
+* *******************************************************************
+*/-->
+
 <?php 
 	//keeps track of a users login session
 	session_start();

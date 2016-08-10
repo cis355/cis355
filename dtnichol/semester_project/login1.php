@@ -1,3 +1,29 @@
+ <!--/* *******************************************************************
+* filename : login1.php
+* author : Derek Nichols
+* username : dtnichol
+* course : cs355
+* section : 11-MW
+* semester : Summer 2016
+*
+* description : displays the login screen where users and admin can log into website to view contents. *				                 
+*               
+*
+* input : user logs in and session variable is created to all the pages can be used that the user has
+*         access to.
+* processing : The program steps are as follows.
+* 		1. user enters login information
+* 		2. submit form
+* 		3. information is compared to database and authenticated
+* 		
+* output : none
+*
+* precondition : none
+* postcondition: user can now access website
+* 				 
+* *******************************************************************
+*/-->
+
 <?php 
 
 	
@@ -85,6 +111,9 @@ form {
     <div class="container" align="center">
 			
     			<div class="col-xs-4" align="center">
+					<div>
+						<h1>Welcome to Hotspot Venues</H1>
+					</div>
     				<div class="row" align="center">
 		    			<h3>Login</h3>
 		    		</div>

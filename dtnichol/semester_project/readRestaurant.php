@@ -1,3 +1,28 @@
+<!--/* *******************************************************************
+* filename : readRestaurant.php
+* author : Derek Nichols
+* username : dtnichol
+* course : cs355
+* section : 11-MW
+* semester : Summer 2016
+*
+* description : displays the venue info from table on separate page.                
+*               
+*
+* input : none
+* processing : The program steps are as follows.
+* 		1. when about me button is clicked it displays the venue info from table on separate page.
+* 		
+* 		
+* 		
+* output : displays the venue info from table on separate 
+*
+* precondition : none
+* postcondition: displays the venue info from table on separate page.
+* 				 
+* *******************************************************************
+*/-->
+
 <?php
 //keeps track of users session who are logged in
 session_start();
@@ -67,7 +92,7 @@ div {
 						     	<?php echo $data['type'];?>
 					  </div>
 					  <div class="control-group">
-					    <label class="control-label">Dining Information:</label>
+					    <label class="control-label">Venue Information:</label>
 						     	<?php echo $data['info'];?>
 					  </div>
 					    <div class="form-actions">

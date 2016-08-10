@@ -1,0 +1,268 @@
+<?php
+session_start();
+require 'CRUD/database.php'; 
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Greeting Card page">
+    <meta name="author" content="Alexander King">
+
+    <title>Greeting Cards - Kinsakes Kreations</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/business-casual.css" rel="stylesheet">
+
+    <!-- Fonts -->
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Josefin+Slab:100,300,400,600,700,100italic,300italic,400italic,600italic,700italic" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+	<div class="log">
+		<?php
+		 $helloName = $_SESSION['name'];
+		
+			if (empty($_SESSION['name'])) {
+				echo '<a style="color: #fff;" href="loginCust.php">Login</a>';
+				echo ' / ';
+				echo '<a style="color: #fff;" href="createCust.php">Create Account</a>';
+				}
+			else {
+				echo 'Hello ' . $helloName . '!';
+				echo ' / ';
+				echo '<a style="color: #fff;" href="myCards.php">My Cards</a>';
+				echo ' / ';
+				echo '<a style="color: #fff;" href="logoutCust.php">Logout</a>';
+				}
+		?>
+	</div>
+
+    <div class="brand">Kingsake's Kreations</div>
+    <div class="address-bar">
+		<table><td>
+			<tr>Items crafted by hand, with future keepsakes in mind.</tr>
+			<tr><h3>Keep some and share some.</h3></tr>
+		</td></table>
+	</div>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <!-- navbar-brand is hidden on larger screens, but visible when the menu is collapsed -->
+                <a class="navbar-brand" href="home.html">Business Casual</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="home.html">Home</a>
+                    </li>
+                    <li>
+                        <a href="about.html">About</a>
+                    </li>
+                    <li>
+                        <a href="greetingCards.html">Greeting Cards</a>
+                    </li>
+                    <li>
+                        <a href="jewlery.html">Jewlery</a>
+                    </li>
+                    <li>
+                        <a href="contact.html">Contact</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <div class="container">
+
+        <div class="row">
+            <div class="box">
+                <div class="col-lg-12">
+                    <hr>
+                    <h2 class="intro-text text-center">Greeting
+                        <strong>Cards</strong>
+                    </h2>
+                    <hr>
+                </div>
+				
+				<!-- Plain card box -->
+                <div class="col-lg-12 text-center">
+                    <img class="img-responsive img-border img-full" src="img/card1.jpg" alt="">
+                    <h2>Basic Greeting Cards
+                        <br>
+                    </h2>
+                    <p>I started making my own cards when I needed one for a certain occasion and just could not find the right one.
+						Then other people who received my cards would ask me to make one for them, for one thing or another.  From there it lead to the desire to make cards that anyone to could enjoy. This slide show gives and example of how my cards turn out.  
+						Each card made is unique. This is part of what makes them so special.  Thus becoming a keepsake. 
+					</p>
+                    <!--<a href="#" class="btn btn-default btn-lg">Read More</a>-->
+                    <hr>
+                </div>
+				
+				<!-- Embossed card box. -->
+                <div class="col-lg-12 text-center">
+                    <img class="img-responsive img-border img-full" src="img/card2.jpg" alt="">
+                    <h2>Embossed Greeting Cards
+                        <br>
+                    </h2>
+                    <p>We can also add embossed designs to your card upon request.</p>
+                    <hr>
+                </div>
+				
+				<!-- 3D Cards box. -->
+                <div class="col-lg-12 text-center">
+                    <img class="img-responsive img-border img-full" src="img/card3.jpg" alt="">
+                    <h2>3D/Pop-up Greeting Cards
+                        <br>
+                    </h2>
+                    <p>With a little bit more time and effort, we can make your card truly unique with a 3D design.</p>
+                    <hr>
+                </div>
+				
+				<div class="col-lg-12 text-center">
+					<h2>Card Kreator</h2>
+					<hr>
+					</br>
+					<p>
+					This is where you can design your own card to your own specifications, and we will make it for you.
+					</p>
+					<hr>
+					
+					<?php
+					
+					$customerid = $_SESSION['id'];
+					$creationName = $_POST['creationName'];
+					$align = $_POST['align'];
+					$front = $_POST['front'];
+					$inside1 = $_POST['inside1'];
+					$inside2 = $_POST['inside2'];
+					$comments = $_POST['comments'];
+					$cardId = $_POST['type'];
+					
+					 if (!empty($_SESSION['name'])) {	
+echo '                   <form role="form">                                                                       ';
+echo '                       <div class="row">                                                                    ';
+echo '                           <div class="form-group col-lg-6">                                                ';
+echo '                               <label>Name of Kreation:</label>                                             ';
+echo '                               <input type="text" name="creationName" class="form-control" />                                     ';
+echo '                           </div>                                                                           ';
+echo '							</br>                                                                             ';
+echo '							<div class="clearfix"></div>                                                      ';
+echo '                           <div class="form-group col-lg-6">                                                ';
+echo '								<input type="radio" name="align" value="portrait" checked>Portrait<br>        ';
+echo '								<input type="radio" name="align" value="landscape">Landscape<br>              ';
+echo '                           </div>                                                                           ';
+echo '							<div class="form-group col-lg-6"> ';
+echo '								<label>Type of Card:</label>';
+echo '								<select name="type"> ';
+                   $pdo = Database::connect();
+                   $sql = 'SELECT * FROM cards ORDER BY id DESC';
+                   foreach ($pdo->query($sql) as $row) {
+						echo '<option value="' . $row['id'] . '">' . $row['type'] . ' - ' . $row['description'] . '</option>';
+				   
+				   }
+                   Database::disconnect();
+echo '								<select>';
+echo '							</div>								';
+echo '							</br>                                                                             ';
+echo '							</br>                                                                             ';
+echo '							<div class="clearfix"></div>                                                      ';
+echo '							<p>Please provide your text and picture preferences for each section below.</p>   ';
+echo '							</br>                                                                             ';
+echo '                           <div class="form-group col-lg-12">                                                ';
+echo '                               <label>Front of Card:</label>                                                ';
+echo '                               <input type="text" name="front" class="form-control" rows="4"/>                         ';
+echo '                           </div>                                                                           ';
+echo '                           <div class="form-group col-lg-6">                                                ';
+echo '                               <label>Inside Left (top):</label>                                            ';
+echo '                               <input type="text" name="inside1" class="form-control" rows="4" />                         ';
+echo '                           </div>                                                                           ';
+echo '							<div class="form-group col-lg-6">                                                 ';
+echo '                               <label>Inside Right (bottom):</label>                                        ';
+echo '                               <input type="text" name="inside2" class="form-control" rows="4" />           ';
+echo '                           </div>                                                                           ';
+echo '							<div class="form-group col-lg-6">                                                 ';
+echo '                               <label>Additional Comments:</label>                                          ';
+echo '                               <input type="text" name="comments" class="form-control" rows="4" />                          ';
+echo '                           </div>                                                                           ';
+echo '                           <div class="form-group col-lg-12">                                               ';
+echo '                               <input type="hidden" name="submit" value="creations">                            ';
+echo '                               <button type="submit" class="btn btn-default">Save</button>                  ';
+echo '                           </div>                                                                           ';
+echo '                       </div>                                                                               ';
+echo '                   </form>      ';
+
+			$pdo = Database::connect();
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $sql = "INSERT INTO creations (cust_id,card_id,creationName,align,front,inside1,inside2,comments) values(?, ?, ?,?,?,?,?,?)";
+            $q = $pdo->prepare($sql);
+            $q->execute(array($customerId,$cardId,$creationName,$align,$front,$inside1,$inside2,$comments));
+            Database::disconnect();
+            header("Location: greetingCards.html");
+
+
+						}
+					else
+						{
+							echo '<p>Please <a href="loginCust.php">login</a> to use this feature.</p>';
+						}
+					
+					?>
+					
+				</div>
+				
+            </div>
+        </div>
+
+    </div>
+    <!-- /.container -->
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <p>Copyright &copy; Alexander King 2016</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+</body>
+
+</html>

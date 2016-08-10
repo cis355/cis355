@@ -1,3 +1,28 @@
+<!--/* *******************************************************************
+* filename : read1.php
+* author : Derek Nichols
+* username : dtnichol
+* course : cs355
+* section : 11-MW
+* semester : Summer 2016
+*
+* description : displays the customer info from table on separate page.                
+*               
+*
+* input : none
+* processing : The program steps are as follows.
+* 		1. when read is clicked it displays the customer info from table on separate page.
+* 		
+* 		
+* 		
+* output : displays the customer info from table on separate 
+*
+* precondition : none
+* postcondition: displays the customer info from table on separate page.
+* 				 
+* *******************************************************************
+*/-->
+
 <?php
 session_start();
 if (empty($_SESSION['id'])) header("Location: login1.php"); //redirect

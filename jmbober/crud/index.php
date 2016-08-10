@@ -1,6 +1,6 @@
 <?php
 session_start();
-if (empty($_SESSION['name'])) header("Location: login.php"); // redirect
+//if (empty($_SESSION['name'])) header("Location: login.php"); // redirect
 
 ?>
 

@@ -1,3 +1,28 @@
+ <!--/* *******************************************************************
+* filename : database.php
+* author : Derek Nichols
+* username : dtnichol
+* course : cs355
+* section : 11-MW
+* semester : Summer 2016
+*
+* description : connects to the database			                 
+*               
+*
+* input : need database login information
+* processing : The program steps are as follows.
+* 		1. login information must be correct in php code
+* 		
+* 		
+* 		
+* output : none
+*
+* precondition : none
+* postcondition: database connection successfull
+* 				 
+* *******************************************************************
+*/-->
+
 <?php
 //database connection
 class Database 

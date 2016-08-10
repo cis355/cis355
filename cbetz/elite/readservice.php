@@ -10,7 +10,7 @@
 	} else {
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$sql = "SELECT * FROM Services where Date = ?";
+		$sql = "SELECT * FROM services where id = ?";
 		$q = $pdo->prepare($sql);
 		$q->execute(array($id));
 		$data = $q->fetch(PDO::FETCH_ASSOC);
@@ -37,18 +37,22 @@
 	    			<div class="form-horizontal" >
 					  <div class="control-group">
 					    <label class="control-label">Service</label>
-						     	<?php echo $data['Service'];?>
+						     	<?php echo $data['s_name'];?>
+					  </div>
+					  <div class="control-group">
+					    <label class="control-label">Description</label>
+						     	<?php echo $data['description'];?>
 					  </div>
 					  <div class="control-group">
 					    <label class="control-label">Price</label>
-						     	<?php echo $data['Price'];?>
+						     	<?php echo $data['price'];?>
 					  </div>
 					  <div class="control-group">
 					    <label class="control-label">Date</label>
-						     	<?php echo $data['Date'];?>
+						     	<?php echo $data['date'];?>
 					  </div>
 					    <div class="form-actions">
-						  <a class="btn" href="index.php">Back</a>
+						  <a class="btn" href="elite.php">Back</a>
 					   </div>
 
 					</div>
