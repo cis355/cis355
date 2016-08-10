@@ -89,7 +89,7 @@ if (empty($_SESSION['id'])) header("Location: login1.php"); //redirect
 		if ($valid) {
 			$pdo = Database::connect();
 			$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-			$sql = "UPDATE restaurant  SET info = '$info', venueName = '$venueName', address = '$address', map = '$map', type = '$type' WHERE id = '$id'";
+			$sql = "UPDATE restaurant  SET info = '$info', venueName = '$venueName', address = '$address', map = '$map', type = '$type' WHERE id = $id";
 			//print_r($sql);
 			$q = $pdo->prepare($sql);
 			$q->execute(array($info,$venueName,$address,$map,$type));
