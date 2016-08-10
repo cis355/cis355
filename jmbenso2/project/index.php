@@ -113,9 +113,10 @@ class StudyGateway {
 		Database::disconnect();
 	}
 	
-	// Quick note about the next two functions:
+	// Quick note about the next three functions:
 	// getAllMeetup gets all records in the meetup table
-	// getAllMeetup takes a user id, and gets only the records hosted by that user
+	// getAllMyMeetup takes a user id, and gets only the records hosted by that user
+	// getAllRsvpdMeetup takes a user id, and gets the records to which that user is RSVPd
 	//
 	/* getAllMeetup ()
 	***********************************************************
