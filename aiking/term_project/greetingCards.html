@@ -76,13 +76,13 @@ require 'CRUD/database.php';
                     <span class="icon-bar"></span>
                 </button>
                 <!-- navbar-brand is hidden on larger screens, but visible when the menu is collapsed -->
-                <a class="navbar-brand" href="index.html">Business Casual</a>
+                <a class="navbar-brand" href="home.html">Business Casual</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li>
-                        <a href="index.html">Home</a>
+                        <a href="home.html">Home</a>
                     </li>
                     <li>
                         <a href="about.html">About</a>
@@ -160,12 +160,21 @@ require 'CRUD/database.php';
 					
 					<?php
 					
+					$customerid = $_SESSION['id'];
+					$creationName = $_POST['creationName'];
+					$align = $_POST['align'];
+					$front = $_POST['front'];
+					$inside1 = $_POST['inside1'];
+					$inside2 = $_POST['inside2'];
+					$comments = $_POST['comments'];
+					$cardId = $_POST['type'];
+					
 					 if (!empty($_SESSION['name'])) {	
 echo '                   <form role="form">                                                                       ';
 echo '                       <div class="row">                                                                    ';
 echo '                           <div class="form-group col-lg-6">                                                ';
 echo '                               <label>Name of Kreation:</label>                                             ';
-echo '                               <input type="text" name="name" class="form-control" />                                     ';
+echo '                               <input type="text" name="creationName" class="form-control" />                                     ';
 echo '                           </div>                                                                           ';
 echo '							</br>                                                                             ';
 echo '							<div class="clearfix"></div>                                                      ';
@@ -179,7 +188,7 @@ echo '								<select name="type"> ';
                    $pdo = Database::connect();
                    $sql = 'SELECT * FROM cards ORDER BY id DESC';
                    foreach ($pdo->query($sql) as $row) {
-						echo '<option value="' . $row['type'] . '">' . $row['type'] . ' - ' . $row['description'] . '</option>';
+						echo '<option value="' . $row['id'] . '">' . $row['type'] . ' - ' . $row['description'] . '</option>';
 				   
 				   }
                    Database::disconnect();
@@ -212,6 +221,16 @@ echo '                               <button type="submit" class="btn btn-defaul
 echo '                           </div>                                                                           ';
 echo '                       </div>                                                                               ';
 echo '                   </form>      ';
+
+			$pdo = Database::connect();
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $sql = "INSERT INTO creations (cust_id,card_id,creationName,align,front,inside1,inside2,comments) values(?, ?, ?,?,?,?,?,?)";
+            $q = $pdo->prepare($sql);
+            $q->execute(array($customerId,$cardId,$creationName,$align,$front,$inside1,$inside2,$comments));
+            Database::disconnect();
+            header("Location: greetingCards.html");
+
+
 						}
 					else
 						{

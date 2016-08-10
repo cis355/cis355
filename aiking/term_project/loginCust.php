@@ -38,8 +38,9 @@
             $results = $q->fetch(PDO::FETCH_ASSOC); 
             if($results['password']==$password) { 
                 $_SESSION['name'] = $name;
+				$_SESSION['id'] = $id;
                 Database::disconnect(); 
-                header("Location: index.html"); // redirect 
+                header("Location: home.html"); // redirect 
             } 
             else { 
                 $passwordError = 'Password is not valid'; 
@@ -99,7 +100,7 @@
 					   
                       <div class="form-actions"> 
                           <button type="submit" class="btn btn-success">Login</button> 
-                          <a class="btn" style="color: #fff;" href="index.html">Back</a>
+                          <a class="btn" style="color: #fff;" href="home.html">Back</a>
                         </div> 
                          
                     </form> 

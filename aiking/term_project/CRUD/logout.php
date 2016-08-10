@@ -1,6 +1,6 @@
 <?php
 session_start();
 $_SESSION['name'] = "";
-header("Location: ../index.html"); //redirect
+header("Location: ../home.html"); //redirect
 session_destroy();
 ?>
