@@ -1,3 +1,58 @@
+<?php
+	# Consider three scenarios.
+	# 1. User clicked create button on list screen (index.php)
+	#         If that happens then create.php displays entry screen
+	# 2. User clicked create button (submit button) on entry screen but one or more fields were empty
+	#         If that happens then error message(s) appears next to empty field(s)
+	# 3. User clicked create button (submit button) and all data valid
+	#         If that happens then PHP code inserts the record and redirect to list screen (index.php)
+	
+	# include connection data and functions
+	require 'database.php';
+	
+	# if there was data passed, then insert record, 
+	# otherwise do nothing (that is, just display html for create)
+    if ( !empty($_POST)) {
+    		// keep track validation errors
+    		$questionError = null;
+    		$categoryError = null;
+    		$difficultyError = null;
+    		
+    		// keep track post values
+    		$question = $_POST['question'];
+    		$category = $_POST['category'];
+    		$difficulty = $_POST['difficulty'];
+    		
+    		// validate input
+    		$valid = true;
+    		if (empty($question)) {
+    			$questionError = 'Please enter a Question';
+    			$valid = false;
+    		}
+    		
+    		if (empty($category)) {
+    			$categoryError = 'Please enter a Category';
+    			$valid = false;
+    		}
+    		
+    		if (empty($difficulty)) {
+    			$difficultyError = 'Please enter a difficulty';
+    			$valid = false;
+    		}
+    		
+    		// insert data
+    		if ($valid) {
+    			$pdo = Database::connect();
+    			$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    			$sql = "INSERT INTO questions (question,category,difficulty) values(?, ?, ?)";
+    			$q = $pdo->prepare($sql);
+    			$q->execute(array($question,$category,$difficulty));
+    			Database::disconnect();
+    			header("Location: prg2.php");
+    		}
+    	} # end if ( !empty($_POST))
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -47,7 +102,7 @@
 					  </div>
 				
 					  <div class="form-actions">
-						  <input type="submit" class="button" name="create" value="create" />
+						  <button type="submit" class="btn btn-success">Create</button>
 						  <a class="btn" href="prg2.php">Back</a>
 						</div>
 						

@@ -50,7 +50,7 @@
 						     	<?php echo $data['mobile'];?>
 					  </div>
 					    <div class="form-actions">
-						  <a class="btn" href="index.php">Back</a>
+						  <a class="btn" href="../classWork/tableDataGateway.php">Back</a>
 					   </div>
 
 					</div>

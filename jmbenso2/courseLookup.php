@@ -1,5 +1,8 @@
 <?php
 
+echo '<a href="webService.php">Sample API</a><br />';
+echo '<a href="weatherLookup.php">Weather Lookup</a><br />';
+
 // Get contents of SVSU courses API
 $url = 'http://api.svsu.edu/courses?prefix=CIS&term=16/FA';
 $json = file_get_contents($url);
