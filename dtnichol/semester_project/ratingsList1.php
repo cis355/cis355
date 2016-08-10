@@ -1,4 +1,30 @@
+<!--/* *******************************************************************
+* filename : ratingsList1.php
+* author : Derek Nichols
+* username : dtnichol
+* course : cs355
+* section : 11-MW
+* semester : Summer 2016
+*
+* description : displays the ratings and reviews table on the website.                
+*               
+*
+* input : none
+* processing : The program steps are as follows.
+* 		1. automatically displays any ratings and reviews from the database onto the website
+* 		
+* 		
+* 		
+* output : displays ratings1 table
+*
+* precondition : none
+* postcondition: displays ratings1 table
+* 				 
+* *******************************************************************
+*/-->
+
 <?php
+//keeps track of users session who are logged in
 session_start();
 if (empty($_SESSION['id'])) header("Location: login1.php"); //redirect
 

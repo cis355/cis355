@@ -1,6 +1,14 @@
+<?php
+  session_start();
+  if(empty($_SESSION['name'])) header("Location: login.php"); //redirect
+
+  $name=$_SESSION['name'];
+  ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<h1><?php echo $name;?></h1>
 	<!-- The head section does the following.
 		1. Sets character set
 		2. Includes Bootstrap
@@ -24,6 +32,7 @@
 			<div class="row">
 				<p>
 					<a href="create.php" class="btn btn-success">Create</a>
+          <a href="logout.php" class="btn btn-danger">Logout</a>
 				</p>
 				
 				<table class="table table-striped table-bordered">

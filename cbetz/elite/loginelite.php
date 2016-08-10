@@ -91,7 +91,7 @@
 					  
 					  <div class="form-actions">
 						  <button type="submit" class="btn btn-primary">Login</button>
-						  <a href="../prg1/create.php" class="btn btn-success">Create</a>
+						  <a href="createcust.php" class="btn btn-success">Create</a>
 						</div>
 						
 					</form>

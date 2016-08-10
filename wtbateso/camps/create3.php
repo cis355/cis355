@@ -17,21 +17,21 @@
 	if ( !empty($_POST)) {
 		// keep track validation errors
 		$userNameError = null;
-		$passwordError = null;
+		$userNumberError = null;
 		
 		// keep track post values
-		$campName = $_POST['campName'];
-		$startDate = $_POST['startDate'];
+		$userName = $_POST['userName'];
+		$userNumber = $_POST['userNumber'];
 
 		
 		// validate input
 		$valid = true;
-		if (empty($campName)) {
-			$campNameError = 'Please enter your camp Name';
+		if (empty($userName)) {
+			$userNameError = 'Please enter your camp Name';
 			$valid = false;
 		}
-		if (empty($startDate)) {
-			$startDateError = 'Please enter Date';
+		if (empty($userNumber)) {
+			$userNumberError = 'Please enter user Number';
 			$valid = false;
 		}
 		
@@ -39,11 +39,11 @@
 		if ($valid) {
 			$pdo = Database::connect();
 			$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-			$sql = "INSERT INTO campUser (campName,startDate,) values(?, ?)";
+			$sql = "INSERT INTO campUser (userName,userNumber) values(?, ?)";
 			$q = $pdo->prepare($sql);
-			$q->execute(array($campName,$startDate));
+			$q->execute(array($userName,$userNumber));
 			Database::disconnect();
-			header("Location: camps.php");
+			header("Location: camps2.php");
 		}
 	} # end if ( !empty($_POST))
 ?>
@@ -75,18 +75,18 @@
 					      	<?php endif; ?>
 					    </div>
 					  </div>
-					  <div class="control-group <?php echo !empty($startDateError)?'error':'';?>">
-					    <label class="control-label">Start Date</label>
+					  <div class="control-group <?php echo !empty($userNumberError)?'error':'';?>">
+					    <label class="control-label">user Number</label>
 					    <div class="controls">
-					      	<input name="password" type="password"  placeholder="password" value="<?php echo !empty($password)?$password:'';?>">
-					      	<?php if (!empty($passwordError)): ?>
-					      		<span class="help-inline"><?php echo $passwordError;?></span>
+					      	<input name="userNumber" type="text"  placeholder="userNumber" value="<?php echo !empty($userNumber)?$userNumber:'';?>">
+					      	<?php if (!empty($userNumberError)): ?>
+					      		<span class="help-inline"><?php echo $userNumberError;?></span>
 					      	<?php endif; ?>
 					    </div>
 					  </div>
 					  <div class="form-actions">
 						  <button type="submit" class="btn btn-success">Create</button>
-						  <a class="btn" href="camps.php">Back</a>
+						  <a class="btn" href="camps2.php">Back</a>
 						</div>
 					</form>
 				</div>

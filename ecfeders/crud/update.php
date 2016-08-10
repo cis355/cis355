@@ -1,6 +1,6 @@
 <?php
-	session_start();
-	if(empty($_SESSION['name'])) header("Location: login.php"); // redirect 
+	//session_start();
+	//if(empty($_SESSION['name'])) header("Location: login.php"); // redirect 
 ?>
 <?php 
 	
@@ -11,7 +11,7 @@
 	}
 	
 	if ( null==$id ) {
-		header("Location: index.php");
+		header("Location: ../classWork/tableDataGateway.php");
 	}
 	
 	if ( !empty($_POST)) {
@@ -53,7 +53,7 @@
 			$q = $pdo->prepare($sql);
 			$q->execute(array($name,$email,$mobile,$id));
 			Database::disconnect();
-			header("Location: index.php");
+			header("Location: ../classWork/tableDataGateway.php");
 		}
 	} else {
 		$pdo = Database::connect();
@@ -116,7 +116,7 @@
 					  </div>
 					  <div class="form-actions">
 						  <button type="submit" class="btn btn-success">Update</button>
-						  <a class="btn" href="index.php">Back</a>
+						  <a class="btn" href="../classWork/tableDataGateway.php">Back</a>
 						</div>
 					</form>
 				</div>

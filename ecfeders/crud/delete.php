@@ -21,7 +21,7 @@
 		$q = $pdo->prepare($sql);
 		$q->execute(array($id));
 		Database::disconnect();
-		header("Location: index.php");
+		header("Location: ../classWork/tableDataGateway.php");
 		
 	} 
 ?>

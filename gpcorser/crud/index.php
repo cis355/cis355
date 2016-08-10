@@ -71,8 +71,6 @@ if (empty($_SESSION['name'])) header("Location: login.php"); // redirect
 					  ?>
 				      </tbody>
 	            </table>
-				<a href="http://www.startutorial.com/articles/view/php-crud-tutorial-part-1" class="btn btn-success">Tutorial</a>
-    	</div>
     </div> <!-- /container -->
   </body>
 </html>

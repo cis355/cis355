@@ -1,11 +1,38 @@
+<!--/* *******************************************************************
+* filename : readCustomer.php
+* author : Derek Nichols
+* username : dtnichol
+* course : cs355
+* section : 11-MW
+* semester : Summer 2016
+*
+* description : displays the customer info from table on separate page.                
+*               
+*
+* input : none
+* processing : The program steps are as follows.
+* 		1. when read is clicked it displays the customer info from table on separate page.
+* 		
+* 		
+* 		
+* output : displays the customer info from table on separate 
+*
+* precondition : none
+* postcondition: displays the customer info from table on separate page.
+* 				 
+* *******************************************************************
+*/-->
+
 <?php
+//keeps track of users session who are logged in
 session_start();
 if (empty($_SESSION['id'])) header("Location: login1.php"); //redirect
 
 ?>
 
 <?php 
-	require 'database.php';
+	//populates the read section for customers to read their info
+	require 'database.php';//connects to database
 	$id = null;
 	if ( !empty($_GET['id'])) {
 		$id = $_REQUEST['id'];
@@ -13,7 +40,7 @@ if (empty($_SESSION['id'])) header("Location: login1.php"); //redirect
 	
 	if ( null==$id ) {
 		header("Location: index1.php");
-	} else {
+	} else {//sql statement to pull info from database
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		$sql = "SELECT * FROM customers1 where id = ?";

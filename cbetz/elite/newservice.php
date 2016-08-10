@@ -1,4 +1,6 @@
 <?php 
+	session_start();
+	$_SESSION['login_user']= $username;
 	# Consider these scenarios.
 	# 1. User clicked the create button on the list screen(index.php)
 	#  If that happens then create.php displays a entry screen
@@ -11,37 +13,41 @@
 	
 	
 	# include connection data and functions
-	require 'database.php';
+	require 'elitedatabase.php';
 	# If there was data passed then insert the record,
 	# otherwise do nothing
 	if ( !empty($_POST)) {
 		// keep track validation errors
 		$nameError = null;
-		$emailError = null;
-		$mobileError = null;
+		$descriptionError = null;
+		$priceError = null;
+		$dateError = null;
 		
 		// keep track post values
-		$name = $_POST['name'];
-		$email = $_POST['email'];
-		$mobile = $_POST['mobile'];
+		$s_name = $_POST['s_name'];
+		$description = $_POST['description'];
+		$price = $_POST['price'];
+		$date = $_POST['date'];
 		
 		// validate input
 		$valid = true;
-		if (empty($name)) {
-			$nameError = 'Please enter Name';
+		if (empty($s_name)) {
+			$s_nameError = 'Please enter Service Name';
 			$valid = false;
 		}
 		
-		if (empty($email)) {
-			$emailError = 'Please enter Email Address';
+		if (empty($description)) {
+			$descriptionError = 'Please enter a Description';
 			$valid = false;
-		} else if ( !filter_var($email,FILTER_VALIDATE_EMAIL) ) {
-			$emailError = 'Please enter a valid Email Address';
+		} 
+		
+		if (empty($price)) {
+			$priceError = 'Please enter a Price';
 			$valid = false;
 		}
 		
-		if (empty($mobile)) {
-			$mobileError = 'Please enter Mobile Number';
+		if (empty($date)) {
+			$dateError = 'Please enter a Date';
 			$valid = false;
 		}
 		
@@ -49,11 +55,11 @@
 		if ($valid) {
 			$pdo = Database::connect();
 			$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-			$sql = "INSERT INTO customers (name,email,mobile) values(?, ?, ?)";
+			$sql = "INSERT INTO services (s_name,description,price,date) values(?, ?, ?, ?)";
 			$q = $pdo->prepare($sql);
-			$q->execute(array($name,$email,$mobile));
+			$q->execute(array($s_name,$description,$price,$date));
 			Database::disconnect();
-			header("Location: index.php");
+			header("Location: elite.php");
 		}
 	} # end if (!empty($_POST))
 ?>
@@ -72,42 +78,54 @@
     
     			<div class="span10 offset1">
     				<div class="row">
-		    			<h3>Create a Customer</h3>
+		    			<h3>Create a new Service</h3>
 		    		</div>
     		
-	    			<form class="form-horizontal" action="create.php" method="post">
+	    			<form class="form-horizontal" action="newservice.php" method="post">
 					
-					  <div class="control-group <?php echo !empty($nameError)?'error':'';?>">
-					    <label class="control-label">Name</label>
+					  <div class="control-group <?php echo !empty($s_nameError)?'error':'';?>">
+					    <label class="control-label">Service Name</label>
 					    <div class="controls">
-					      	<input name="name" type="text"  placeholder="Name" value="<?php echo !empty($name)?$name:'';?>">
-					      	<?php if (!empty($nameError)): ?>
-					      		<span class="help-inline"><?php echo $nameError;?></span>
+					      	<input name="s_name" type="text"  placeholder="Service Name" value="<?php echo !empty($s_name)?$s_name:'';?>">
+					      	<?php if (!empty($s_nameError)): ?>
+					      		<span class="help-inline"><?php echo $s_nameError;?></span>
 					      	<?php endif; ?>
 					    </div>
 					  </div>
 					  
-					  <div class="control-group <?php echo !empty($emailError)?'error':'';?>">
-					    <label class="control-label">Email Address</label>
+					  <div class="control-group <?php echo !empty($descriptionError)?'error':'';?>">
+					    <label class="control-label">Description</label>
 					    <div class="controls">
-					      	<input name="email" type="text" placeholder="Email Address" value="<?php echo !empty($email)?$email:'';?>">
-					      	<?php if (!empty($emailError)): ?>
-					      		<span class="help-inline"><?php echo $emailError;?></span>
+					      	<input name="description" type="text" placeholder="Service Description" value="<?php echo !empty($description)?$description:'';?>">
+					      	<?php if (!empty($descriptionError)): ?>
+					      		<span class="help-inline"><?php echo $descriptionError;?></span>
 					      	<?php endif;?>
 					    </div>
 					  </div>
-					  <div class="control-group <?php echo !empty($mobileError)?'error':'';?>">
-					    <label class="control-label">Mobile Number</label>
+					  
+					  <div class="control-group <?php echo !empty($priceError)?'error':'';?>">
+					    <label class="control-label">Price</label>
 					    <div class="controls">
-					      	<input name="mobile" type="text"  placeholder="Mobile Number" value="<?php echo !empty($mobile)?$mobile:'';?>">
-					      	<?php if (!empty($mobileError)): ?>
-					      		<span class="help-inline"><?php echo $mobileError;?></span>
+					      	<input name="price" type="text"  placeholder="Service Price" value="<?php echo !empty($price)?$price:'';?>">
+					      	<?php if (!empty($priceError)): ?>
+					      		<span class="help-inline"><?php echo $priceError;?></span>
 					      	<?php endif;?>
 					    </div>
 					  </div>
+					  
+					  <div class="control-group <?php echo !empty($dateError)?'error':'';?>">
+					    <label class="control-label">Date</label>
+					    <div class="controls">
+					      	<input name="date" type="text"  placeholder="Service Date" value="<?php echo !empty($date)?$date:'';?>">
+					      	<?php if (!empty($dateError)): ?>
+					      		<span class="help-inline"><?php echo $dateError;?></span>
+					      	<?php endif;?>
+					    </div>
+					  </div>
+					  
 					  <div class="form-actions">
 						  <button type="submit" class="btn btn-success">Create</button>
-						  <a class="btn" href="index.php">Back</a>
+						  <a class="btn" href="elite.php">Back</a>
 						</div>
 					</form>
 				</div>

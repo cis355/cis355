@@ -1,4 +1,27 @@
-
+<!--/* *******************************************************************
+* filename : register.php
+* author : Derek Nichols
+* username : dtnichol
+* course : cs355
+* section : 11-MW
+* semester : Summer 2016
+*
+* description : registration form for new users that will insert them into the database *       		  customers1.                
+*               
+*
+* input : user fills out registration form
+* processing : The program steps are as follows.
+* 		1. registration form is filled out
+* 		2. submits form
+* 		3. user is added to customers1 database table
+* 		
+* output : none
+*
+* precondition : none
+* postcondition: user is registered in customers1 database table
+* 				 
+* *******************************************************************
+*/-->
 
 
 

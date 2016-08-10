@@ -1,0 +1,76 @@
+1. What is true about a constructor in PHP?
+A. A constructor cannot be overloaded
+B. A constructor has to have parameters
+C. A constructor cannot have parameters
+D. A constructor cannot be overriden
+E. A constructor always has to be manually defined
+
+----------------------------------------------------------------
+
+2. What is the output of the following code block?
+<?php
+
+$var = "";
+
+if (isset($var)){
+
+echo "<p>This variable is set<p/>";
+
+
+}
+
+
+if (empty($var)){
+
+echo "<p>This variable is empty<p/>";
+
+}
+
+
+?>
+
+A. This variable is set
+   This variable is empty
+
+B. This variable is set
+
+C. This variable is empty
+
+D. <p>This variable is set<p/>
+   <p>This variable is emtpy<p/>
+
+E. Nothing is output
+
+------------------------------------------------------------
+3.  Which of the following is not a way to pass a variable between pages
+A. Static variable
+B. POST Array
+C. GET Array
+D. Session Variable
+E. cookies
+------------------------------------------------------------
+
+4. What is the regex for matching the entire string: 989-123-4567?
+A. ^.*
+B. /[989]-[123]-[4567]/
+C. /^./
+D. /^989-\a{3}-\a{4}/
+E. /^989-\d{5}-\d{9}/
+
+Hint: https://regex101.com/ for testing
+------------------------------------------------------------
+5.what keyword enforces the existance of a referenced file?
+A. require
+B. include
+C. extends
+D. header
+E. server
+------------------------------------------------------------
+6. What keyword would be used in sql to perform a "Read" on a table in a database?
+A. Select
+B. Update
+C. Fetch
+D. Read
+E. Pull
+
+

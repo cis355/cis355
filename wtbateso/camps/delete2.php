@@ -1,3 +1,26 @@
+<!-- ------------------------------------------------------------------------
+* filename : delete2.php
+* author : William Bateson
+* username : wtbateso
+* course : cs355
+* section : 11-MW
+* semester : Summer 2016
+*
+* description : this file deletes information from the basketball camps
+*
+* input : N/A
+* processing : The program steps are as follows.
+* 1. initialize session
+* 2. display buttons
+* 3. delete from table using id
+*
+* output : buttons
+*
+* precondition : check for login
+* postcondition: information printed to the screen, and delete information from tables
+* 
+*              
+------------------------------------------------------------------------- -->
 <?php 	
 	require 'database.php';
 	$id = 0;
@@ -17,7 +40,7 @@
 		$q = $pdo->prepare($sql);
 		$q->execute(array($id));
 		Database::disconnect();
-		header("Location: camps.php");
+		header("Location: camps2.php");
 		
 	} 
 ?>
@@ -35,7 +58,7 @@
     
     			<div class="span10 offset1">
     				<div class="row">
-		    			<h3>Delete a Rating</h3>
+		    			<h3>Delete a Camp</h3>
 		    		</div>
 		    		
 	    			<form class="form-horizontal" action="delete2.php" method="post">
@@ -43,7 +66,7 @@
 					  <p class="alert alert-error">Are you sure to delete ?</p>
 					  <div class="form-actions">
 						  <button type="submit" class="btn btn-danger">Yes</button>
-						  <a class="btn" href="camps.php">No</a>
+						  <a class="btn" href="camps2.php">No</a>
 						</div>
 					</form>
 				</div>

@@ -52,7 +52,7 @@
 			$q = $pdo->prepare($sql);
 			$q->execute(array($campName,$startDate,$endDate,$id));
 			Database::disconnect();
-			header("Location: camps.php");
+			header("Location: camps2.php");
 		}
 	} else {
 		$pdo = Database::connect();
@@ -115,7 +115,7 @@
 					  </div>
 					  <div class="form-actions">
 						  <button type="submit" class="btn btn-success">Update</button>
-						  <a class="btn" href="camps.php">Back</a>
+						  <a class="btn" href="camps2.php">Back</a>
 						</div>
 					</form>
 				</div>

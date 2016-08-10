@@ -1,3 +1,27 @@
+<!-- ------------------------------------------------------------------------
+* filename : create.php
+* author : William Bateson
+* username : wtbateso
+* course : cs355
+* section : 11-MW
+* semester : Summer 2016
+*
+* description : this file creates a new rating for the basketball camps
+*
+* input : camp name, camp start date, and camp end date
+* processing : The program steps are as follows.
+* 1. initialize session
+* 2. display form
+* 3. take input
+* 4. post input to sql tables
+*
+* output : forms
+*
+* precondition : check for login
+* postcondition: information printed to the screen, and post information to tables
+* 
+*              
+------------------------------------------------------------------------- -->
 <?php 
 
 	session_start();
@@ -43,17 +67,17 @@
 			$valid = false;
 		} 
 		
-		
+		//echo "got to here"; exit();
 		
 		// insert data
 		if ($valid) {
 			$pdo = Database::connect();
 			$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-			$sql = "INSERT INTO camps (campName,startDate,endDate,) values(?, ?, ?)";
+			$sql = "INSERT INTO camps (campName,startDate,endDate) values(?, ?, ?)";
 			$q = $pdo->prepare($sql);
 			$q->execute(array($campName,$startDate,$endDate));
 			Database::disconnect();
-			header("Location: camps.php");
+			header("Location: camps2.php");
 		}
 	} # end if ( !empty($_POST))
 ?>
@@ -105,7 +129,7 @@
 					  </div>
 					  <div class="form-actions">
 						  <button type="submit" class="btn btn-success">Create</button>
-						  <a class="btn" href="camps.php">Back</a>
+						  <a class="btn" href="camps2.php">Back</a>
 						</div>
 					</form>
 				</div>

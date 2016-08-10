@@ -1,11 +1,35 @@
-
+ <!--/* *******************************************************************
+* filename : createRating.php
+* author : Derek Nichols
+* username : dtnichol
+* course : cs355
+* section : 11-MW
+* semester : Summer 2016
+*
+* description : displays the create rating form and when submitted it inserts it into the ratings1 *				 database.                
+*               
+*
+* input : user enters information into the ratings form and is inserted into ratings1 table
+* processing : The program steps are as follows.
+* 		1. user enters rating information
+* 		2. submit form
+* 		3. information is inserted into database table
+* 		
+* output : rating will be displayed on screen
+*
+* precondition : rating and review button must be clicked
+* postcondition: information added in database
+* 				 
+* *******************************************************************
+*/-->
 
 
 
 
 
 <?php 
-
+	//customers create ratings
+	//keeps track of users session who are logged in
 	session_start();
 	if (empty($_SESSION['id'])) header("Location: login1.php"); //redirect
 

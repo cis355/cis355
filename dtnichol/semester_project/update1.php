@@ -1,13 +1,40 @@
+ <!--/* *******************************************************************
+* filename : update1.php
+* author : Derek Nichols
+* username : dtnichol
+* course : cs355
+* section : 11-MW
+* semester : Summer 2016
+*
+* description : displays the customers list and the customer logged in can choose to update and then 	*				sends updates to database when submitted.
+*               
+*
+* input : no input for this file
+* processing : The program steps are as follows.
+* 		1. displays database table to be changed
+* 		2. changes database if changes were made
+* 		
+* 		
+* output : none
+*
+* precondition : none
+* postcondition: information changed in database
+* 				 
+* *******************************************************************
+*/-->
+
  <?php
+ //keeps track of users session who are logged in
 session_start();
 if (empty($_SESSION['id'])) header("Location: login1.php"); //redirect
 
 ?>
  
  <?php 
-	
+	//connect to database
 	require 'database.php';
 	$id = null;
+	//get id if there
 	if ( !empty($_GET['id'])) {
 		$id = $_REQUEST['id'];
 	}
@@ -57,7 +84,7 @@ if (empty($_SESSION['id'])) header("Location: login1.php"); //redirect
 			Database::disconnect();
 			header("Location: index1.php");
 		}
-	} else {
+	} else {//populates the text input fields
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		$sql = "SELECT * FROM customers1 where id = ?";

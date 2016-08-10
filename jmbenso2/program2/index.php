@@ -125,11 +125,11 @@ class InterviewGateway {
 	public function getAll() {
 		$mysqli = Database::connect();
 		// SQL to execute:
-		$sql = 'SELECT * FROM interviews ORDER BY id DESC';
+		$sql = 'SELECT i.id, i.jobID, i.resumeID, i.time FROM interviews AS i ORDER BY id DESC';
 		$result = $mysqli->query($sql);
 		Database::disconnect();
 		return $result;
-	} // end of getAll()
+	} 
 	
 	/* isNewDataValid ($jobID, $resumeID, $time, &$jobIDError, &$resumeIDError, &$timeError, &$valid)
 	 ***********************************************************
@@ -188,29 +188,23 @@ class InterviewGateway {
 	 **********************************************************/	
 	public function runIndex() {
 		// Decide what to do based on command posted in cmd
-
 		// Create
 		if ($_POST['cmd'] == 'create') {
 			self::runCreate();
 		}
-		
 		// Read
 		else if ($_POST['cmd'] == 'read') {
 			self::runRead();
-			
 		}
-		
 		// Update
 		else if ($_POST['cmd'] == 'update') {
 			self::runUpdate();
 		}
-		
 		// Delete
 		else if ($_POST['cmd'] == 'delete') {
 			self::runDelete();
 		}
-		
-		// If no command posted:
+		// If no command posted, default to displaying table screen
 		else {
 			self::displayTable();
 		}
@@ -261,7 +255,7 @@ class InterviewGateway {
 		else { 
 			self::displayCreate();
 		}
-	}
+	} // End of runCreate
 	
 	/* runRead()
 	 ***********************************************************
@@ -336,7 +330,7 @@ class InterviewGateway {
 			self::read($id,$data);
 			self::displayUpdate($id,$data);
 		}
-	}
+	} // End of runUpdate
 	
 	/* runDelete()
 	 ***********************************************************
@@ -371,7 +365,7 @@ class InterviewGateway {
 	 *NOTE:
 	 **********************************************************/	
 	public function displayTable () {
-		echo '<h1>Interviews CRUD</h1><br />';
+		echo '<h1>Benson\'s Interviews CRUD</h1><br />';
 		echo '<table border="1"><tr><th>Interview ID</th><th>Job ID</th><th>Resume ID</th><th>Scheduled Date/Time</th><th>Actions</th></tr>'; // echo out table header
 
 		foreach (self::getAll() as $row) { // Get table contents

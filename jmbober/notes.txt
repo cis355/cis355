@@ -2,3 +2,14 @@ RANDOM NOTES:
 
 The sql thing we did in class:
 SELECT customers1.name , ratings.rating , products.productId FROM `customers1`, `ratings` , `products` WHERE customers1.id = ratings.customerId AND products.id = ratings.productId
+
+Sample SQL queries
+1. What are the product descriptions and ratings of all products that have ratings?
+SELECT products.productDescription, ratings.rating FROM `ratings`, `products` WHERE products.id = ratings.productId
+
+2. What are the customer names and email addresses of all customers who rated any product greater than 3?
+SELECT customers1.name, customers1.email, ratings.rating from `customers1`, `ratings` WHERE (customers1.id = ratings.customerId) & (ratings.rating > 3)
+
+3. What are the customer names, product descriptions and ratings of all products that have even-numbered ratings?
+SELECT customers1.name, products.productDescription, ratings.rating FROM `customers1`, `products`, `ratings` WHERE customers1.id = ratings.customerId AND products.id = ratings.productId AND ratings.rating % 2 = 0
+

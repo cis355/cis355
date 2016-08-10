@@ -1,3 +1,28 @@
+<!--/* *******************************************************************
+* filename : read1.php
+* author : Derek Nichols
+* username : dtnichol
+* course : cs355
+* section : 11-MW
+* semester : Summer 2016
+*
+* description : displays the customer info from table on separate page.                
+*               
+*
+* input : none
+* processing : The program steps are as follows.
+* 		1. when read is clicked it displays the customer info from table on separate page.
+* 		
+* 		
+* 		
+* output : displays the customer info from table on separate 
+*
+* precondition : none
+* postcondition: displays the customer info from table on separate page.
+* 				 
+* *******************************************************************
+*/-->
+
 <?php
 session_start();
 if (empty($_SESSION['id'])) header("Location: login1.php"); //redirect
@@ -20,7 +45,7 @@ if (empty($_SESSION['id'])) header("Location: login1.php"); //redirect
 		
 		print_r($_POST);
 		print_r($_SESSION);
-		
+		//sql to select an join to populate the ratings and reviews table
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		$sql = 'SELECT * FROM `ratings1` INNER JOIN `restaurant` WHERE restaurant.id = ratings1.restaurantID';;
