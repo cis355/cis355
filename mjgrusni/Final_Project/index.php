@@ -1,6 +1,6 @@
 <?php
-session_start();
-if (empty($_SESSION['name'])) header("Location: login.php"); // redirect
+//session_start();
+//if (empty($_SESSION['name'])) header("Location: login.php"); // redirect
 ?>
 
 <!DOCTYPE html>
@@ -28,17 +28,16 @@ if (empty($_SESSION['name'])) header("Location: login.php"); // redirect
     		</div>
 			<div class="row">
 				<p>
-					<a href="create.php" class="btn btn-success">Create</a>
-					<a href="logout.php" class="btn btn-danger">Logout</a>
+					<a href="createActor.php" class="btn btn-success">Create Actor</a>
+					<a href="createFilm.php" class="btn btn-success">Create Film</a>
+					<a href="viewActors.php" class="btn btn-success">View Actors</a>
 				</p>
 				
 				<table class="table table-striped table-bordered">
 		              <thead>
 		                <tr>
 		                  <th>Name</th>
-		                  <th>Email Address</th>
-		                  <th>Mobile Number</th>
-		                  <th>Action</th>
+		                  <th>Movies</th>
 		                </tr>
 		              </thead>
 		              <tbody>
@@ -48,13 +47,12 @@ if (empty($_SESSION['name'])) header("Location: login.php"); // redirect
 					   # connect to database and assign object to variable
 					   $pdo = Database::connect();
 					   # assign select statement to variable
-					   $sql = 'SELECT * FROM customers ORDER BY id DESC';
+					   $sql = 'SELECT * FROM actors JOIN actor_film_mapping USING (actor_id) JOIN films USING (film_id) ORDER BY (actor_id)';
 					   # iterates through every record return by the select statement
 	 				   foreach ($pdo->query($sql) as $row) {
 						   		echo '<tr>';
-							   	echo '<td>'. $row['name'] . '</td>';
-							   	echo '<td>'. $row['email'] . '</td>';
-							   	echo '<td>'. $row['mobile'] . '</td>';
+							   	echo '<td width=250>'. $row['actor_name'] . '</td>';
+							   	echo '<td width=250>'. $row['film_name'] . '</td>';
 							   	echo '<td width=250>';
 							   	echo '<a class="btn" href="read.php?id='.
 								   $row['id'].'">Read</a>';
@@ -63,7 +61,7 @@ if (empty($_SESSION['name'])) header("Location: login.php"); // redirect
 								   href="update.php?id='.$row['id'].'">Update</a>';
 							   	echo '&nbsp;';
 							   	echo '<a class="btn btn-danger" 
-								   href="delete.php?id='.$row['id'].'">Delete</a>';
+								   href="deleteActor.php?id='.$row['actor_id'].'">Delete Actor</a>';
 							   	echo '</td>';
 							   	echo '</tr>';
 					   }

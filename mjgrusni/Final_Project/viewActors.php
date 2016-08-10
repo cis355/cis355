@@ -1,8 +1,3 @@
-<?php
-session_start();
-if (empty($_SESSION['name'])) header("Location: login.php"); // redirect
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,46 +19,61 @@ if (empty($_SESSION['name'])) header("Location: login.php"); // redirect
 		-->
     <div class="container">
     		<div class="row">
-    			<h3>PHP CRUD Grid</h3>
+    			<h3>View Actors</h3>
     		</div>
 			<div class="row">
 				<p>
-					<a href="create.php" class="btn btn-success">Create</a>
-					<a href="logout.php" class="btn btn-danger">Logout</a>
+					<a href="createActor.php" class="btn btn-success">Create Actor</a>
+					<a href="createFilm.php" class="btn btn-success">Create Film</a>
+					<a href="viewActors.php" class="btn btn-success">View Actors</a>
+					<a href="index.php" class="btn btn-success">View All</a>
 				</p>
 				
+				
 				<table class="table table-striped table-bordered">
-		              <thead>
-		                <tr>
-		                  <th>Name</th>
-		                  <th>Email Address</th>
-		                  <th>Mobile Number</th>
-		                  <th>Action</th>
-		                </tr>
-		              </thead>
-		              <tbody>
-		              <?php 
+					
+					   <?php 				   
 					   # database.php contains connection code, including connect and disconnect functions
 					   include 'database.php';
 					   # connect to database and assign object to variable
 					   $pdo = Database::connect();
 					   # assign select statement to variable
-					   $sql = 'SELECT * FROM customers ORDER BY id DESC';
+					   $sql = 'SELECT * FROM films';
+					   # iterates through every record return by the select statement
+					   $selectString = '';
+					   foreach ($pdo->query($sql) as $row) {
+					   	$selectString = $selectString . '<option value="' . $row['film_name'] . '">' . $row['film_name'] . '</option>';
+					   }
+					   Database::disconnect();
+					   //echo $selectString;
+					   ?>
+		              <thead>
+		                <tr>
+		                  <th>Name</th>
+		                  <th>Movies</th>
+		                </tr>
+		              </thead>
+		              <tbody>
+					 
+		              <?php 		
+					
+					   # connect to database and assign object to variable
+					   $pdo = Database::connect();
+					   # assign select statement to variable
+					   $sql = 'SELECT * FROM actors';
 					   # iterates through every record return by the select statement
 	 				   foreach ($pdo->query($sql) as $row) {
 						   		echo '<tr>';
-							   	echo '<td>'. $row['name'] . '</td>';
-							   	echo '<td>'. $row['email'] . '</td>';
-							   	echo '<td>'. $row['mobile'] . '</td>';
+							   	echo '<td width=250>'. $row['actor_name'] . '</td>';
 							   	echo '<td width=250>';
-							   	echo '<a class="btn" href="read.php?id='.
-								   $row['id'].'">Read</a>';
 							   	echo '&nbsp;';
+								echo '<form class="form-horizontal" action="addFilm.php" method="post"><select name="film">' . $selectString . '</select>';
+								echo '&nbsp;';
 							   	echo '<a class="btn btn-success" 
-								   href="update.php?id='.$row['id'].'">Update</a>';
+								   href="addFilm.php?id='.$row['actor_id'].'">Add Film</a>';
 							   	echo '&nbsp;';
 							   	echo '<a class="btn btn-danger" 
-								   href="delete.php?id='.$row['id'].'">Delete</a>';
+								   href="deleteActor.php?id='.$row['actor_id'].'">Delete Actor</a>';
 							   	echo '</td>';
 							   	echo '</tr>';
 					   }
@@ -71,7 +81,6 @@ if (empty($_SESSION['name'])) header("Location: login.php"); // redirect
 					  ?>
 				      </tbody>
 	            </table>
-				<a href="http://www.startutorial.com/articles/view/php-crud-tutorial-part-1" class="btn btn-success">Tutorial</a>
     	</div>
     </div> <!-- /container -->
   </body>

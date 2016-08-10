@@ -1,0 +1,8 @@
+https://www.draw.io/
+
+https://www.vertabelo.com/
+
+SELECT RIGHT(productDescription, 3) AS mjg, productDescription FROM `products` HAVING mjg <> "one";
+
+SELECT customers.name, ratings.rating, products.productDescription FROM customers, ratings, products WHERE customers.id = ratings.customerID AND products.id=ratings.productID
+

@@ -1,6 +1,6 @@
 <?php
 session_start();
-if (empty($_SESSION['name'])) header("Location: login.php"); // redirect
+if (empty($_SESSION['name'])) header("Location: se_login.php"); // redirect
 ?>
 
 <!DOCTYPE html>
@@ -28,17 +28,16 @@ if (empty($_SESSION['name'])) header("Location: login.php"); // redirect
     		</div>
 			<div class="row">
 				<p>
-					<a href="create.php" class="btn btn-success">Create</a>
-					<a href="logout.php" class="btn btn-danger">Logout</a>
+					<a href="se_create.php" class="btn btn-success">Create</a>
+					<a href="se_logout.php" class="btn btn-danger">Logout</a>
 				</p>
 				
 				<table class="table table-striped table-bordered">
 		              <thead>
 		                <tr>
-		                  <th>Name</th>
-		                  <th>Email Address</th>
-		                  <th>Mobile Number</th>
-		                  <th>Action</th>
+		                  <th>Question ID</th>
+		                  <th>Customer ID</th>
+		                  <th>Question</th>
 		                </tr>
 		              </thead>
 		              <tbody>
@@ -48,22 +47,22 @@ if (empty($_SESSION['name'])) header("Location: login.php"); // redirect
 					   # connect to database and assign object to variable
 					   $pdo = Database::connect();
 					   # assign select statement to variable
-					   $sql = 'SELECT * FROM customers ORDER BY id DESC';
+					   $sql = 'SELECT * FROM se_questions ORDER BY id DESC';
 					   # iterates through every record return by the select statement
 	 				   foreach ($pdo->query($sql) as $row) {
 						   		echo '<tr>';
-							   	echo '<td>'. $row['name'] . '</td>';
-							   	echo '<td>'. $row['email'] . '</td>';
-							   	echo '<td>'. $row['mobile'] . '</td>';
+							   	echo '<td>'. $row['id'] . '</td>';
+							   	echo '<td>'. $row['cust_id'] . '</td>';
+							   	echo '<td>'. $row['question'] . '</td>';
 							   	echo '<td width=250>';
-							   	echo '<a class="btn" href="read.php?id='.
+							   	echo '<a class="btn" href="se_read.php?id='.
 								   $row['id'].'">Read</a>';
 							   	echo '&nbsp;';
 							   	echo '<a class="btn btn-success" 
-								   href="update.php?id='.$row['id'].'">Update</a>';
+								   href="se_update.php?id='.$row['id'].'">Update</a>';
 							   	echo '&nbsp;';
 							   	echo '<a class="btn btn-danger" 
-								   href="delete.php?id='.$row['id'].'">Delete</a>';
+								   href="se_delete.php?id='.$row['id'].'">Delete</a>';
 							   	echo '</td>';
 							   	echo '</tr>';
 					   }
@@ -74,5 +73,9 @@ if (empty($_SESSION['name'])) header("Location: login.php"); // redirect
 				<a href="http://www.startutorial.com/articles/view/php-crud-tutorial-part-1" class="btn btn-success">Tutorial</a>
     	</div>
     </div> <!-- /container -->
+	<?php
+		echo "<br /><br /><br /><br />";
+		show_source(__FILE__);
+	?>
   </body>
 </html>
