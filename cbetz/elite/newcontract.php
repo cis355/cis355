@@ -1,6 +1,6 @@
 <?php 
-	session_start();
-	$_SESSION['login_user']= $username;
+	#session_start();
+	#$_SESSION['login_user']= $username;
 	# Consider these scenarios.
 	# 1. User clicked the create button on the list screen(index.php)
 	#  If that happens then create.php displays a entry screen

@@ -1,4 +1,19 @@
 <?php
+/* ************************************************************************************ 
+ filename     : prg3.php   
+ author       : Chad Betz   
+ course       : cis355     
+ semester     : Summer 2016   
+ description  : This file contains the class that returns the JSON object
+				of the query and displays them in a table.
+				
+PURPOSE 	  : CRUD application for Lawn Care services. Creates customers,
+				creates services, creates contracts, updates services, deletes services
+INPUT		  : NONE
+PRE     	  : All of the tables must be working and filled out.
+OUTPUT		  : Prining out the table based on the customer logged in.
+POST		  : Front end displays all of the correct information
+***************************************************************************************/ 
 session_start();
 // Store Session Data
 if (empty($_SESSION['name'])) header("Location: loginelite.php"); //redirect
@@ -17,7 +32,7 @@ $name = $_SESSION['name'];
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </head>
 
-<body style="background-image: url('http://www.publicdomainpictures.net/pictures/40000/velka/grass-1366796906dab.jpg');">
+<body <!--style="background-image: url('http://www.publicdomainpictures.net/pictures/40000/velka/grass-1366796906dab.jpg')-->;">
 	<!-- The head section does the follwing.
 		1. Displays Heading
 		2. Displays Create button
@@ -63,8 +78,10 @@ $name = $_SESSION['name'];
 							   	echo '<td>'. $row['price'] . '</td>';
 								echo '<td>'. $row['date'] . '</td>';
 							   	echo '<td width=250>';
-
 								echo '<a class="btn" href="readservice.php?id='. $row['serviceID'].'">Read</a>';
+								echo '<a class="btn btn-success" href="updateservice.php?id='.$row['id'].'">Update</a>';
+							   	echo '&nbsp;';
+							   	echo '<a class="btn btn-danger" href="deleteservice.php?id='.$row['id'].'">Delete</a>';
 							   	echo '&nbsp;';
 							   	echo '</td>';
 							   	echo '</tr>';
