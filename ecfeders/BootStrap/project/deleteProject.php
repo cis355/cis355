@@ -21,6 +21,7 @@
  * output       : deleted sheet
  *  
  * precondition : css documents and php files in same directory/databaseProject.php
+ 		  Record needs to exist in databse.
  * postcondition: deletes the sheet from the sheets table
  * *******************************************************************   */ 
  ?>
