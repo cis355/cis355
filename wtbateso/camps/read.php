@@ -1,7 +1,7 @@
 <?php 
 	
 	session_start();
-	//if (empty($_SESSION['name'])) header("Location: login.php");
+
 
 	require 'database.php';
 	$id = null;
@@ -10,7 +10,7 @@
 	}
 	
 	if ( null==$id ) {
-		header("Location: index.php");
+		header("Location: camps.php");
 	} else {
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

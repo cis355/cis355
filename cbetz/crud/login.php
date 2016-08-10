@@ -70,7 +70,7 @@
 					  <div class="control-group <?php echo !empty($nameError)?'error':'';?>">
 					    <label class="control-label">User Name</label>
 					    <div class="controls">
-					      	<input name="name" type="text"  placeholder="Name" value="<?php echo !empty($name)?$name:'';?>">
+					      	<input name="name" type="text"  placeholder="User Name" value="<?php echo !empty($name)?$name:'';?>">
 					      	<?php if (!empty($nameError)): ?>
 					      		<span class="help-inline"><?php echo $nameError;?></span>
 					      	<?php endif; ?>
@@ -80,7 +80,7 @@
 					  <div class="control-group <?php echo !empty($passwordError)?'error':'';?>">
 					    <label class="control-label">Password</label>
 					    <div class="controls">
-					      	<input name="password" type="password" placeholder="password Address" value="<?php echo !empty($password)?$password:'';?>">
+					      	<input name="password" type="password" placeholder="Password" value="<?php echo !empty($password)?$password:'';?>">
 					      	<?php if (!empty($passwordError)): ?>
 					      		<span class="help-inline"><?php echo $passwordError;?></span>
 					      	<?php endif;?>
@@ -88,8 +88,8 @@
 					  </div>
 					  
 					  <div class="form-actions">
-						  <button type="submit" class="btn btn-success">Create</button>
-						  <a class="btn" href="index.php">Back</a>
+						  <button type="submit" class="btn btn-primary">Login</button>
+						  <a href="create.php" class="btn btn-success">Create</a>
 						</div>
 						
 					</form>
@@ -97,10 +97,5 @@
 				</div>
 				
     </div> <!-- /container -->
-	
-	<?php
-		echo "<br /><br /><br /><br />";
-		show_source(__FILE__);
-	?>
   </body>
 </html>

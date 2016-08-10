@@ -52,8 +52,7 @@ if (empty($_SESSION['name'])) header("Location: login.php"); //redirect
 							   	echo '<td>'. $row['email'] . '</td>';
 							   	echo '<td>'. $row['mobile'] . '</td>';
 							   	echo '<td width=250>';
-							   	echo '<a class="btn" href="read.php?id='.
-								   $row['id'].'">Read</a>';
+							   	echo '<a class="btn" href="readservice.php'. $row['services.id'].'">Read</a>';
 							   	echo '&nbsp;';
 							   	echo '<a class="btn btn-success" 
 								   href="update.php?id='.$row['id'].'">Update</a>';

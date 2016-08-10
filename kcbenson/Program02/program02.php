@@ -34,7 +34,7 @@ class Gig {
 public function displayRecords () {
 	$con = mysqli_connect('localhost','kcbenson','Kelsi42B','kcbenson');
 	$sql = 'SELECT * FROM gigs ORDER BY id DESC';
-	echo '<table class="table table-striped table-bordered">
+	echo '<table class="table table-striped table-bordered records">
 		<thead>
 		    <tr>
 		        <th>Band</th>
@@ -53,159 +53,210 @@ public function displayRecords () {
 		   	echo '<td>'. $row['date'] . '</td>';
 		   	echo '<td>'. $row['time'] . '</td>';
 		   	echo '<td width="250">';
-		   	echo '<a class="btn" href="program02.php?status=read">Read</a>';
+		   	echo '<a class="btn" href="program02.php?status=read&id=' . $row['id'] . '">Read</a>';
 		   	echo '&nbsp;';
 		   	echo '<a class="btn btn-success" 
-			   href="program02.php?status=update">Update</a>';
+			   href="program02.php?status=update&id=' . $row['id'] . '">Update</a>';
 		   	echo '&nbsp;';
 		    echo '<a class="btn btn-danger" 
-			  href="program02.php?status=remove">Delete</a>';
+			  href="program02.php?status=remove&id=' . $row['id'] . '">Delete</a>';
 		   	echo '</td>';
 		    echo '</tr>';
 		}
 		echo '</tbody></table>';
 		mysqli_close($con);
 	}
-	public function displayCreate() {
-		echo "<a href='program02.php?status=create' class='btn btn-success'>Create New Gig</a>";
+	
+	function displayCreateButton() {
+		echo '<a href="program02.php?status=create" class="btn btn-success create">Create New Record</a>';
 	}
-	function create() {
-		# if there was data passed, then insert the record, otherwise just display the HTML 
-	if ( !empty($_POST)) {
-		// keep track validation errors
-		$bandIDError = null;
-		$venueIDError = null;
-		$timeError = null;
-		$dateError = null;
-		
-		// keep track post values
-		$bandID = $_POST['bandID'];
+	
+	function displayCreateScreen () { 
+		echo ' <div class="container"><div class="span10 offset1"><div class="row"><h3>Create a Gig</h3></div><form class="form-horizontal" action="program02.php" method="post"> <input name="create" value="create" type="hidden"><div class="control-group <label class=" control-label ">Band ID</label><div class="controls "> <input name="bandID" type="text " placeholder="Band ID " ></div></div><div class="control-group "> <label class="control-label ">Venue ID</label><div class="controls "> <input name="venueID" type="text " placeholder="Venue ID "/></div></div><div class="control-group "> <label class="control-label ">Date</label><div class="controls "> <input name="date" type="date " placeholder="Date"/></div></div><div class="control-group <label class=" control-label ">Time</label><div class="controls "> <input name="time" type="time " placeholder="Time" ></div></div><div class="form-actions "> <button type="submit " class="btn btn-success ">Create</button> </div></form></div></div>';
+		$bandID= $_POST['bandID'];
 		$venueID = $_POST['venueID'];
-		$time = $_POST['time'];
 		$date = $_POST['date'];
-		
-		// validate input
-		$valid = true;
-		if (empty($bandID)) {
-			$bandIDError = 'Please enter a band ID.';
-			$valid = false;
-		}
-		
-		if (empty($venueID)) {
-			$venueIDError = 'Please enter a venue ID';
-			$valid = false;
-		}
-		if (empty($date)) {
-			$dateError = 'Please enter the gig date.';
-			$valid = false;
-		}
-		if (empty($time)) {
-			$timeError = 'Please enter the gig time.';
-			$valid = false;
-		}
-		
-		// insert data
-		if ($valid) {
-			$status = valid;
-			
-		}
+		$time = $_POST['time'];
 	} 
-	function insert() {
+
+	function createRecord($bandID, $venueID, $date, $time) {
 		$con = mysqli_connect('localhost','kcbenson','Kelsi42B','kcbenson');
-		&sql = "INSERT INTO gigs (bandID, venueID, date, time) values(?, ?, ?, ?)");
+		$sql = "INSERT INTO  gigs (bandID,venueID,date,time) values($bandID, $venueID, '$date', '$time')";
 		$con->query($sql);
 		mysqli_close($con);
 		header("Location: program02.php");
 	}
-	//echo head of html document
-	echo '<html lang="en">
-		<head>
-			<!-- The head section does the following: 
-				1. Sets the character set
-				2. includes Bootstrap
-				-->
-			<meta charset="utf-8">
-			<link   href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-			<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-		</head>';
-	//echo body of html
-	echo '<body>
-		<div class="container">
-    		<div class="span10 offset1">
-    			<div class="row">
-	    			<h3>Create a Customer</h3>
-		    	</div>
-    			<form class="form-horizontal" action="program02.php?status=create" method="post">
-				<div class="control-group'; !empty($bandIDError)?'error':'';echo'">
+	function read() {
+		$id = $_GET['id'];
+		$con = mysqli_connect('localhost','kcbenson','Kelsi42B','kcbenson');
+		$sql = "SELECT * FROM gigs WHERE id = $id";
+		$q = $con->query($sql);
+		$row = $q->fetch_assoc();
+		
+		echo '<div class="container">
+    
+    			<div class="span10 offset1">
+    				<div class="row">
+		    			<h3>Read a Gig</h3>
+		    		</div>
+		    		
+	    			<div class="form-horizontal" >
+					  <div class="control-group">
 					    <label class="control-label">Band ID</label>
-					    <div class="controls">
-					      	<input name="bandID" type="text"  placeholder="bandID" value="'; !empty($bandID)?$bandID:'';echo'">';
-					      	if (!empty($bandIDError)):
-					      		echo'<span class="help-inline">'; $bandIDError;echo'</span>';
-							endif;
-					    echo'</div>
+						     	' . $row['bandID']. '
 					  </div>
-					  
-					  <div class="control-group'; echo !empty($venueIDError)?'error':'';echo'">
+					  <div class="control-group">
 					    <label class="control-label">Venue ID</label>
-					    <div class="controls">
-					      	<input name="venueID" type="text" placeholder="Venue ID" value="'; echo !empty($venueID)?$venueID:'';echo'">';;
-					      	if (!empty($venueIDError)):
-					      		echo'<span class="help-inline">'; echo $venueIDError;echo'</span>';
-					      	endif;
-					   echo' </div>
+						     	' . $row['venueID']. '
 					  </div>
-					  
-					  <div class="control-group'; echo !empty($dateError)?'error':''; echo'">
-					    <label class="control-label">Date of Gig</label>
-					    <div class="controls">
-					      	<input name="date" type="text"  placeholder="Date" value="'; echo !empty($date)?$date:''; echo'">';
-					      	if (!empty($dateError)):
-					      		echo'<span class="help-inline">';echo $dateError; echo'</span>';
-					      	endif;
-					    echo'</div>
+					  <div class="control-group">
+					    <label class="control-label">Date</label>
+						     	' . $row['date']. '
 					  </div>
-					  
-					  <div class="form-actions">
-						  <button type="submit" class="btn btn-success">Create</button>
+					  <div class="control-group">
+					    <label class="control-label">Time</label>
+						     	' . $row['time']. '
+					  </div>
+					    <div class="form-actions">
 						  <a class="btn" href="program02.php">Back</a>
 					   </div>
+
+					</div>
+				</div>
+				
+		</div>';
+		mysqli_close($con);
+	}
+	function displayUpdateScreen() {
+		$id = $_GET['id'];
+		$con = mysqli_connect('localhost','kcbenson','Kelsi42B','kcbenson');
+		$sql = "SELECT * FROM gigs WHERE id = $id";
+		$q = $con->query($sql);
+		$data = $q->fetch_assoc();
+		$bandID = $data['bandID'];
+		$venueID = $data['venueID'];
+		$date = $data['date'];
+		$time = $data['time'];
+		mysqli_close($con);
+		echo '<div class="container">
+    
+    			<div class="span10 offset1">
+    				<div class="row">
+		    			<h3>Update a Gig</h3>
+		    		</div>
+    		
+	    			<form class="form-horizontal" action="program02.php?id=' . $id . '" method="post">
+					<input name="update" value="update" type="hidden">
+					  <div class="control-group">
+					    <label class="control-label">Band ID</label>
+					    <div class="controls">
+					      	<input name="bandID" type="text"  placeholder="Band ID" value="' . $bandID . '">
+					    </div>
+					  </div>
+					  <div class="control-group">
+					    <label class="control-label">Venue ID</label>
+					    <div class="controls">
+					      	<input name="venueID" type="text" placeholder="Venue ID" value="' . $venueID . '">
+					    </div>
+					  </div>
+					  <div class="control-group">
+					    <label class="control-label">Date</label>
+					    <div class="controls">
+					      	<input name="date" type="date"  placeholder="Date" value="' . $date . '">
+					    </div>
+					  </div>
+					  <div class="control-group">
+					    <label class="control-label">Time</label>
+					    <div class="controls">
+					      	<input name="time" type="time"  placeholder="Time" value="' . $time . '">
+					    </div>
+					  </div>
+					  <div class="form-actions">
+						  <button type="submit" class="btn btn-success">Update</button>
+						  <a class="btn" href="program02.php">Back</a>
+						</div>
+					</form>
+				</div>
+			</div>';
+	}
+	function update($bandID, $venueID, $date, $time) {
+		$id = $_GET['id'];
+		$con = mysqli_connect('localhost','kcbenson','Kelsi42B','kcbenson');
+		$sql = "UPDATE gigs SET bandID = $bandID, venueID = $venueID, date = '$date', time = '$time' WHERE id = $id";
+		$con->query($sql);
+		mysqli_close($con);
+		header("Location: program02.php");
+	}
+	function displayRemoveScreen(){
+		$id = $_GET['id'];
+		echo'<div class="container">
+    
+    			<div class="span10 offset1">
+    				<div class="row">
+		    			<h3>Delete a Gig</h3>
+		    		</div>
+		    		
+	    			<form class="form-horizontal" action="program02.php?id=' . $id . '" method="post">
+					<input name="remove" value="remove" type="hidden">
+	    			  <input type="hidden" name="id" value="' . $id . '"/>
+					  <p class="alert alert-error">Are you sure to remove this gig?</p>
+					  <div class="form-actions">
+						  <button type="submit" class="btn btn-danger">Yes</button>
+						  <a class="btn" href="program02.php">No</a>
+						</div>
 					</form>
 				</div>
 				
-    </div> <!-- /container -->
-  </body>
-</html>';
-	}
-	function read() {
-		$id = null;
-	if ( !empty($_GET['id'])) {
-		$id = $_REQUEST['id'];
-	}
-	
-	if ( null==$id ) {
-		header("Location: index.php");
-	} else {
-		$con = mysqli_connect('localhost','kcbenson','Kelsi42B','kcbenson');
-		$sql = 'SELECT * FROM gigs WHERE id = ?';
-		
-		Database::disconnect();
-	}
-	}
-	function update() {
-		
-	}
-	function remove() {
-		
-	}
+		</div>';
+	}	
 
+	function hideRecords() {
+		echo '<style>
+			.records {
+				display: none;
+			}
+			</style>';
+	}
+	function hideCreate() {
+		echo '<style>
+			.create {
+				display: none;
+			}
+			</style>';
+	}
 }
 $gig1 = new Gig;
-$gig1->displayCreate();
+if(!empty($_POST['create'])) {
+	$bandID = $_POST['bandID'];
+	$venueID = $_POST['venueID'];
+	$date = $_POST['date'];
+	$time = $_POST['time'];
+	$gig1->createRecord($bandID, $venueID, $date, $time);
+}
+if(!empty($_POST['update'])) {
+	$bandID = $_POST['bandID'];
+	$venueID = $_POST['venueID'];
+	$date = $_POST['date'];
+	$time = $_POST['time'];
+	$gig1->update($bandID, $venueID, $date, $time);
+}
+if(!empty($_POST['remove'])) {
+	$id = $_GET['id'];
+		// delete data
+		$con = mysqli_connect('localhost','kcbenson','Kelsi42B','kcbenson');
+		$sql = "DELETE FROM gigs  WHERE id = $id";
+		$con->query($sql);
+		mysqli_close($con);
+		header("Location: program02.php");
+}
+$gig1->displayCreateButton();
 $gig1->displayRecords();
-if ($_GET['status'] == create) $gig1->create();
-if ($_GET['status'] == valid) $gig1->insert();
-if ($_GET['status'] == read) $gig1->read();
-if ($_GET['status'] == update) $gig1->update();
-if ($_GET['status'] == remove) $gig1->remove();
+if ($_GET['status'] == create) $gig1->displayCreateScreen();
+if ($_GET['status'] == read) {$gig1->hideRecords(); $gig1->hideCreate(); $gig1->read();}
+if ($_GET['status'] == update) {$gig1->hideCreate(); $gig1->hideRecords(); $gig1->displayUpdateScreen(); }
+if ($_GET['status'] == remove) {$gig1->hideCreate(); $gig1->hideRecords(); $gig1->displayRemoveScreen();}
+echo '<br /><br />';
+echo '<a href = "https://www.draw.io/?chrome=0&lightbox=1&edit=https%3A%2F%2Fwww.draw.io%2F%23DProgram02.html&nav=1#DProgram02.html">UML diagram</a>';
+echo '<br /><br />';
+show_source(__FILE__);
 ?>
