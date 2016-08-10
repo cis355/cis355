@@ -20,7 +20,8 @@
  
  * output       : table with correct information
  *  
- * precondition : css documents and php files in same directory/databaseProject.php
+ * precondition : css documents and php files in same directory/databaseProject.php,
+ 		  user has to exist in database.
  * postcondition: shows a table of workers for an owner of a business
  * *******************************************************************   */ 
  ?>
