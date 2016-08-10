@@ -17,7 +17,7 @@ $name = $_SESSION['name'];
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </head>
 
-<body style="background-image: url('http://www.publicdomainpictures.net/pictures/40000/velka/grass-1366796906dab.jpg');">
+<body <!--style="background-image: url('http://www.publicdomainpictures.net/pictures/40000/velka/grass-1366796906dab.jpg');"-->>
 	<!-- The head section does the follwing.
 		1. Displays Heading
 		2. Displays Create button
@@ -27,11 +27,12 @@ $name = $_SESSION['name'];
     <div class="container">
     		<div class="row">
     			<a href="http://www.auplod.com/i-poldau82986.html"><img src="http://www.auplod.com/u/poldau82986.png" alt="Image" border="0" /></a>
+				
     		</div>
-			<div class="row">
+			<div class="row">	
 			<p>
 				<p>
-				   <a href="logoutelite.php" class="btn btn-danger">Logout <?php print[$name] ?> </a>
+				   <a href="logoutelite.php" class="btn btn-danger">Logout <?php echo $name ?> </a>
 				</p>
 			</p>
 				<table class="table table-striped table-bordered">
@@ -52,17 +53,18 @@ $name = $_SESSION['name'];
 					   #connecting to the database and assign object to variable
 					   $pdo = Database::connect();
 					   # assign select statement to a variable
-					   $sql = 'SELECT * FROM `contracts` INNER JOIN `services` INNER JOIN `customers` WHERE services.id = contracts.serviceID AND customers.id = contracts.customerID AND `name`= "chad"';
+					   $sql = 'SELECT * FROM `contracts` INNER JOIN `services` INNER JOIN `customers` WHERE services.id = contracts.serviceID AND customers.id = contracts.customerID';
 					   # itterates through every record returned by the select statement
 	 				   foreach ($pdo->query($sql) as $row) {
 						   		echo '<tr>';
-							   	echo '<td>'. $row['service_name'] . '</td>';
-							   	echo '<td>'. $row['service_desc'] . '</td>';
-							   	echo '<td>'. $row['service_price'] . '</td>';
-								echo '<td>'. $row['service_date'] . '</td>';
+							   	echo '<td>'. $row['s_name'] . '</td>';
+							   	echo '<td>'. $row['description'] . '</td>';
+							   	echo '<td>'. $row['price'] . '</td>';
+								echo '<td>'. $row['date'] . '</td>';
 							   	echo '<td width=250>';
-							   	echo '<a class="btn" href="paypal.php">
-								<img src="https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif" align="left" style="margin-right:7px;"></a>';
+
+								echo '<a class="btn" href="readservice.php?id='. $row['serviceID'].'">Read</a>';
+							   	echo '&nbsp;';
 							   	echo '</td>';
 							   	echo '</tr>';
 					   }
@@ -71,9 +73,12 @@ $name = $_SESSION['name'];
 				      </tbody>
 	            </table>
 				<p>
-					<a href="create.php" class="btn btn-success">New Service</a>
+					<a href="newservice.php" class="btn btn-success">New Service</a>
 				</p>
     	</div>
     </div> <!-- /container -->
   </body>
 </html>
+<?php
+show_source(__FILE__); 
+?>
