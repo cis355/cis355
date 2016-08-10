@@ -43,7 +43,7 @@
 			$q = $pdo->prepare($sql);
 			$q->execute(array($name,$email,$mobile));
 			Database::disconnect();
-			header("Location: index.php");
+			header('Location: program01.php');
 		}
 	}
 ?>
