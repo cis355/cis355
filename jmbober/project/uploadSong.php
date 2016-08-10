@@ -1,13 +1,38 @@
 <?php 
-
-	# Consider three scenarios
-	# 1. User clicked "create" button on list screen (index.php)
-	#		-create.php displays blank entry screen
-	# 2. User clicked "create" button (submit button) on entry screen, but a field was empty
-	#		-Displays an error message next to the empty field
-	# 3. User clicked "create" button (submit button) on entry screen and all data valid
-	# 		-PHP code inserts the record and redirects to the list screen
-	
+/* *******************************************************************
+* filename : uploadSong.php
+* author : Jenny Bober
+* username : jmbober
+* course : cs355
+* section : 11-MW
+* semester : Summer 2016
+*
+description : Adds a song to the songs table 
+              
+*
+* Structure: PHP:
+              start session
+              if post is not empty...
+                -set variables
+                -validate input
+                -insert data into database      
+             HTML:
+              header:
+                -links to bootstrap
+              body:
+                -Create form
+*
+precondition : database connection is valid, 
+               songs table exists with proper fields,
+               user is logged in
+               
+postcondition: if user input is valid, record is added to "songs" table, user redirected to index
+               otherwise displays error message
+*
+* Code adapted from George Corser
+* *******************************************************************/
+  session_start();
+	if (empty($_SESSION['username'])) header("Location: login.php"); 
 	
 	# include connection data and functions
 	require 'database.php';
@@ -68,71 +93,66 @@
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="utf-8">
     <link   href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-</head>
+  </head>
 
-<body>
+  <body>
     <div class="container">
-    
-    			<div class="span10 offset1">
-    				<div class="row">
-		    			<h3>Add a song</h3>
-		    		</div>
-    		
-	    			<form class="form-horizontal" action="uploadSong.php" method="post">
-					  <div class="control-group <?php echo !empty($titleError)?'error':'';?>">
-					    <label class="control-label">Song Title</label>
-					    <div class="controls">
-					      	<input name="title" type="text"  placeholder="title" value="<?php echo !empty($title)?$title:'';?>">
-					      	<?php if (!empty($titleError)): ?>
-					      		<span class="help-inline"><?php echo $titleError;?></span>
-					      	<?php endif; ?>
-					    </div>
-					  </div>
+      <div class="span10 offset1">
+        <div class="row">
+          <h3>Add a song</h3>
+        </div>
+    		<!-- FORM -->
+        <form class="form-horizontal" action="uploadSong.php" method="post">
+          <div class="control-group <?php echo !empty($titleError)?'error':'';?>">
+            <label class="control-label">Song Title</label>
+            <div class="controls">
+              <input name="title" type="text"  placeholder="title" value="<?php echo !empty($title)?$title:'';?>">
+              <?php if (!empty($titleError)): ?>
+                <span class="help-inline"><?php echo $titleError;?></span>
+              <?php endif; ?>
+            </div>
+          </div>
             
-             <div class="control-group <?php echo !empty($artistError)?'error':'';?>">
-					    <label class="control-label">Artist</label>
-					    <div class="controls">
-					      	<input name="artist" type="text"  placeholder="artist" value="<?php echo !empty($artist)?$artist:'';?>">
-					      	<?php if (!empty($artistError)): ?>
-					      		<span class="help-inline"><?php echo $artistError;?></span>
-					      	<?php endif; ?>
-					    </div>
-					  </div>
+          <div class="control-group <?php echo !empty($artistError)?'error':'';?>">
+            <label class="control-label">Artist</label>
+            <div class="controls">
+              <input name="artist" type="text"  placeholder="artist" value="<?php echo !empty($artist)?$artist:'';?>">
+              <?php if (!empty($artistError)): ?>
+                <span class="help-inline"><?php echo $artistError;?></span>
+              <?php endif; ?>
+            </div>
+          </div>
             
-             <div class="control-group <?php echo !empty($genreError)?'error':'';?>">
-					    <label class="control-label">Genre</label>
-					    <div class="controls">
-					      	<input name="genre" type="text"  placeholder="genre" value="<?php echo !empty($genre)?$genre:'';?>">
-					      	<?php if (!empty($genreError)): ?>
-					      		<span class="help-inline"><?php echo $genreError;?></span>
-					      	<?php endif; ?>
-					    </div>
-					  </div>
+          <div class="control-group <?php echo !empty($genreError)?'error':'';?>">
+            <label class="control-label">Genre</label>
+            <div class="controls">
+              <input name="genre" type="text"  placeholder="genre" value="<?php echo !empty($genre)?$genre:'';?>">
+              <?php if (!empty($genreError)): ?>
+                <span class="help-inline"><?php echo $genreError;?></span>
+              <?php endif; ?>
+            </div>
+          </div>
             
-             <div class="control-group <?php echo !empty($linkError)?'error':'';?>">
-					    <label class="control-label">Link</label>
-					    <div class="controls">
-					      	<input name="link" type="text"  placeholder="link" value="<?php echo !empty($link)?$link:'';?>">
-					      	<?php if (!empty($linkError)): ?>
-					      		<span class="help-inline"><?php echo $linkError;?></span>
-					      	<?php endif; ?>
-					    </div>
-					  </div>
-            
-					 
-            </br>
-					  <div class="form-actions">
-						  <button type="submit" class="btn btn-success">Create</button>
-						  <a class="btn" href="index.php">Back</a>
-						</div>
-					</form>
-				</div>
-				
+          <div class="control-group <?php echo !empty($linkError)?'error':'';?>">
+            <label class="control-label">Link</label>
+            <div class="controls">
+              <input name="link" type="text"  placeholder="link" value="<?php echo !empty($link)?$link:'';?>">
+              <?php if (!empty($linkError)): ?>
+                <span class="help-inline"><?php echo $linkError;?></span>
+              <?php endif; ?>
+            </div>
+          </div>
+          </br>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-success">Add Song</button>
+            <a class="btn" href="index.php">Back</a>
+          </div>
+        </form>
+      </div>			
     </div> <!-- /container -->
   </body>
 </html>
-<?php   show_source(__FILE__); ?>
