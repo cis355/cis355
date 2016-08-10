@@ -38,6 +38,7 @@
       print_r($results);
       if($results['password'] == $password){
         $_SESSION['username'] = $username;
+        $_SESSION['userID'] = $results['ID'];
         Database::disconnect();
 			  header("Location: index.php");
       }
