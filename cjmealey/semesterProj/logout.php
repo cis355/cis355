@@ -14,15 +14,14 @@
   \_____||_____||_____/       |____/ |____/ |____/                 
                                                          
 
-filename  : database.php
+filename  : logout.php
 author    : Colin Mealey
 date      : 2016-08-08
 email     : cjmealey@svsu.edu
 course    : CIS-355
-link      : csis.svsu.edu/~gpcorser/cis355/cjmealey/semesterProj/database.php
+link      : csis.svsu.edu/~gpcorser/cis355/cjmealey/semesterProj/logout.php
 backup    : github.com/cis355/cis355
-purpose   : This file connects to the database for PDO connections
-            "require" where needed
+purpose   : This file 
 
 copyright : GNU General Public License (http://www.gnu.org/licenses/)
       This program is free software: you can redistribute it and/or modify
@@ -37,56 +36,24 @@ external code used in this file:
       Some code adapted from STAR Tutorials
       
 program structure : 
-      class database
-        declare variables
-        construct()
-          instakill
-        connect()
-          if connection not established
-            connect
-          else
-            kill connection
-        disconnect()
-        
+      session
+        disconnect from session
+        destroy session
+      redirect to login
+
                 
 ======================================================================== -->
 
 <?php
-class Database
-{
-    private static $dbName = 'cjmealey' ;
-    private static $dbHost = 'localhost' ;
-    private static $dbUsername = 'cjmealey';
-    private static $dbUserPassword = '564667';
-     
-    private static $cont  = null;
-     
-    public function __construct() {
-        die('Init function is not allowed');
-    }
-     
-    public static function connect()
-    {
-       // One connection through whole application
-       if ( null == self::$cont )
-       {     
-        try
-        {
-          self::$cont =  new PDO( "mysql:host=".self::$dbHost.";"."dbname=".self::$dbName, self::$dbUsername, self::$dbUserPassword); 
-        }
-        catch(PDOException $e)
-        {
-          die($e->getMessage()); 
-        }
-       }
-       return self::$cont;
-    }
-     
-    public static function disconnect()
-    {
-        self::$cont = null;
-    }
-}
+	session_start();
+  $_SESSION = array();
+  if (ini_get("session.use_cookies")) {
+    $params = session_get_cookie_params();
+    setcookie(session_name(), '', time() - 42000,
+        $params["path"], $params["domain"],
+        $params["secure"], $params["httponly"]
+    );
+  } 
+  session_destroy();
+  header('Location: login.php');
 ?>
-
-

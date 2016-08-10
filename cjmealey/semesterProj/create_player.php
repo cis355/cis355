@@ -1,4 +1,6 @@
+
 <?php
+
 /* ========================================================================
 
    _____      _  __  __  ______            _       ______ __     __
@@ -15,14 +17,14 @@
   \_____||_____||_____/       |____/ |____/ |____/                 
                                                          
 
-filename  : create.php
+filename  : create_player.php
 author    : Colin Mealey
 date      : 2016-08-08
 email     : cjmealey@svsu.edu
 course    : CIS-355
-link      : csis.svsu.edu/~gpcorser/cis355/cjmealey/semesterProj/create.php
+link      : csis.svsu.edu/~gpcorser/cis355/cjmealey/semesterProj/create_player.php
 backup    : github.com/cis355/cis355
-purpose   : This file displays and implements the create campaign feature
+purpose   : This file displays and implements the create user feature
 
 copyright : GNU General Public License (http://www.gnu.org/licenses/)
       This program is free software: you can redistribute it and/or modify
@@ -37,38 +39,41 @@ external code used in this file:
       Some code adapted from STAR Tutorials
       
 program structure : 
-      session start
+    session start
       database.php
       check all errors
         if valid, create campaign
       HTML form
-        name
-        creator (auto enters)
+        username
+        password
+        pass_confirm
         location
-        description
+        email
+        about
+
 
                 
 ======================================================================== */
 
-
-
-    session_start();
-    if(empty($_SESSION['username'])) header('Location: login.php'); //redirect
      
     require 'database.php';
  
     if ( !empty($_POST)) {
         // keep track validation errors
         $nameError = null;
-        $creatorError = null;
+        $passwordError = null;
+        $pass_confirmError = null;
         $locationError = null;
-        $descriptionError = null;
+        $emailError = null;
+        $aboutError = null;
          
         // keep track post values
         $name = $_POST['name'];
-        $creator = $_POST['creator'];
+        $password = $_POST['password'];
+        $pass_confirm = $_POST['pass_confirm'];
         $location = $_POST['location'];
-        $description = $_POST['description'];
+        $email = $_POST['email'];
+        $about = $_POST['about'];
          
         // validate input
         $valid = true;
@@ -77,8 +82,13 @@ program structure :
             $valid = false;
         }
          
-        if (empty($creator)) {
-            $creatorError = 'Please enter GM Name';
+        if (empty($password)) {
+            $passwordError = 'Please enter password';
+            $valid = false;
+        }
+
+        if ($password != $pass_confirm){
+            $pass_confirmError = 'Passwords must match!';
             $valid = false;
         }
          
@@ -87,30 +97,29 @@ program structure :
             $valid = false;
         }
 
-        if (empty($description)) {
-            $descriptionError = 'Please enter Description';
+        if (empty($about)) {
+            $aboutError = 'Please enter about';
+            $valid = false;
+        }
+
+        if (empty($email)) {
+            $emailError = 'Please enter Email Address';
+            $valid = false;
+        } else if ( !filter_var($email,FILTER_VALIDATE_EMAIL) ) {
+            $emailError = 'Please enter a valid Email Address';
             $valid = false;
         }
          
         // insert data
         if ($valid) {
-
-            echo $name . " , " . $creator . " , " . $location . " , " . $description. " ::";
-
-            try {
-              $pdo = Database::connect();
-              $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-              $sql = "INSERT INTO campaigns (name,creator,camplocation,description) values(?, ?, ?, ?)";
-              $q = $pdo->prepare($sql);
-              $q->execute(array($name,$creator,$location,$description));
-              Database::disconnect();
-              header("Location: semesterProj.php");
-            }
-            catch(PDOException $e)
-            {
-            echo $sql . "<br>" . $e->getMessage();
-            }
-
+            $pdo = Database::connect();
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $sql = "INSERT INTO players (username,password,location,about,email) 
+                    values(?, ?, ?, ?, ?)";
+            $q = $pdo->prepare($sql);
+            $q->execute(array($name,$password,$location,$about,$email));
+            Database::disconnect();
+            header("Location: login.php");
         }
     }
 ?>
@@ -119,8 +128,8 @@ program structure :
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>DnDatabase</title>
-  <link rel="icon" type="image/png" href="favicon.ico">
+<title>DnDatabase</title>
+<link rel="icon" type="image/png" href="favicon.ico">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://bootswatch.com/sandstone/bootstrap.min.css">
@@ -132,61 +141,45 @@ program structure :
   </style>
 </head>
  
-<nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="semesterProj.php">Dungeons n' Database</a>
-    </div>
-
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        <li class="active"><a href="semesterProj.php">Campaigns <span class="sr-only">(current)</span></a></li>
-        <li><a href="user_profile.php">Profile</a></li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="logout.php">Logout</a></li>
-      </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
-</nav>
-
- 
 <body>
     <div class="container">
      
                 <div class="span10 offset1">
                     <div class="row">
-                        <h3>Create a Campaign</h3>
+                        <h3>Create a New Player</h3>
                     </div>
              
-                    <form class="form-horizontal" action="create.php" method="post">
+                    <form class="form-horizontal" action="create_player.php" method="post">
 
-
+                    <!-- Enter username and errorcheck call -->
                       <div class="control-group <?php echo !empty($nameError)?'error':'';?>">
-                        <label class="control-label">Name</label>
+                        <label class="control-label">Userame</label>
                         <div class="controls">
-                            <input name="name" type="text"  placeholder="Name" value="<?php echo !empty($name)?$name:'';?>">
+                            <input name="name" type="text"  placeholder="Username" value="<?php echo !empty($name)?$name:'';?>">
                             <?php if (!empty($nameError)): ?>
                                 <span class="help-inline"><?php echo $nameError;?></span>
                             <?php endif; ?>
                         </div>
                       </div>
 
-
-                      <div type="hidden" class="control-group <?php echo !empty($creatorError)?'error':'';?>">
-                        <label class="control-label">Game Master</label>
+                      <!-- Enter password and errorcheck call -->
+                      <div class="control-group <?php echo !empty($passwordError)?'error':'';?>">
+                        <label class="control-label">Password</label>
                         <div class="controls">
-                        <?php 
-                            echo' <input name="creator" type="text" placeholder="' . $_SESSION['username'] . '" value="' . $_SESSION['username'] . '">';
-                            if (!empty($creatorError)): ?>
-                                <span class="help-inline"><?php echo $creatorError;?></span>
+                            <input name="password" type="password" placeholder="Enter Password" value="<?php echo !empty($password)?$password:'';?>">
+                            <?php if (!empty($passwordError)): ?>
+                                <span class="help-inline"><?php echo $passwordError;?></span>
+                            <?php endif;?>
+                        </div>
+                      </div>
+
+                      <!-- Enter password confirmation and errorcheck call -->
+                      <div class="control-group <?php echo !empty($pass_confirmError)?'error':'';?>">
+                        <label class="control-label">Confirm password</label>
+                        <div class="controls">
+                            <input name="pass_confirm" type="password" placeholder="Confirm Password" value="<?php echo !empty($pass_confirm)?$pass_confirm:'';?>">
+                            <?php if (!empty($pass_confirmError)): ?>
+                                <span class="help-inline"><?php echo $pass_confirmError;?></span>
                             <?php endif;?>
                         </div>
                       </div>
@@ -203,12 +196,23 @@ program structure :
                       </div>
 
 
-                      <div class="control-group <?php echo !empty($descriptionError)?'error':'';?>">
-                        <label class="control-label">Description</label>
+                      <div class="control-group <?php echo !empty($emailError)?'error':'';?>">
+                        <label class="control-label">Email</label>
                         <div class="controls">
-                            <input name="description" type="text" class=resizedTextbox  placeholder="Enter Description" value="<?php echo !empty($description)?$description:'';?>">
-                            <?php if (!empty($descriptionError)): ?>
-                                <span class="help-inline"><?php echo $descriptionError;?></span>
+                            <input name="email" type="text" class=resizedTextbox  placeholder="example@email.com" value="<?php echo !empty($email)?$email:'';?>">
+                            <?php if (!empty($emailError)): ?>
+                                <span class="help-inline"><?php echo $emailError;?></span>
+                            <?php endif;?>
+                        </div>
+                      </div>
+
+
+                      <div class="control-group <?php echo !empty($aboutError)?'error':'';?>">
+                        <label class="control-label">About</label>
+                        <div class="controls">
+                            <input name="about" type="text" class=resizedTextbox  placeholder="Enter User Description" value="<?php echo !empty($about)?$about:'';?>">
+                            <?php if (!empty($aboutError)): ?>
+                                <span class="help-inline"><?php echo $aboutError;?></span>
                             <?php endif;?>
                         </div>
                       </div>

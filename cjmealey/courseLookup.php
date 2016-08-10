@@ -1,4 +1,6 @@
 <?php
+
+echo "<a href='http://csis.svsu.edu/~cjmealey/cis355/cjmealey/webservice.php'>Web Service</a><br><br><br>";
 // THIS IS LINK TO ACCESS THE COURSES API
 $url = 'http://api.svsu.edu/courses?prefix=CIS&term=16/FA';
 $json = file_get_contents($url);
@@ -24,5 +26,6 @@ $obj2 = json_decode($json2);
 foreach($obj2->query->results->channel->item->forecast as $f) {
 	echo '<strong>' . $f->day . ', ' . $f->date . '</strong><br>' . 'High: ' . $f->high . '<br>Low: ' . $f->low . '<br>Will be ' . $f->text . '<br><br>';
 }
+show_source(__FILE__);
 
 ?>

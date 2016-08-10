@@ -1,5 +1,6 @@
 <?php
-/* ========================================================================
+
+/*-- ========================================================================
 
    _____      _  __  __  ______            _       ______ __     __
   / ____|    | ||  \/  ||  ____|    /\    | |     |  ____|\ \   / /
@@ -15,14 +16,14 @@
   \_____||_____||_____/       |____/ |____/ |____/                 
                                                          
 
-filename  : create.php
+filename  : update.php
 author    : Colin Mealey
 date      : 2016-08-08
 email     : cjmealey@svsu.edu
 course    : CIS-355
-link      : csis.svsu.edu/~gpcorser/cis355/cjmealey/semesterProj/create.php
+link      : csis.svsu.edu/~gpcorser/cis355/cjmealey/semesterProj/update.php
 backup    : github.com/cis355/cis355
-purpose   : This file displays and implements the create campaign feature
+purpose   : This file update selected campaign
 
 copyright : GNU General Public License (http://www.gnu.org/licenses/)
       This program is free software: you can redistribute it and/or modify
@@ -37,26 +38,32 @@ external code used in this file:
       Some code adapted from STAR Tutorials
       
 program structure : 
-      session start
-      database.php
-      check all errors
-        if valid, create campaign
-      HTML form
-        name
-        creator (auto enters)
-        location
-        description
+      session
+      check for post vars
+      if correct, update entry
+        SQL statement
+      if not, repopulate and run error messages
+      HTML Header
+      HTML Form
 
                 
 ======================================================================== */
-
 
 
     session_start();
     if(empty($_SESSION['username'])) header('Location: login.php'); //redirect
      
     require 'database.php';
- 
+
+    $id = null;
+    if ( !empty($_GET['id'])) {
+        $id = $_REQUEST['id'];
+    }
+     
+    if ( null==$id ) {
+        header("Location: semesterProj.php");
+    }
+
     if ( !empty($_POST)) {
         // keep track validation errors
         $nameError = null;
@@ -94,24 +101,27 @@ program structure :
          
         // insert data
         if ($valid) {
-
-            echo $name . " , " . $creator . " , " . $location . " , " . $description. " ::";
-
-            try {
               $pdo = Database::connect();
               $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-              $sql = "INSERT INTO campaigns (name,creator,camplocation,description) values(?, ?, ?, ?)";
+              $sql = "UPDATE campaigns  set name = ?, creator = ?, camplocation = ?, description = ? WHERE id = ?";
               $q = $pdo->prepare($sql);
-              $q->execute(array($name,$creator,$location,$description));
+              $q->execute(array($name,$creator,$location,$description,$id));
               Database::disconnect();
               header("Location: semesterProj.php");
-            }
-            catch(PDOException $e)
-            {
-            echo $sql . "<br>" . $e->getMessage();
-            }
-
         }
+      }
+    else{
+      $pdo = Database::connect();
+      $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+      $sql = "SELECT * FROM campaigns where id = ?";
+      $q = $pdo->prepare($sql);
+      $q->execute(array($id));
+      $data = $q->fetch(PDO::FETCH_ASSOC);
+      $name = $data['name'];
+      $creator = $data['creator'];
+      $location = $data['camplocation'];
+      $description = $data['description'];
+      Database::disconnect();
     }
 ?>
 
@@ -157,22 +167,32 @@ program structure :
   </div><!-- /.container-fluid -->
 </nav>
 
- 
 <body>
     <div class="container">
-     
-                <div class="span10 offset1">
+    
+               <div class="span10 offset1">
                     <div class="row">
-                        <h3>Create a Campaign</h3>
+                        <h3>Update <?php echo $name;?></h3>
                     </div>
-             
-                    <form class="form-horizontal" action="create.php" method="post">
 
+                    <?php
+                      if ($valid) {
+                        echo "<br><h4>" . $name . ' has been updated!</h4 style="color:red;">';
+                      }
+                    ?>
+
+                    <form class="form-horizontal" id="textarea" action="update.php?id=<?php echo $id?>" method="post">
+
+                      <div class="form-actions">
+                          <br/><br/>
+                          <button type="submit" class="btn btn-primary">Update</button>
+                          <a class="btn btn-success" href="semesterProj.php">Back</a>
+                      </div>
 
                       <div class="control-group <?php echo !empty($nameError)?'error':'';?>">
                         <label class="control-label">Name</label>
                         <div class="controls">
-                            <input name="name" type="text"  placeholder="Name" value="<?php echo !empty($name)?$name:'';?>">
+                            <input name="name" type="text"  placeholder="Name" value="<?php echo $name;?>">
                             <?php if (!empty($nameError)): ?>
                                 <span class="help-inline"><?php echo $nameError;?></span>
                             <?php endif; ?>
@@ -184,7 +204,7 @@ program structure :
                         <label class="control-label">Game Master</label>
                         <div class="controls">
                         <?php 
-                            echo' <input name="creator" type="text" placeholder="' . $_SESSION['username'] . '" value="' . $_SESSION['username'] . '">';
+                            echo' <input name="creator" type="text" value="' . $_SESSION['username'] . '">';
                             if (!empty($creatorError)): ?>
                                 <span class="help-inline"><?php echo $creatorError;?></span>
                             <?php endif;?>
@@ -195,31 +215,26 @@ program structure :
                       <div class="control-group <?php echo !empty($locationError)?'error':'';?>">
                         <label class="control-label">Location</label>
                         <div class="controls">
-                            <input name="location" type="text"  placeholder="City, State, Zip" value="<?php echo !empty($location)?$location:'';?>">
+                            <input name="location" type="text"  placeholder="City, State, Zip" value="<?php echo $location;?>">
                             <?php if (!empty($locationError)): ?>
                                 <span class="help-inline"><?php echo $locationError;?></span>
                             <?php endif;?>
                         </div>
                       </div>
-
-
-                      <div class="control-group <?php echo !empty($descriptionError)?'error':'';?>">
-                        <label class="control-label">Description</label>
-                        <div class="controls">
-                            <input name="description" type="text" class=resizedTextbox  placeholder="Enter Description" value="<?php echo !empty($description)?$description:'';?>">
-                            <?php if (!empty($descriptionError)): ?>
-                                <span class="help-inline"><?php echo $descriptionError;?></span>
-                            <?php endif;?>
-                        </div>
-                      </div>
-                      <div class="form-actions">
-                          <br/><br/>
-                          <button type="submit" class="btn btn-success">Create</button>
-                          <a class="btn" href="semesterProj.php">Back</a>
-                        </div>
                     </form>
+
+
+
+                    <label class="control-label">Description</label>
+                    <div class="controls">
+                        <?php 
+                        echo'<textarea name="description" form="textarea" rows="10" cols="100" value="' . $description . '">' . $description . '</textarea>';
+                        if (!empty($descriptionError)): ?>
+                            <span class="help-inline"><?php echo $descriptionError;?></span>
+                        <?php endif;?>
+                    </div>
                 </div>
-                 
+
     </div> <!-- /container -->
   </body>
 </html>

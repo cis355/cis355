@@ -1,4 +1,11 @@
 <!-- -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+   _____   __  __ ______          _      ________     __
+  / ____| |  \/  |  ____|   /\   | |    |  ____\ \   / /
+ | |      | \  / | |__     /  \  | |    | |__   \ \_/ / 
+ | |      | |\/| |  __|   / /\ \ | |    |  __|   \   /  
+ | |____ _| |  | | |____ / ____ \| |____| |____   | |   
+  \_____(_)_|  |_|______/_/    \_\______|______|  |_|   
+
 
 filename  : program02.php
 author    : Colin Mealey
@@ -59,6 +66,12 @@ class Athlete {
 
 	// THIS FUNCTION ACTS AS A CONNECT THAT WORKS WITHIN THE CLASS METHODS
 	public function connect(){
+	// Purpose: connect to the server via MySQLi
+	// Input: N/A
+	// Pre: New Athlete class declared
+	// Output: returns connection to server as $c
+	// Post: connection established and returned
+
 		$c = mysqli_connect("localhost","cjmealey","564667","cjmealey");
 		// Check connection
 		if (mysqli_connect_errno()){
@@ -70,6 +83,11 @@ class Athlete {
 	}
 
 	function __construct()
+	// Purpose: builds basic html and checks functions
+	// Input: N/A
+	// Pre: class declared
+	// Output: all html/function calls
+	// Post: appropriate page displayed
 	{
 		// ECHO GENERIC HEADER FOR EVERY PAGE
 		echo "  <!DOCTYPE html>
@@ -179,7 +197,20 @@ class Athlete {
 		}
 	}
 
-	public function create($data)
+
+
+
+
+
+
+
+	public function create()
+	// Purpose: display create page
+	// Input: N/A
+	// Pre: create function called from base page
+	// Output: create page form
+	// Post: create form can be used or retreated from
+
 	{
 		// GENERATE HTML HERE
 		echo '	<h3>Enter Information: </h3>
@@ -192,7 +223,18 @@ class Athlete {
 				</form>';
 	}
 
+
+
+
+
+
+
 	public function read($data)
+	// Purpose: display read for line
+	// Input: $row data from database
+	// Pre: read function called, $data located in database
+	// Output: all data from database in readable format
+	// Post: read page displayed with back button
 	{
 		// GENERATE HTML HERE
 		echo '	<div class="span10 offset1">
@@ -217,7 +259,17 @@ class Athlete {
 			</html>';
 	}
 
+
+
+
+
+
 	public function update($data)
+	// Purpose: display update page
+	// Input: $row from database
+	// Pre: update function called, row data obtained
+	// Output: form with row info displayed
+	// Post: display filled form to edit
 	{
 		// GENERATE HTML HERE
 		echo '	<h3>Enter Information: </h3>
@@ -231,15 +283,34 @@ class Athlete {
 				</form>';
 	}
 
+
+
+
+
 	public function delete($data)
+	// Purpose: display delete page
+	// Input: $row data from database
+ 	// Pre: delete function called and row data obtained
+	// Output: delete query with yes/no choice
+	// Post: entry either deleted or retreated from
 	{
 		// GENERATE HTML HERE
 		echo ' 	<h3> Entry with ID: ' . $data . ' has been deleted </h3><br>
 				<a class="btn btn-danger" href="program02.php">Back</a>';
 	}
 
+
+
+
+
 	// Code uses HTML to construct the table of all athletes
-	public function displayRecords () {
+	public function displayRecords () 
+	// Purpose: display table of database
+	// Input: N/A
+	// Pre: Athlete declared, database connected
+	// Output: html and tabel data
+	// Post: table built with buttons
+	{
 		$con = $this->connect();
 		$sql = "SELECT * FROM athletes ORDER BY id DESC";
 		echo '<a href="program02.php" class="btn btn-success">Refresh</a>&nbsp;';
@@ -272,6 +343,7 @@ class Athlete {
 	mysqli_close($con);
 	}
 }
+
 // Actually declare a Customer, iterate correct buttons
 $ath1 = new Athlete;
 show_source(__FILE__);

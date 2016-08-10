@@ -8,5 +8,5 @@ $json = '{"item": [
         {"name":"River", "id": 30, "school":"MYU", "clubs":{"A":"MNO", "B":"TUV"}}
         ]}';
 $obj = json_decode ($json);
-echo ($obj->item[2]->clubs->A);
+// put echo statement here
 ?>

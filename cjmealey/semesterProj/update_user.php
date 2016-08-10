@@ -1,5 +1,4 @@
-<?php
-/* ========================================================================
+<!-- ========================================================================
 
    _____      _  __  __  ______            _       ______ __     __
   / ____|    | ||  \/  ||  ____|    /\    | |     |  ____|\ \   / /
@@ -15,14 +14,14 @@
   \_____||_____||_____/       |____/ |____/ |____/                 
                                                          
 
-filename  : delete.php
+filename  : update_user.php
 author    : Colin Mealey
 date      : 2016-08-08
 email     : cjmealey@svsu.edu
 course    : CIS-355
-link      : csis.svsu.edu/~gpcorser/cis355/cjmealey/semesterProj/delete.php
+link      : csis.svsu.edu/~gpcorser/cis355/cjmealey/semesterProj/update_user.php
 backup    : github.com/cis355/cis355
-purpose   : This file displays the delete option and can execute it
+purpose   : This file updates the selected user's information
 
 copyright : GNU General Public License (http://www.gnu.org/licenses/)
       This program is free software: you can redistribute it and/or modify
@@ -37,50 +36,29 @@ external code used in this file:
       Some code adapted from STAR Tutorials
       
 program structure : 
-        database call
-        check for "yes" value
-            execute if yes
-        HTML form
-            button options
+      HTML Header
+
+      connect function
+      SQL statement
+        create form
+      check appropriate inputs
 
                 
-======================================================================== */
+======================================================================== -->
 
-
-    require 'database.php';
-    $id = 0;
-     
-    if ( !empty($_GET['id'])) {
-        $id = $_REQUEST['id'];
-    }
-     
-    if ( !empty($_POST)) {
-        // keep track post values
-        $id = $_POST['id'];
-         
-        // delete data
-        $pdo = Database::connect();
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $sql = "DELETE FROM campaigns  WHERE id = ?";
-        $q = $pdo->prepare($sql);
-        $q->execute(array($id));
-        Database::disconnect();
-        header("Location: semesterProj.php");
-         
-    }
-?>
- 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>DnDatabase</title>
-<link rel="icon" type="image/png" href="favicon.ico">
+  <title>DnDatabase</title>
+  <link rel="icon" type="image/png" href="favicon.ico">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://bootswatch.com/sandstone/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </head>
+ 
+<body>
 
 <nav class="navbar navbar-default">
   <div class="container-fluid">
@@ -106,24 +84,87 @@ program structure :
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
- 
-<body>
-    <div class="container">
-        <div class="span10 offset1">
-            <div class="row">
-                <h3>Delete a Campaign</h3>
-            </div>
-            <div class="row">
-              <form class="form-horizontal" action="delete.php" method="post">
-                <input type="hidden" name="id" value="<?php echo $id;?>"/>
-                <p class="alert alert-error">Are you sure you want to delete campaign No. <?php echo $id?> ?</p>
-                <div class="form-actions">
-                    <button type="submit" class="btn btn-danger">Yes</button>
-                    <a class="btn btn-success" href="semesterProj.php">No</a>
-                </div>
-              </form>
-            </div>
-        </div>        
-    </div> <!-- /container -->
-  </body>
+
+<div class="container">
+
+
+
+
+
+
+
+<?php
+
+function connect(){
+// Purpose: connect to the server via MySQLi
+// Input: N/A
+// Pre: update_user called
+// Output: returns connection to server as $c
+// Post: connection established and returned
+
+	$c = mysqli_connect("localhost","cjmealey","564667","cjmealey");
+	// Check connection
+	if (mysqli_connect_errno()){
+		echo "Failed to connect to MySQL: " . mysqli_connect_error();
+	}
+	else{
+		return($c);
+	}
+}
+// THIS WILL CHECK FOR UPDATE
+if(in_array('update', $_GET) && !in_array('submit_up', $_GET)) 
+{
+	$id = $_REQUEST['id'];
+	//Connect to Server
+	$con = connect();
+	$sql = "SELECT * FROM players where id = $id";
+	$result=mysqli_query($con,$sql);
+	$row=mysqli_fetch_row($result);
+
+
+	echo '	<h3>Update Information: </h3>
+					<form action="update_user.php?submit_up=submit_up" method="post" id="description">
+						<input type="hidden" name="id" value="' . $_GET['id'] . '">
+						<br><input type="submit" class="btn btn-success" value="Update ' . $row[1] . '"><br><br><br><br>
+						<br>Location<br><input type="text" name="location" value="' . $row[3] . '">
+						<br><br>Email<br><input type="text" name="email" value="' . $row[5] . '">
+						<br><br>About<br><br>				
+					</form>
+
+					<textarea name="about" form="description" rows="10" cols="100">' . $row[4] . '</textarea>
+					<br><br><a class="btn btn-danger" href="user_profile.php">Back</a><br><br>
+					';
+}
+
+
+
+if(in_array('submit_up', $_GET))
+{
+
+	//ASSIGN VARS BASED ON POST
+	$id = $_POST['id'];
+	$location = filter_var($_POST['location'], FILTER_SANITIZE_STRING);
+	$email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
+	$about = filter_var($_POST['about'], FILTER_SANITIZE_STRING);
+
+	$con = connect();
+	$sql = "UPDATE players set location = '$location', email = '$email', about = '$about' WHERE id = '$id'";
+	if ($con->query($sql) === TRUE) {
+	    echo "Updated successfully<br><br>";
+	} else {
+	    echo "Error: " . $sql . "<br>" . $con->error;
+	}
+	echo '<a class="btn btn-danger" href="user_profile.php">Back</a>';
+    mysqli_close($con);
+}
+
+
+?>
+
+
+
+
+
+</div>
+</body>
 </html>

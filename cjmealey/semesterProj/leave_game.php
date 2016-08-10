@@ -14,15 +14,15 @@
   \_____||_____||_____/       |____/ |____/ |____/                 
                                                          
 
-filename  : database.php
+filename  : leave_game.php
 author    : Colin Mealey
 date      : 2016-08-08
 email     : cjmealey@svsu.edu
 course    : CIS-355
-link      : csis.svsu.edu/~gpcorser/cis355/cjmealey/semesterProj/database.php
+link      : csis.svsu.edu/~gpcorser/cis355/cjmealey/semesterProj/leave_game.php
 backup    : github.com/cis355/cis355
-purpose   : This file connects to the database for PDO connections
-            "require" where needed
+purpose   : This file deletes the "joined" member that contains the user and 
+			the campaign
 
 copyright : GNU General Public License (http://www.gnu.org/licenses/)
       This program is free software: you can redistribute it and/or modify
@@ -37,56 +37,66 @@ external code used in this file:
       Some code adapted from STAR Tutorials
       
 program structure : 
-      class database
-        declare variables
-        construct()
-          instakill
-        connect()
-          if connection not established
-            connect
-          else
-            kill connection
-        disconnect()
-        
+      session start
+      connect function
+      leave function
+      	SQL statement and query
+
                 
 ======================================================================== -->
 
-<?php
-class Database
-{
-    private static $dbName = 'cjmealey' ;
-    private static $dbHost = 'localhost' ;
-    private static $dbUsername = 'cjmealey';
-    private static $dbUserPassword = '564667';
-     
-    private static $cont  = null;
-     
-    public function __construct() {
-        die('Init function is not allowed');
-    }
-     
-    public static function connect()
-    {
-       // One connection through whole application
-       if ( null == self::$cont )
-       {     
-        try
-        {
-          self::$cont =  new PDO( "mysql:host=".self::$dbHost.";"."dbname=".self::$dbName, self::$dbUsername, self::$dbUserPassword); 
-        }
-        catch(PDOException $e)
-        {
-          die($e->getMessage()); 
-        }
-       }
-       return self::$cont;
-    }
-     
-    public static function disconnect()
-    {
-        self::$cont = null;
-    }
-}
+<?php 
+
+	session_start();
+	if(empty($_SESSION['username'])) header('Location: login.php'); //redirect
+
+	function connect(){
+	// Purpose: connect to the server via MySQLi
+	// Input: N/A
+	// Pre: leave function called
+	// Output: returns connection to server as $c
+	// Post: connection established and returned
+
+		$c = mysqli_connect("localhost","cjmealey","564667","cjmealey");
+		// Check connection
+		if (mysqli_connect_errno()){
+			echo "Failed to connect to MySQL: " . mysqli_connect_error();
+		}
+		else{
+			return($c);
+		}
+	}
+
+
+
+	function leave_campaign(){
+	// Purpose: delete "joined" entry
+	// Input: N/A
+	// Pre: leave function called
+	// Output: N/A
+	// Post: "joined" entry delete
+
+		$id = $_SESSION['id'];
+		$campId = $_GET['id'];
+		
+		$con = connect();
+
+	    echo "	<div class='row'>";
+		$sql = "DELETE FROM joined WHERE userID=$id AND campID=$campId";
+		if ($con->query($sql) === TRUE) {
+		    echo  "<h3>Campaign No. ". $campId ." un-joined</h3>";
+		    header("Location: user_profile.php#joined");
+		} 
+		else{
+		    echo "Error: " . $sql . "<br>" . $con->error;
+		}
+		echo "	</div>
+				<div class='row'>
+					<a class='btn btn-primary' href='user_profile.php'>Back</a>
+				</div>";
+	}
+
+
+	leave_campaign();
+
 ?>
-
-
