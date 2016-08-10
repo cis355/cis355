@@ -25,4 +25,6 @@ foreach($obj->query->results->channel->item->forecast as $day) {
 	echo '<br />';
 }
 
+show_source(__FILE__);
+
 ?>
