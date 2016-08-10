@@ -2,7 +2,7 @@
 	require 'elitedatabase.php';
 	$id = null;
 	if ( !empty($_GET['id'])) {
-		$id = $_REQUEST['serviceID'];
+		$id = $_REQUEST['id'];
 	}
 	
 	if ( null==$id ) {
@@ -37,19 +37,19 @@
 	    			<div class="form-horizontal" >
 					  <div class="control-group">
 					    <label class="control-label">Service</label>
-						     	<?php echo $data['service_name'];?>
+						     	<?php echo $data['s_name'];?>
 					  </div>
 					  <div class="control-group">
 					    <label class="control-label">Description</label>
-						     	<?php echo $data['service_desc'];?>
+						     	<?php echo $data['description'];?>
 					  </div>
 					  <div class="control-group">
 					    <label class="control-label">Price</label>
-						     	<?php echo $data['service_price'];?>
+						     	<?php echo $data['price'];?>
 					  </div>
 					  <div class="control-group">
 					    <label class="control-label">Date</label>
-						     	<?php echo $data['service_date'];?>
+						     	<?php echo $data['date'];?>
 					  </div>
 					    <div class="form-actions">
 						  <a class="btn" href="elite.php">Back</a>

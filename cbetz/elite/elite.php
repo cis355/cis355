@@ -17,7 +17,7 @@ $name = $_SESSION['name'];
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </head>
 
-<body <!--style="background-image: url('http://www.publicdomainpictures.net/pictures/40000/velka/grass-1366796906dab.jpg');"-->>
+<body style="background-image: url('http://www.publicdomainpictures.net/pictures/40000/velka/grass-1366796906dab.jpg');">
 	<!-- The head section does the follwing.
 		1. Displays Heading
 		2. Displays Create button
@@ -53,6 +53,7 @@ $name = $_SESSION['name'];
 					   #connecting to the database and assign object to variable
 					   $pdo = Database::connect();
 					   # assign select statement to a variable
+					   #$sql = 'SELECT * FROM `services`';
 					   $sql = 'SELECT * FROM `contracts` INNER JOIN `services` INNER JOIN `customers` WHERE services.id = contracts.serviceID AND customers.id = contracts.customerID';
 					   # itterates through every record returned by the select statement
 	 				   foreach ($pdo->query($sql) as $row) {
@@ -74,11 +75,12 @@ $name = $_SESSION['name'];
 	            </table>
 				<p>
 					<a href="newservice.php" class="btn btn-success">New Service</a>
+					<a href="newcontract.php" class="btn btn-success">New Contract</a>
 				</p>
     	</div>
     </div> <!-- /container -->
   </body>
 </html>
 <?php
-show_source(__FILE__); 
+//show_source(__FILE__); 
 ?>
