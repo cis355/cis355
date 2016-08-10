@@ -42,7 +42,24 @@ program structure :
       join function
       	SQL and execute
 
-                
+======================================================================== 
+
+* 3PIO
+*
+* input : $_GET line info
+* 
+* processing : The program steps are as follows.
+*   1. connect to database
+*   2. if joined, display message
+*   3. if not, create new "joined" entry
+*   4. display y/n
+* 
+* output : database entry
+*
+* precondition : line info passed via get, user logged in
+* 
+* postcondition: user/campaign added to joined table
+
 ======================================================================== -->
 
 <!DOCTYPE html>

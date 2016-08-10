@@ -41,7 +41,21 @@ program structure :
         destroy session
       redirect to login
 
-                
+======================================================================== 
+
+* 3PIO
+*
+* input : N/A
+* 
+* processing : The program steps are as follows.
+*   1. kill session
+* 
+* output : N/A
+*
+* precondition : logout selected
+* 
+* postcondition: user logged out, session killed
+
 ======================================================================== -->
 
 <?php

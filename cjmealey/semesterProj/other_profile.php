@@ -46,6 +46,24 @@ program structure :
 
       declare functions and class
 
+======================================================================== 
+
+* 3PIO
+*
+* input : username from GET
+* 
+* processing : The program steps are as follows.
+*   1. displat HTML
+*   2. connect to database
+*   3. display profile info
+*   4. display joined campaigns
+*   5. display created campaigns
+* 
+* output : N/A
+*
+* precondition : user selected from list
+* 
+* postcondition: user displayed onscreen
                 
 ======================================================================== -->
 

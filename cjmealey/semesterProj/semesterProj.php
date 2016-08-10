@@ -43,7 +43,24 @@ program structure :
         SQL statement
       close tags
 
-                
+======================================================================== 
+
+* 3PIO
+*
+* input : session for user
+* 
+* processing : The program steps are as follows.
+*   1. display greeting/button
+*   2. connect to database
+*   3. display campaigns
+*   4. diplay appropriate buttons for user
+* 
+* output : N/A
+*
+* precondition : user logged in
+* 
+* postcondition: campaign database entries displayed
+
 ======================================================================== -->
 
 <!DOCTYPE html>

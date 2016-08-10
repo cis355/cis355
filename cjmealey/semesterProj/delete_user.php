@@ -39,7 +39,23 @@ program structure :
       session start
       HTML Header
 
+======================================================================== 
 
+* 3PIO
+*
+* input : "yes" from form
+* 
+* processing : The program steps are as follows.
+*   1. display form
+*   2. if yes, connect to database
+*   3. delete user from database
+*   4. redirect to login
+* 
+* output : N/A
+*
+* precondition : delete option selected
+* 
+* postcondition: user deleted
                 
 ======================================================================== -->
 

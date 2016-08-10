@@ -43,6 +43,24 @@ program structure :
         create form
       check appropriate inputs
 
+======================================================================== 
+
+* 3PIO
+*
+* input : session vars
+* 
+* processing : The program steps are as follows.
+*   1. display form
+*   2. connect to database
+*   3. populate form
+*   4. check inputs
+*   5. Update database for user
+* 
+* output : databse entry for user
+*
+* precondition : update option selected
+* 
+* postcondition: user updated in database
                 
 ======================================================================== -->
 

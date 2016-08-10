@@ -48,6 +48,21 @@ program structure :
             kill connection
         disconnect()
         
+======================================================================== 
+
+* 3PIO
+*
+* input : N/A
+* 
+* processing : The program steps are as follows.
+*   1. login info
+*   2. database verification
+* 
+* output : database connection
+*
+* precondition : called function in code
+* 
+* postcondition: connected to database for PDO
                 
 ======================================================================== -->
 

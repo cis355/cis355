@@ -47,6 +47,24 @@ program structure :
         location
         description
 
+======================================================================== 
+
+* 3PIO
+*
+* input : username from $_SESSION
+* 
+* processing : The program steps are as follows.
+*   1. get username
+*   2. display form
+*   3. create button press
+*   4. add info to database
+*   5. redirect to campaigns
+* 
+* output : database entry from form
+*
+* precondition : create button pressed, user logged in
+* 
+* postcondition: information passed to database, redirect to campaigns
                 
 ======================================================================== */
 

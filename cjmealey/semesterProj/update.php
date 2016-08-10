@@ -46,6 +46,23 @@ program structure :
       HTML Header
       HTML Form
 
+======================================================================== 
+
+* 3PIO
+*
+* input : line info from get
+* 
+* processing : The program steps are as follows.
+*   1. check if update pressed
+*   2. if not, display table
+*   3. if yes, validate data
+*   4. if valid, update database
+* 
+* output : database info
+*
+* precondition : update pressed and id passed via get
+* 
+* postcondition: database entry updated
                 
 ======================================================================== */
 

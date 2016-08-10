@@ -43,6 +43,22 @@ program structure :
         HTML form
             button options
 
+======================================================================== 
+
+* 3PIO
+*
+* input : ID from database
+* 
+* processing : The program steps are as follows.
+*   1. display y/n
+*   2. if yes, delete entry from database
+*   3. redirect to campaigns
+* 
+* output : N/A
+*
+* precondition : delete button press
+* 
+* postcondition: entry deleted from database
                 
 ======================================================================== */
 

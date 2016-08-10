@@ -45,6 +45,23 @@ program structure :
         define SESSION vars
       HTML FORM
 
+======================================================================== 
+
+* 3PIO
+*
+* input : N/A
+* 
+* processing : The program steps are as follows.
+*   1. display form
+*   2. check database
+*   3. if valid, add to session/connect
+*   4. redirect to campaigns
+* 
+* output : SESSION info
+*
+* precondition : url accessed with redirect
+* 
+* postcondition: user logged in and added to session
                 
 ======================================================================== -->
 
@@ -66,7 +83,7 @@ program structure :
 	
    <body>
    <div class = "container">
-      <h3>Welcome to Dragons n' Databases</h3>
+      <h3>Welcome to Dungeons n' Database</h3>
       <h4>Please enter username and password</h4> 
       <div class = "container form-signin">
          <?php

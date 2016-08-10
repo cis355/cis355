@@ -51,7 +51,23 @@ program structure :
         email
         about
 
+======================================================================== 
 
+* 3PIO
+*
+* input : N/A
+* 
+* processing : The program steps are as follows.
+*   1. display form
+*   2. check valid/invalid
+*   3. input data from form to database
+*   4. redirect to login
+* 
+* output : database info
+*
+* precondition : create user selected
+* 
+* postcondition: user added to database
                 
 ======================================================================== */
 

@@ -42,6 +42,21 @@ program structure :
       leave function
       	SQL statement and query
 
+======================================================================== 
+
+* 3PIO
+*
+* input : GET vars for user and campaign
+* 
+* processing : The program steps are as follows.
+*   1. connect to database
+*   2. if everything is correct, delete joined entry
+* 
+* output : N/A
+*
+* precondition : get vars passed in URL/SESSION
+* 
+* postcondition: joined entry deleted
                 
 ======================================================================== -->
 
