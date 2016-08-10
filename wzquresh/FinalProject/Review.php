@@ -1,12 +1,19 @@
 <?php
-//Review Page
+//Page: Reviews for recipes.
+//Purpose: Displays the reviews for the recipes.
+//Info: Displays all the reviews in the Rating table.
+
 //Define how the database connects
 require ("database.php");
 session_start();
 
   class Review{
-       //Displays the records in the database in the form of a table
-    //and displays CRUD buttons
+    
+    //Purpose: Display reviews in a table.
+    //Input: None.
+    //Precondition: None.
+    //Output: Table.
+    //Postcondition: A table of all the reviews, with CRUD buttons.
     public function displayReviews () {
       $pdo = Database::connect();
       $sql = 'SELECT * FROM Rating';
@@ -46,6 +53,7 @@ session_start();
       Database::disconnect();
     }
     
+    //Purpose: Display buttons for the other pages.
     function displayButtons(){
       echo "<a href='createReview.php' class='btn btn-danger'>Add Review</a>";
       echo "<a href='index.php' class='btn btn-info'>Profile</a><br/>";
@@ -66,11 +74,11 @@ echo '<html lang="en">
             <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
         </head>';
 echo    '<body>';
-//Create a new customer object
+//Create a new Review object
 $review = new Review;
-//Display the button to create a new users
+//Displays buttons for other pages
 $review->displayButtons();
-//Display the records
+//Display the reviews
 echo '<div class="container">';
   echo '<div class="panel panel-primary">';
     echo '<div class="panel-heading">Reviews</div>';

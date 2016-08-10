@@ -1,10 +1,15 @@
-<?php 
+<?php
+//Page: Read a Recipe.
+//Purpose: Display the recipe and ingredients.
+//Info: Displays the recipe who's ID was passed.
+
 	require 'database.php';
 	$id = null;
 	if ( !empty($_GET['id'])) {
 		$id = $_REQUEST['id'];
 	}
 	
+  //If no ID return to Recipe page
 	if ( null==$id ) {
 		header("Location: Recipe.php");
 	} else {

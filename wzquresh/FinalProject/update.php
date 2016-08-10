@@ -1,5 +1,9 @@
 <?php 
-	
+	//Page: Update Recipe
+  //Purpose: Allows user to update their recipe.
+  //Info: Updates values entered for the Recipe table.
+  //Returns to the Recipe.php page.  
+  
 	require 'database.php';
 	$id = null;
 	if ( !empty($_GET['id'])) {
@@ -11,37 +15,12 @@
 	}
 	
 	if ( !empty($_POST)) {
-		// keep track validation errors
-		$nameError = null;
-		$emailError = null;
-		$mobileError = null;
-		
 		// keep track post values
-		$name = $_POST['name'];
-		$email = $_POST['email'];
-		$mobile = $_POST['mobile'];
+		$recipeTitle = $_POST['recipeTitle'];
+		$ingredients = $_POST['ingredients[]'];
+		$directions = $_POST['directions'];
 		
-		// validate input
-		$valid = true;
-		if (empty($name)) {
-			$nameError = 'Please enter Name';
-			$valid = false;
-		}
-		
-		if (empty($email)) {
-			$emailError = 'Please enter Email Address';
-			$valid = false;
-		} else if ( !filter_var($email,FILTER_VALIDATE_EMAIL) ) {
-			$emailError = 'Please enter a valid Email Address';
-			$valid = false;
-		}
-		
-		if (empty($mobile)) {
-			$mobileError = 'Please enter Mobile Number';
-			$valid = false;
-		}
-		
-		// update data
+		//Update the Recipe table
 		if ($valid) {
 			$pdo = Database::connect();
 			$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -52,7 +31,9 @@
 			Database::disconnect();
 			header("Location: Recipe.php");
 		}
-	} else {
+	}
+  //Output User's values if POST is empty
+  else {
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		$sql = "SELECT * FROM Recipe where id = ?";

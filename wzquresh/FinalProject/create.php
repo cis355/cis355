@@ -1,4 +1,6 @@
 <?php 
+//Final Project
+//Purpose: Creates a new user and inserts it into the User table.
 
 	# Consider three scenarios.
 	# 1. User clicked create button on list screen (index.php)

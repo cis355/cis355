@@ -1,4 +1,8 @@
 <?php 
+//Page: Delete Recipe
+//Purpose: Delete recipe who's ID was passed.
+//Info: Delete recipe by ID from Recipe table.
+
 	require 'database.php';
 	$id = 0;
 	

@@ -1,4 +1,9 @@
 <?php
+//Page: Create Recipe
+//Purpose: Lets the user input a new recipe.
+//Info: Adds a new recipe to the Recipe table.
+//Returns back to the Recipe.php page.
+
 //Define how the database connects
 require ("database.php");
 session_start();
@@ -8,12 +13,6 @@ if ( !empty($_POST)) {
   $ingredients = array();
   $directions;
   $id = $_SESSION['userID'];
-
-  //foreach ($_POST['ingredients'] as $ingredient){
-  //
-  //  $doquery = mysql_query("INSERT INTO Recipe(`Ingredients`) VALUES('".$ingredient."')") or die(mysql_error());
-  //}
-  
   
     $title = $_POST['title'];
     if($_POST){

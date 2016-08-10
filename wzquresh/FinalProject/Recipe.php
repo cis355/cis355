@@ -1,12 +1,21 @@
 <?php
-//Recipe Page
+//Page: Recipe
+//Purpose: Display all recipes from all users.
+//Info: The goal of this page is to allow users to
+// read other users' recipes and edit their own 
+// recipes.
+
 //Define how the database connects
 require ("database.php");
 session_start();
 
   class Recipe{
-       //Displays the records in the database in the form of a table
-    //and displays CRUD buttons
+    
+    //Purpose: Display all recipes.
+    //Input: None.
+    //Precondition: None.
+    //Output: Table.
+    //Postcondition: Table of all recipes in Recipe table.
     public function displayRecipes () {
       $pdo = Database::connect();
       $sql = 'SELECT * FROM Recipe ORDER BY ID DESC';
@@ -43,12 +52,13 @@ session_start();
       Database::disconnect();
     }
     
-    //Displays the create button, links to create.php
+    //Purpose: Displays buttons to display other pages.
     function displayCreateScreen(){
       echo "<a href='Review.php' class='btn btn-danger'>Reviews</a>";
       echo "<a href='createRecipe.php' class='btn btn-primary'>Create Recipe</a>";
     }
     
+    //Purpose: Displays a button for the Home Screen, index.php.
     function displayHomeScreen(){
       echo "<a href='index.php' class='btn btn-info'>Profile</a><br/>";
     }
@@ -68,12 +78,12 @@ echo '<html lang="en">
             <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
         </head>';
 echo    '<body>';
-//Create a new customer object
+//Create a new Recipe object
 $recipe = new Recipe;
-//Display the button to create a new users
+//Display buttons to go to other pages in application
 $recipe->displayCreateScreen();
 $recipe->displayHomeScreen();
-//Display the records
+//Display the recipes
 echo '<div class="container">';
   echo '<div class="panel panel-primary">';
     echo '<div class="panel-heading">Records Table</div>';
