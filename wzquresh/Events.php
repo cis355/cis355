@@ -76,33 +76,33 @@ session_start();
     
   }
   
-echo '<html lang="en">
-        <head>
-            <meta charset="utf-8">
-            <link   href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-        </head>';
-echo    '<body>';
-//Create a new customer object
-$event1 = new Events();
-//Display the button to create a new users
-$event1->displayCreateScreen();
-//Display the records
-echo '<div class="container">';
-  echo '<div class="panel panel-primary">';
-    echo '<div class="panel-heading">Events Table</div>';
-    echo '<div class="panel-body">';
-      $event1->displayEventsTable();
+  echo '<html lang="en">
+          <head>
+              <meta charset="utf-8">
+              <link   href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+              <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+          </head>';
+  echo    '<body>';
+  //Create a new customer object
+  $event1 = new Events();
+  //Display the button to create a new users
+  $event1->displayCreateScreen();
+  //Display the records
+  echo '<div class="container">';
+    echo '<div class="panel panel-primary">';
+      echo '<div class="panel-heading">Events Table</div>';
+      echo '<div class="panel-body">';
+        $event1->displayEventsTable();
+      echo '</div>';
     echo '</div>';
   echo '</div>';
-echo '</div>';
 
-echo "<br/><br/><br/>";
-echo "<br/><br/>";
-echo '</body>';
-echo '</html>';
-echo '<br/><br/><br/>';
-echo "<a href='Qureshi_EventClassDiagram.png' class='btn btn-success'>Events Class UML Diagram</a>";
-echo '<br/><br/><br/>';  
-show_source(__FILE__); 
+  echo "<br/><br/><br/>";
+  echo "<br/><br/>";
+  echo '</body>';
+  echo '</html>';
+  echo '<br/><br/><br/>';
+  echo "<a href='Qureshi_EventClassDiagram.png' class='btn btn-success'>Events Class UML Diagram</a>";
+  echo '<br/><br/><br/>';  
+  show_source(__FILE__); 
 ?>

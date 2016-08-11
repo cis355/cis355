@@ -1,23 +1,36 @@
 <?php
+//Page: Create Recipe
+//Purpose: Lets the user input a new recipe.
+//Info: Adds a new recipe to the Recipe table.
+//Returns back to the Recipe.php page.
+
 //Define how the database connects
 require ("database.php");
 session_start();
 if ( !empty($_POST)) {
   //Member data for the class
-  $ingredients;
+  $title;
+  $ingredients = array();
   $directions;
   $id = $_SESSION['userID'];
-
+  
+    $title = $_POST['title'];
     if($_POST){
-      $ingredients = implode(",", $_POST["ingredients"]);
+      foreach($_POST['ingredients[]'] as $ingredient){
+        $ingredients[] = $ingredient;
+      }
+      //$ingredients[] = $_POST['ingredients[]'];
+      $commaIngredients = implode(",", $ingredients);
     }
+    //$ingredients[] = $_POST['ingredients[]'];
+    //$commaIngredients = implode(",", $ingredients);
     $directions = $_POST['directions'];
     $pdo = Database::connect();
-    $sql = "INSERT INTO Recipe (userID,Ingredients,Recipe,) values(?, ?, ?)";
+    $sql = "INSERT INTO Recipe (userID,recipeTitle,Ingredients,Recipe) values(?, ?, ?, ?)";
     $q = $pdo->prepare($sql);
-    $q->execute(array($id,$ingredients,$directions));
+    $q->execute(array($id,$title,$commaIngredients,$directions));
 	  Database::disconnect();
-    header("Location: Profile.php");
+    header("Location: Recipe.php");
 
 show_source(__FILE__);
 }
@@ -40,7 +53,9 @@ show_source(__FILE__);
       <div class="container">
         <div class="panel panel-primary">
           <div class="panel-heading">Create Your Recipe</div>
-            <form role="form" action="createRecipe.php" method="POST">
+            <form role="form" action="createRecipe.php" method="post">
+            <label>Title</label>
+            <input type="text" name="title"><br/>
               <label>Ingredients</label>
                 <div class="multi-field-wrapper">
                   <div class="multi-fields">
@@ -55,6 +70,7 @@ show_source(__FILE__);
               <textarea class="form-control" rows="5" name="directions" placeholder="Directions" style="width: 50%"></textarea>
               <div class="form-actions">
                 <button type="submit" class="btn btn-success">Create Recipe</button>
+                <a href="Recipe.php" class="btn btn-danger">Back</a>
               </div>
             </form>
         

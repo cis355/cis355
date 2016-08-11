@@ -1,5 +1,7 @@
 <?php
-
+//Final Project
+//Page: Login Screen
+//Info: Displays if there is no username session variable set.
 	session_start();
 	# include connection data and functions
 	require 'database.php';
@@ -38,6 +40,7 @@
       print_r($results);
       if($results['password'] == $password){
         $_SESSION['username'] = $username;
+        $_SESSION['userID'] = $results['ID']; //This does not return anything
         Database::disconnect();
 			  header("Location: index.php");
       }

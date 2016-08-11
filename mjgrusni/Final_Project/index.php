@@ -24,13 +24,15 @@
 		-->
     <div class="container">
     		<div class="row">
-    			<h3>PHP CRUD Grid</h3>
+    			<h3>Actors in Movies</h3>
     		</div>
 			<div class="row">
 				<p>
 					<a href="createActor.php" class="btn btn-success">Create Actor</a>
 					<a href="createFilm.php" class="btn btn-success">Create Film</a>
 					<a href="viewActors.php" class="btn btn-success">View Actors</a>
+					<a href="viewFilms.php" class="btn btn-success">View Films</a>
+					<a href="index.php" class="btn btn-success">View All</a>
 				</p>
 				
 				<table class="table table-striped table-bordered">
