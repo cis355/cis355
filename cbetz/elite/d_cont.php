@@ -1,4 +1,17 @@
 <?php 
+/* ***************************************************************************************************************
+ filename     : d_cont.php   
+ author       : Chad Betz   
+ course       : cis355     
+ semester     : Summer 2016   
+ description  : This file deletes a contract
+				
+PURPOSE 	  : CRUD App : delete
+INPUT		  : None
+PRE     	  : There must be a contract in place to be deleted
+OUTPUT		  : A contract is deleted
+POST		  : Redirected back to the main page and a contract is delted from the contracts table
+*****************************************************************************************************************/
 	require 'elitedatabase.php';
 	$id = 0;
 	
@@ -13,7 +26,7 @@
 		// delete data
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$sql = "DELETE FROM services WHERE id = ?";
+		$sql = "DELETE FROM contracts WHERE id = ?";
 		$q = $pdo->prepare($sql);
 		$q->execute(array($id));
 		Database::disconnect();
@@ -35,10 +48,10 @@
     
     			<div class="span10 offset1">
     				<div class="row">
-		    			<h3>Delete a Service</h3>
+		    			<h3>Delete a Contract</h3>
 		    		</div>
 		    		
-	    			<form class="form-horizontal" action="deleteservice.php" method="post">
+	    			<form class="form-horizontal" action="d_cont.php" method="post">
 	    			  <input type="hidden" name="id" value="<?php echo $id;?>"/>
 					  <p class="alert alert-error">Are you sure to delete ?</p>
 					  <div class="form-actions">

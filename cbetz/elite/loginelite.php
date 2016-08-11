@@ -1,5 +1,17 @@
 <?php 
-	
+/* ***************************************************************************************************************
+ filename     : loginelite.php   
+ author       : Chad Betz   
+ course       : cis355     
+ semester     : Summer 2016   
+ description  : This file gets the username of the user logging in, and logs in a user
+				
+PURPOSE 	  : This starts a session and lets the user log in to the website		
+INPUT		  : name,password
+PRE     	  : There must be users that can log into the system
+OUTPUT		  : sussesfull login
+POST		  : Redirected to the main page and logged in as the user
+*****************************************************************************************************************/	
 	session_start();
 	$_SESSION['login_user']= $username;
 	
@@ -91,7 +103,6 @@
 					  
 					  <div class="form-actions">
 						  <button type="submit" class="btn btn-primary">Login</button>
-						  <a href="createcust.php" class="btn btn-success">Create</a>
 						</div>
 						
 					</form>

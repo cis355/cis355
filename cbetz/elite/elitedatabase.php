@@ -1,4 +1,17 @@
 <?php
+/* ***************************************************************************************************************
+ filename     : elitedatabase.php   
+ author       : Chad Betz   
+ course       : cis355     
+ semester     : Summer 2016   
+ description  : This file sets up the database to be used throughout the project
+				
+PURPOSE 	  : Database setup
+INPUT		  : dbName, dbHost, dbusername, dbUserPassword
+PRE     	  : None
+OUTPUT		  : database is generated and found
+POST		  : the database is found on the system and is ready for use.
+*****************************************************************************************************************/
 class Database 
 {
     # commented out code below...

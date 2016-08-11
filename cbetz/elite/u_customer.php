@@ -1,35 +1,37 @@
 <?php 
 /* ***************************************************************************************************************
- filename     : createcust.php   
+ filename     : u_customer.php   
  author       : Chad Betz   
  course       : cis355     
  semester     : Summer 2016   
- description  : This file creates new customer, and adds them to the database when the user pushes the create button.
+ description  : This file updates the customer that has the same id as selected
 				
-PURPOSE 	  : CRUD App : Create
-INPUT		  : name, email, mobile, password
-PRE     	  : The user must enter in all of the information in the fields
-OUTPUT		  : A new customer is made
-POST		  : Redirected back to the main page and a new customer has been added to the customer table
+PURPOSE 	  : CRUD App : Update
+INPUT		  : NONE
+PRE     	  : The customer must be valid and created
+OUTPUT		  : A updated version of the customer
+POST		  : Redirected back to the main page where the customer will be updated
 *****************************************************************************************************************/ 	
-
-	# include connection data and functions
 	require 'elitedatabase.php';
+	$id = null;
+	if ( !empty($_GET['id'])) {
+		$id = $_REQUEST['id'];
+	}
 	
-	# if there was data passed, then insert record, 
-	# otherwise do nothing (that is, just display html for create)
+	if ( null==$id ) {
+		header("Location: elite.php");
+	}
+	
 	if ( !empty($_POST)) {
 		// keep track validation errors
 		$nameError = null;
 		$emailError = null;
 		$mobileError = null;
-		$passwordError = null;
 		
 		// keep track post values
 		$name = $_POST['name'];
 		$email = $_POST['email'];
 		$mobile = $_POST['mobile'];
-		$password = $_POST['password'];
 		
 		// validate input
 		$valid = true;
@@ -51,22 +53,28 @@ POST		  : Redirected back to the main page and a new customer has been added to 
 			$valid = false;
 		}
 		
-		if (empty($password)) {
-			$mobileError = 'Please enter a Password';
-			$valid = false;
-		}
-		
-		// insert data
+		// update data
 		if ($valid) {
 			$pdo = Database::connect();
 			$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-			$sql = "INSERT INTO customers (name,email,mobile,password) values(?, ?, ?, ?)";
+			$sql = "UPDATE customers  set name = ?, email = ?, mobile = ? WHERE id = ?";
 			$q = $pdo->prepare($sql);
-			$q->execute(array($name,$email,$mobile,$password));
+			$q->execute(array($name,$email,$mobile,$id));
 			Database::disconnect();
 			header("Location: elite.php");
 		}
-	} # end if ( !empty($_POST))
+	} else {
+		$pdo = Database::connect();
+		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$sql = "SELECT * FROM customers where id = ?";
+		$q = $pdo->prepare($sql);
+		$q->execute(array($id));
+		$data = $q->fetch(PDO::FETCH_ASSOC);
+		$name = $data['name'];
+		$email = $data['email'];
+		$mobile = $data['mobile'];
+		Database::disconnect();
+	}
 ?>
 
 
@@ -83,11 +91,10 @@ POST		  : Redirected back to the main page and a new customer has been added to 
     
     			<div class="span10 offset1">
     				<div class="row">
-		    			<h3>Create a Customer</h3>
+		    			<h3>Update a Customer</h3>
 		    		</div>
     		
-	    			<form class="form-horizontal" action="createcust.php" method="post">
-					
+	    			<form class="form-horizontal" action="u_customer.php?id=<?php echo $id?>" method="post">
 					  <div class="control-group <?php echo !empty($nameError)?'error':'';?>">
 					    <label class="control-label">Name</label>
 					    <div class="controls">
@@ -97,7 +104,6 @@ POST		  : Redirected back to the main page and a new customer has been added to 
 					      	<?php endif; ?>
 					    </div>
 					  </div>
-					  
 					  <div class="control-group <?php echo !empty($emailError)?'error':'';?>">
 					    <label class="control-label">Email Address</label>
 					    <div class="controls">
@@ -116,24 +122,14 @@ POST		  : Redirected back to the main page and a new customer has been added to 
 					      	<?php endif;?>
 					    </div>
 					  </div>
-					  <div class="control-group <?php echo !empty($passwordError)?'error':'';?>">
-					    <label class="control-label">Password</label>
-					    <div class="controls">
-					      	<input name="password" type="text"  placeholder="Password" value="<?php echo !empty($password)?$password:'';?>">
-					      	<?php if (!empty($passwordError)): ?>
-					      		<span class="help-inline"><?php echo $passwordError;?></span>
-					      	<?php endif;?>
-					    </div>
-					  </div>
 					  <div class="form-actions">
-						  <button type="submit" class="btn btn-success">Create</button>
+						  <button type="submit" class="btn btn-success">Update</button>
 						  <a class="btn" href="elite.php">Back</a>
 						</div>
-						
 					</form>
-					
 				</div>
 				
     </div> <!-- /container -->
+
   </body>
 </html>

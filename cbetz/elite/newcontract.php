@@ -1,6 +1,19 @@
-<?php 
-	#session_start();
-	#$_SESSION['login_user']= $username;
+<?php
+/* ***************************************************************************************************************
+ filename     : createcust.php   
+ author       : Chad Betz   
+ course       : cis355     
+ semester     : Summer 2016   
+ description  : This file creates new customer, and adds them to the database when the user pushes the create button.
+				
+PURPOSE 	  : CRUD App : Create
+INPUT		  : name, email, mobile, password
+PRE     	  : The user must enter in all of the information in the fields
+OUTPUT		  : A new customer is made
+POST		  : Redirected back to the main page and a new customer has been added to the customer table
+*****************************************************************************************************************/ 	 
+	session_start();
+	$_SESSION['login_user']= $username;
 	# Consider these scenarios.
 	# 1. User clicked the create button on the list screen(index.php)
 	#  If that happens then create.php displays a entry screen

@@ -1,4 +1,17 @@
-<?php 
+<?php
+/* ***************************************************************************************************************
+ filename     : r_customer.php   
+ author       : Chad Betz   
+ course       : cis355     
+ semester     : Summer 2016   
+ description  : This file reads a customer depending on which id is slected.
+				
+PURPOSE 	  : CRUD App : Read
+INPUT		  : id info
+PRE     	  : The customer must have information in it
+OUTPUT		  : A reading of the customer
+POST		  : A page that shows each of the items in the customer is shown
+*****************************************************************************************************************/  
 	require 'elitedatabase.php';
 	$id = null;
 	if ( !empty($_GET['id'])) {
@@ -10,7 +23,7 @@
 	} else {
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$sql = "SELECT * FROM services where id = ?";
+		$sql = "SELECT * FROM customers where id = ?";
 		$q = $pdo->prepare($sql);
 		$q->execute(array($id));
 		$data = $q->fetch(PDO::FETCH_ASSOC);
@@ -31,25 +44,21 @@
     
     			<div class="span10 offset1">
     				<div class="row">
-		    			<h3>Read a Service</h3>
+		    			<h3>Read a Customer</h3>
 		    		</div>
 		    		
 	    			<div class="form-horizontal" >
 					  <div class="control-group">
-					    <label class="control-label">Service</label>
-						     	<?php echo $data['s_name'];?>
+					    <label class="control-label">Name</label>
+						     	<?php echo $data['name'];?>
 					  </div>
 					  <div class="control-group">
-					    <label class="control-label">Description</label>
-						     	<?php echo $data['description'];?>
+					    <label class="control-label">Email</label>
+						     	<?php echo $data['email'];?>
 					  </div>
 					  <div class="control-group">
-					    <label class="control-label">Price</label>
-						     	<?php echo $data['price'];?>
-					  </div>
-					  <div class="control-group">
-					    <label class="control-label">Date</label>
-						     	<?php echo $data['date'];?>
+					    <label class="control-label">Phone #</label>
+						     	<?php echo $data['mobile'];?>
 					  </div>
 					    <div class="form-actions">
 						  <a class="btn" href="elite.php">Back</a>
