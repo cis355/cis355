@@ -1,8 +1,5 @@
 <?php 
 
-session_start();
-if (empty($_SESSION['name'])) header("Location: login.php"); // redirect
-
 	require 'database.php';
 	$id = 0;
 	
@@ -17,11 +14,11 @@ if (empty($_SESSION['name'])) header("Location: login.php"); // redirect
 		// delete data
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$sql = "DELETE FROM customers  WHERE id = ?";
+		$sql = "DELETE FROM films WHERE film_id = ?";
 		$q = $pdo->prepare($sql);
 		$q->execute(array($id));
 		Database::disconnect();
-		header("Location: index.php");
+		header("Location: viewFilms.php");
 		
 	} 
 ?>
@@ -39,15 +36,15 @@ if (empty($_SESSION['name'])) header("Location: login.php"); // redirect
     
     			<div class="span10 offset1">
     				<div class="row">
-		    			<h3>Delete a Customer</h3>
+		    			<h3>Delete an Actor</h3>
 		    		</div>
 		    		
-	    			<form class="form-horizontal" action="delete.php" method="post">
+	    			<form class="form-horizontal" action="deleteFilm.php" method="post">
 	    			  <input type="hidden" name="id" value="<?php echo $id;?>"/>
 					  <p class="alert alert-error">Are you sure to delete ?</p>
 					  <div class="form-actions">
 						  <button type="submit" class="btn btn-danger">Yes</button>
-						  <a class="btn" href="index.php">No</a>
+						  <a class="btn" href="viewActors.php">No</a>
 						</div>
 					</form>
 				</div>

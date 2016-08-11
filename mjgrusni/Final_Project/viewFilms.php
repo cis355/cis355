@@ -1,8 +1,3 @@
-<?php
-session_start();
-if (empty($_SESSION['name'])) header("Location: login.php"); // redirect
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,41 +19,60 @@ if (empty($_SESSION['name'])) header("Location: login.php"); // redirect
 		-->
     <div class="container">
     		<div class="row">
-    			<h3>Ratings of Products By Customers</h3>
+    			<h3>View Films</h3>
     		</div>
 			<div class="row">
-
+				<p>
+					<a href="createActor.php" class="btn btn-success">Create Actor</a>
+					<a href="createFilm.php" class="btn btn-success">Create Film</a>
+					<a href="viewActors.php" class="btn btn-success">View Actors</a>
+					<a href="viewFilms.php" class="btn btn-success">View Films</a>
+					<a href="index.php" class="btn btn-success">View All</a>
+				</p>
+				
+				
 				<table class="table table-striped table-bordered">
-		              <thead>
-		                <tr>
-		                  <th>Rating Id</th>
-		                  <th>Product</th>
-		                  <th>Customer</th>
-		                  <th>Rating</th>
-		                </tr>
-		              </thead>
-		              <tbody>
-		              <?php 
+					
+					   <?php 				   
 					   # database.php contains connection code, including connect and disconnect functions
 					   include 'database.php';
 					   # connect to database and assign object to variable
 					   $pdo = Database::connect();
 					   # assign select statement to variable
-					   $sql = 'SELECT * FROM `ratings` INNER JOIN `product` INNER JOIN `customers` WHERE product.id = ratings.productID AND customers.id = ratings.customerID';
+					   $sql = 'SELECT * FROM films';
+					   # iterates through every record return by the select statement
+					   Database::disconnect();
+					   //echo $selectString;
+					   ?>
+		              <thead>
+		                <tr>
+		                  <th>Name</th>
+		                  <th>Actions</th>
+		                </tr>
+		              </thead>
+		              <tbody>
+					 
+		              <?php 		
+					
+					   # connect to database and assign object to variable
+					   $pdo = Database::connect();
+					   # assign select statement to variable
+					   $sql = 'SELECT * FROM films';
 					   # iterates through every record return by the select statement
 	 				   foreach ($pdo->query($sql) as $row) {
 						   		echo '<tr>';
-							   	echo '<td>'. $row[0] . '</td>';
-							   	echo '<td>'. $row['productName'] . '</td>';
-							   	echo '<td>'. $row['name'] . '</td>';
-							   	echo '<td>'. $row['rating'] . '</td>';
+							   	echo '<td width=250>'. $row['film_name'] . '</td>';
+							   	echo '<td width=250>';
+							   	echo '&nbsp;';
+							   	echo '<a class="btn btn-danger" 
+								   href="deleteFilm.php?id='.$row['film_id'].'">Delete Film</a>';
+							   	echo '</td>';
 							   	echo '</tr>';
 					   }
 					   Database::disconnect();
 					  ?>
 				      </tbody>
 	            </table>
-
     	</div>
     </div> <!-- /container -->
   </body>
